@@ -1,0 +1,40 @@
+
+%%% ELS includes
+\documentclass[review]{elsarticle}
+\usepackage{lineno,hyperref}
+\modulolinenumbers[5]
+\journal{Environmental Modelling \& Software}
+\bibliographystyle{elsarticle-num}
+%%%
+
+%%% General usepackages, definitions, etc.
+\input{preamble}
+
+%%% General setup
+\graphicspath{{./figs/}}
+%\include{acros}
+\makeglossaries
+
+\begin{document}
+
+%%% ELS input
+\input{elsfrontmatter} 
+%%%
+
+\newpage
+stuff
+%% \input{intro}
+%% \input{methods}
+%% \input{results}
+%% \input{conclusion}
+% 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgements}
+
+fill in
+
+\newpage
+\section*{\refname}
+\bibliography{refs}
+\end{document}

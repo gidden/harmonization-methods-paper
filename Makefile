@@ -1,5 +1,5 @@
 manuscript = paper
-references = `refs.bib`
+references = refs.bib
 latexopt   = -halt-on-error -file-line-error
 
 all: all-via-pdf
