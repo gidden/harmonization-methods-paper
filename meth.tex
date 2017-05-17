@@ -1,0 +1,51 @@
+
+\section{Methodology}
+
+IAM emission results are provided along a number of different dimensions,
+including, temporal (normally half decade or decade), spatial (i.e., model
+regions), gas species, and sectoral. Each individual temporal trajectory (i.e.,
+unique combinations of regions, species, and sectors) must be harmonized to the
+initial time period. Given a model trajectory, $m_{r, g, s}(t)$, historical
+trajectory, $h_{r, g, s}(t)$, and initial time period $t_i$, a harmonized
+trajectory can be calcluated.
+
+In previous studies, two \textit{families} of methods have been used: those that
+operate on the ratio of base year values (i.e., $\frac{h(t_i)}{m(t_i)}$) and
+those that operate on the offset of base year values (i.e., $h(t_i) -
+m(t_i)$). The \code{aneris} code base provides a number of variations on the
+classic methods, including ratio-convergence methods shown in Equation
+\ref{eqs:ratio}, offset-convergence methods shown in Equation \ref{eqs:offset},
+and interpolation methods shown in Equation \ref{eqs:interpolate}; the
+convergence factor for associated methods is shown first in Equation
+\ref{eqs:factor}. Each is a function of time, model trajectory, historical
+trajectory, harmonization time period, and, potentially, a convergence time
+period ($t_f$), where the harmonized trajectory is equivalent to the
+unharmonized trajectory.
+
+\begin{equation}\label{eqs:factor}
+  \beta(t, t_i, t_f) =
+  \begin{cases}
+    1 - \frac{t - t_i}{t_f - t_i},& \text{if } t \leq t_f\\
+    0,                        & \text{otherwise}
+  \end{cases}
+\end{equation}
+
+\begin{equation}\label{eqs:ratio}
+  m^{rat}(t, m, h, t_i, t_f) = [\beta(t, t_i, t_f) (\frac{h(t_i)}{m(t_i)} - 1) + 1] m(t)
+\end{equation}
+
+\begin{equation}\label{eqs:offset}
+  m^{off}(t, m, h, t_i, t_f) = \beta(t, t_i, t_f) (h(t_i) - m(t_i)) + m(t)
+\end{equation}
+  
+\begin{equation}\label{eqs:interpolate}
+  m^{int}(t, m, h, t_i, t_f) =
+  \begin{cases}
+    \frac{m(t_f) - h(t_i)}{t_f - t_i}(t - t_i) + h(t_i), & \text{if } t \leq t_f\\
+    m(t), & \text{otherwise}
+  \end{cases}
+\end{equation}
+  
+\section{Implementation}
+
+foo
