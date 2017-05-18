@@ -54,7 +54,7 @@ in Table \ref{tab:meths}.
 \begin{table}[]
 \centering
 \caption{All Harmonization Methods Provided in \code{aneris}}
-\label{my-label}
+\label{tab:meths}
 \begin{tabular}{|l|l|l|}
 \hline
 Method Name                             & Harmonization Type & Convergence Year\\
@@ -175,4 +175,74 @@ presented in Figure \ref{fig:dh}. Given the available data, a threshold value of
     }
   \end{center}
 \end{figure}
+
+\subsection{\code{aneris} Workflow}
+
+The full \code{aneris} workflow is comprised of a number of components shown
+graphically in Figure \ref{fig:workflow}. Unharmonized model data and
+run-control configuration are read in via an Excel spreadsheet. Data is assumed
+to be in the \textit{IAM Consortium} format, i.e., using \code{Model},
+\code{Scenario}, \code{Region}, \code{Variable}, and \code{Unit} columns in
+addition to column representing each modeled time period. Users are able to
+control the harmonization process via a number of controls. First, users can
+provide \textit{override} methods for any combination of region and variable. If
+override methods are provided, they are used instead of the default methods as
+determined by the default method decision tree. Further, users can set the
+above-mentioned thresholds as well as the LUC method used in the decision
+tree. Further detail of input parameters can be found at
+\hyperlink{http://aneris.readthedocs.io/en/latest/}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[height=0.85\textheight]{aneris-workflow.pdf}
+    \caption[]{
+      \label{fig:workflow}
+      The full harmonization process as executed by \code{aneris}. Operations
+      that can be configured with user-based input configurations are shown in
+      purple. The core harmonization process is shown in orange.  }
+  \end{center}
+\end{figure}
+
+Input data then undergoes a cleaning operation, which adds any trajectories in
+the historical dataset but not provided by the model and detects any issues that
+would cause the harmonization process to fail. The methods used to harmonize the
+data are then determined and the harmonization process is executed. Upon
+completion of the harmonization process, aggregation of common analysis regions
+is performed (e.g., the 5 RCP regions \TODO{CITE}). Finally, any exogenous
+trajectories the user provides are added. Exogenous trajectories are normally
+provided for unmodeled gases with well-accepted scenario trajectories, e.g.,
+Chlorofloro Carbons provided by WMO \TODO{CITE}. Upon completion, the harmonized
+trajectories and metadata regarding the harmonization process are returned. A
+description of all returned metadata is provided in Table \ref{tab:metadata}.
+
+\begin{table}[]
+\centering
+\caption{Metadata provided by the \code{aneris} harmonization routine. This metadata is provided for every combination of region, sector, and emissions species.}
+\label{my-tab:metadata}
+\begin{tabular}{|p{2cm}|p{8cm}|}
+\hline
+Column       & Description                                                                  \\
+\hline
+\hline
+method       & The harmonization method used.                                               \\
+\hline
+default      & The default harmonization method as determined by the default decision tree. \\
+\hline
+override     & The method provided as an override (if any).                                 \\
+\hline
+offset       & The offset value between history and model in the harmonization year.        \\
+\hline
+ratio        & The ratio value between history and model in the harmonization year.         \\
+\hline
+cov          & The covariance value of the historical trajectory.                           \\
+\hline
+unharmonized & The unharmonized value in the harmonization year.                            \\
+\hline
+history      & This historical value in the harmonization year.                             \\
+\hline
+harmonized   & The resulting harmonized value in the harmonization year.\\
+\hline
+\end{tabular}
+\end{table}
+
 
