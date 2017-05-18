@@ -47,6 +47,27 @@ where the harmonized trajectory converges to the unharmonized trajectory.
   \end{cases}
 \end{equation}
 
+The \code{aneris} code base provides a family of methods to choose from for each
+of the harmonization cases. A summary of all available methods is provided below
+in Table \ref{tab:meths}.
+
+\begin{table}[]
+\centering
+\caption{All Harmonization Methods Provided in \code{aneris}}
+\label{my-label}
+\begin{tabular}{|l|l|l|}
+\hline
+Method Name                             & Harmonization Type & Convergence Year\\
+\hline
+\code{constant\_ratio}                  & ratio              & $t_f = \infty$\\
+\code{reduce\_ratio\_<year>}            & ratio              & $t_f = $\code{<year>}\\
+\code{constant\_offset}                 & offset             & $t_f = \infty$\\
+\code{reduce\_offset\_<year>}           & offset             & $t_f = $\code{<year>}\\
+\code{linear\_interpolate\_<year>}      & interpolation      & $t_f = $\code{<year>}\\
+\hline
+\end{tabular}
+\end{table}
+
 \subsection{Default Method Decision Tree}
 
 While historically expert opinion has guided the determination of harmonization
@@ -155,5 +176,3 @@ presented in Figure \ref{fig:dh}. Given the available data, a threshold value of
   \end{center}
 \end{figure}
 
-
-\subsection{Implemented Methods}\label{sec:impl-meths}
