@@ -82,7 +82,12 @@ convergence method is provided in order to be as representative as possible to
 the underlying unharmonized model results. The final model-based characteristic
 of import is whether the model reports negative emissions. Such a case is
 possible for gas species which can be extracted from the enviornment, as is the
-case for CO2 in future scenarios with high mitigation strategies. 
+case for CO2 in future scenarios with high mitigation strategies. If a model
+provides a trajectory that transitions from positive to negative emissions, then
+a convergence method is used in order to guarantee capture of this
+transition. Otherwise, it is possible, given the relative values between history
+and model in the harmonization year, for a negative trajectory to be
+inappropriatley harmonized to positive, but decreasing, trajectory.
 
 Variability of the historical trajectory is also an important characteristic
 when considering the choice of harmonization method. Such trajectories are
@@ -120,7 +125,7 @@ detection mechanism is necessary.
     \caption[]{
       \label{fig:cov}
       The distribution of $\Omega$ values for LUC and non-LUC historical
-      trajectories are shown. CEDS historical data is used for non-LUC data and
+      trajectories is shown. CEDS historical data is used for non-LUC data and
       \TODO{cite LUC data} is used for LUC data. All historical data has been
       aggregated from countries to IAM model regional definitions, and all gas
       species included in the historical datasets are included in the
@@ -131,7 +136,24 @@ detection mechanism is necessary.
 \end{figure}
 
 Finally, consideration is taken with respect to the relative difference between
-the historic and model values in the harmonization year. 
+the historic and model values in the harmonization year. In order to investigate
+the possible values that these relative differences can take, the flagship model
+values used in the SSP \TODO{CITE} and (ongoing) CMIP6 intercomparison exercises
+are used. A distribution of these differences for all models in the study is
+presented in Figure \ref{fig:dh}. Given the available data, a threshold value of
+50\% was chosen to be used as a default in \code{aneris}.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\textwidth]{dh.pdf}
+    \caption[]{
+      \label{fig:dh}
+      The distribution of relative differences between model and historical
+      values in the harmonization year is shown. The solid black line indicates
+      the threshold value used by default in \code{aneris}.  
+    }
+  \end{center}
+\end{figure}
 
 
 \subsection{Implemented Methods}\label{sec:impl-meths}
