@@ -101,10 +101,13 @@ trajectory is calculated as shown in Equation \ref{eqs:cov} and tested against a
 threshold. To determine this threshold, an analysis of the recent CEDS
 \TODO{cite ceds paper} historical data has been performed. Figure \ref{fig:cov}
 shows the distribution of land-use covariances and non-land-use covariances as
-determined for historical data aggregated to 11 world regions \TODO{list regions
-  for 11 regions}. A threshold value of 10 has been chosen based on the
-11-region observations, but, importantly, any regional aggregation is possible
-as this is model depedent.
+determined for historical data aggregated to the model regions of 5 different
+flagship IAMs \TODO{cite all 5 IAMs}. A threshold value of 20 has been chosen
+based on these observations. Importantly, tails of the LUC and non-LUC overlap,
+thus there are both false positives (~10\% of non-LUC trajectories) and false
+negatives (~7\% of LUC trajectories). However, as any regional definition is
+model depedent and thus any regional aggregation is possible an automated
+detection mechanism is necessary.
 
 \begin{equation}\label{eqs:cov}
     \Omega =  \frac{\sigma(h^{\prime}(t))}{\mu(h^{\prime}(t))}
@@ -117,17 +120,18 @@ as this is model depedent.
     \caption[]{
       \label{fig:cov}
       The distribution of $\Omega$ values for LUC and non-LUC historical
-      trajectories are shown. The CEDS historical data is used for non-LUC data
-      and \TODO{cite LUC data} is used for LUC data. All historical data has
-      been aggregated to the 11-RCP \TODO{correct nomenclature?, cite} regions,
-      and all gas species included in the historical datasets are included. The
-      solid black line indicates the threshold value chosen in this analysis.
+      trajectories are shown. CEDS historical data is used for non-LUC data and
+      \TODO{cite LUC data} is used for LUC data. All historical data has been
+      aggregated from countries to IAM model regional definitions, and all gas
+      species included in the historical datasets are included in the
+      analysis. The solid black line indicates the threshold value used by
+      default in \code{aneris}.  
     }
   \end{center}
 \end{figure}
 
 Finally, consideration is taken with respect to the relative difference between
-the historic and model values in the harmonization year.
+the historic and model values in the harmonization year. 
 
 
 \subsection{Implemented Methods}\label{sec:impl-meths}
