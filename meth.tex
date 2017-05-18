@@ -1,6 +1,8 @@
 
 \section{Methodology \& Implementation}
 
+\subsection{Harmonization Methods}
+
 IAM emission results are provided along a number of different dimensions,
 including, temporal (normally half decade or decade), spatial (i.e., model
 regions), gas species, and sectoral. Each individual temporal trajectory (i.e.,
@@ -45,15 +47,27 @@ where the harmonized trajectory converges to the unharmonized trajectory.
   \end{cases}
 \end{equation}
 
+\subsection{Default Method Decision Tree}
+
 While historically expert opinion has guided the determination of harmonization
 methods to choose for a given trajectory, a new, \textit{decision tree} approach
 has been implemented in this work. In order to provide reasonable
 \textit{default} methods, the historical trajectory, unharmonized model
 trajectory, and relative difference between history and model values in the
 harmonization year are analyzed. A figure of the decision tree used in this
-analysis is shown in Figure \ref{}. 
+analysis is shown in Figure \ref{fig:decision_tree}. 
 
-% decision tree figure
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\textwidth]{decision_tree.png}
+    \caption[]{
+      \label{fig:decision_tree}
+      The default method decision tree used in the \code{aneris} software
+      library. Decision-making threshold are described below, and the methods
+      applied are described in Section \ref{sec:impl-meths}.}
+  \end{center}
+\end{figure}
 
 A number of characteristics impact the decision of which default method to
 select based on the effect of the characteristic on the potential harmonized
@@ -62,7 +76,13 @@ harmonization year in situations in which technologies are introduced in future
 time periods in regions or for sectors which produce an emissions species that
 is absent in the initial modeling period. In such cases, an offset method is
 required as a ratio method would mask future emissions and erroneously harmonize
-the trajectory. 
+the trajectory. In most cases, however, models do report values in the
+harmonization year. When model and historical values are relatively close, a
+convergence method is provided in order to be as representative as possible to
+the underlying unharmonized model results. The final model-based characteristic
+of import is whether the model reports negative emissions. Such a case is
+possible for gas species which can be extracted from the enviornment, as is the
+case for CO2 in future scenarios with high mitigation strategies. 
 
 Variability of the historical trajectory is also an important characteristic
 when considering the choice of harmonization method. Such trajectories are
@@ -81,9 +101,10 @@ trajectory is calculated as shown in Equation \ref{eqs:cov} and tested against a
 threshold. To determine this threshold, an analysis of the recent CEDS
 \TODO{cite ceds paper} historical data has been performed. Figure \ref{fig:cov}
 shows the distribution of land-use covariances and non-land-use covariances as
-determined for \TODO{list regions for 11 regions}. The minimum covariance
-observed for land-use sectors is \TODO{find}, thus theshold used in this study
-is \TODO{do this}. Notably, some non-land-use sectors , however,
+determined for historical data aggregated to 11 world regions \TODO{list regions
+  for 11 regions}. A threshold value of 10 has been chosen based on the
+11-region observations, but, importantly, any regional aggregation is possible
+as this is model depedent.
 
 \begin{equation}\label{eqs:cov}
     \Omega =  \frac{\sigma(h^{\prime}(t))}{\mu(h^{\prime}(t))}
@@ -104,3 +125,9 @@ is \TODO{do this}. Notably, some non-land-use sectors , however,
     }
   \end{center}
 \end{figure}
+
+Finally, consideration is taken with respect to the relative difference between
+the historic and model values in the harmonization year.
+
+
+\subsection{Implemented Methods}\label{sec:impl-meths}
