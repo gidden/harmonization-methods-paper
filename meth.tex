@@ -1,5 +1,5 @@
 
-\section{Methodology}
+\section{Methodology \& Implementation}
 
 IAM emission results are provided along a number of different dimensions,
 including, temporal (normally half decade or decade), spatial (i.e., model
@@ -18,9 +18,8 @@ classic methods, including ratio-convergence methods shown in Equation
 and interpolation methods shown in Equation \ref{eqs:interpolate}; the
 convergence factor for associated methods is shown first in Equation
 \ref{eqs:factor}. Each is a function of time, model trajectory, historical
-trajectory, harmonization time period, and, potentially, a convergence time
-period ($t_f$), where the harmonized trajectory is equivalent to the
-unharmonized trajectory.
+trajectory, harmonization time period, and a convergence time period ($t_f$),
+where the harmonized trajectory converges to the unharmonized trajectory.
 
 \begin{equation}\label{eqs:factor}
   \beta(t, t_i, t_f) =
@@ -45,7 +44,63 @@ unharmonized trajectory.
     m(t), & \text{otherwise}
   \end{cases}
 \end{equation}
-  
-\section{Implementation}
 
-foo
+While historically expert opinion has guided the determination of harmonization
+methods to choose for a given trajectory, a new, \textit{decision tree} approach
+has been implemented in this work. In order to provide reasonable
+\textit{default} methods, the historical trajectory, unharmonized model
+trajectory, and relative difference between history and model values in the
+harmonization year are analyzed. A figure of the decision tree used in this
+analysis is shown in Figure \ref{}. 
+
+% decision tree figure
+
+A number of characteristics impact the decision of which default method to
+select based on the effect of the characteristic on the potential harmonized
+trajectory. For example, it is possible for models to report zero values in the
+harmonization year in situations in which technologies are introduced in future
+time periods in regions or for sectors which produce an emissions species that
+is absent in the initial modeling period. In such cases, an offset method is
+required as a ratio method would mask future emissions and erroneously harmonize
+the trajectory. 
+
+Variability of the historical trajectory is also an important characteristic
+when considering the choice of harmonization method. Such trajectories are
+normally indicative of emissions from land use sectors. Land use sectors are
+modeled with varying fidelity by IAMs, but in general proxies are used for
+emissions trajectories. Take for example the emissions of black carbon (BC) from
+grassland burning in Africa \TODO{check that this is a good sector}: for most
+models, the use of grass and paturelands is modeled, and the emissions of
+species from the burning of these lands is determined by applying a emissions
+factor to a proxy model of burning of these lands; in general, the more
+grassland usage occurs, the higher the emissions from burning of
+grasslands. Therefore, consistency in harmonization method is important due to
+the approaches taken in modeling these sectors by IAMs. In order to reliably
+detect land-use-like emissions, a measure of the covariance of the historical
+trajectory is calculated as shown in Equation \ref{eqs:cov} and tested against a
+threshold. To determine this threshold, an analysis of the recent CEDS
+\TODO{cite ceds paper} historical data has been performed. Figure \ref{fig:cov}
+shows the distribution of land-use covariances and non-land-use covariances as
+determined for \TODO{list regions for 11 regions}. The minimum covariance
+observed for land-use sectors is \TODO{find}, thus theshold used in this study
+is \TODO{do this}. Notably, some non-land-use sectors , however,
+
+\begin{equation}\label{eqs:cov}
+    \Omega =  \frac{\sigma(h^{\prime}(t))}{\mu(h^{\prime}(t))}
+\end{equation}
+
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\textwidth]{cov.pdf}
+    \caption[]{
+      \label{fig:cov}
+      The distribution of $\Omega$ values for LUC and non-LUC historical
+      trajectories are shown. The CEDS historical data is used for non-LUC data
+      and \TODO{cite LUC data} is used for LUC data. All historical data has
+      been aggregated to the 11-RCP \TODO{correct nomenclature?, cite} regions,
+      and all gas species included in the historical datasets are included. The
+      solid black line indicates the threshold value chosen in this analysis.
+    }
+  \end{center}
+\end{figure}
