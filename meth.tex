@@ -9,7 +9,7 @@ regions), gas species, and sectoral. Each individual temporal trajectory (i.e.,
 unique combinations of regions, species, and sectors) must be harmonized to the
 initial time period. Given a model trajectory, $m_{r, g, s}(t)$, historical
 trajectory, $h_{r, g, s}(t)$, and initial time period $t_i$, a harmonized
-trajectory can be calcluated.
+trajectory can be calculated.
 
 In previous studies, two \textit{families} of methods have been used: those that
 operate on the ratio of base year values (i.e., $\frac{h(t_i)}{m(t_i)}$) and
@@ -68,7 +68,7 @@ Method Name                             & Harmonization Type & Convergence Year\
 \end{tabular}
 \end{table}
 
-\subsection{Default Method Decision Tree}
+\subsection{Default Method Decision Tree}\label{sec:tree}
 
 While historically expert opinion has guided the determination of harmonization
 methods to choose for a given trajectory, a new, \textit{decision tree} approach
@@ -101,13 +101,13 @@ harmonization year. When model and historical values are relatively close, a
 convergence method is provided in order to be as representative as possible to
 the underlying unharmonized model results. The final model-based characteristic
 of import is whether the model reports negative emissions. Such a case is
-possible for gas species which can be extracted from the enviornment, as is the
+possible for gas species which can be extracted from the environment, as is the
 case for CO2 in future scenarios with high mitigation strategies. If a model
 provides a trajectory that transitions from positive to negative emissions, then
 a convergence method is used in order to guarantee capture of this
 transition. Otherwise, it is possible, given the relative values between history
 and model in the harmonization year, for a negative trajectory to be
-inappropriatley harmonized to positive, but decreasing, trajectory.
+inappropriately harmonized to positive, but decreasing, trajectory.
 
 Variability of the historical trajectory is also an important characteristic
 when considering the choice of harmonization method. Such trajectories are
@@ -121,17 +121,17 @@ factor to a proxy model of burning of these lands; in general, the more
 grassland usage occurs, the higher the emissions from burning of
 grasslands. Therefore, consistency in harmonization method is important due to
 the approaches taken in modeling these sectors by IAMs. In order to reliably
-detect land-use-like emissions, a measure of the covariance of the historical
+detect land-use-like emissions, a measure of the co-variance of the historical
 trajectory is calculated as shown in Equation \ref{eqs:cov} and tested against a
 threshold. To determine this threshold, an analysis of the recent CEDS
 \TODO{cite ceds paper} historical data has been performed. Figure \ref{fig:cov}
-shows the distribution of land-use covariances and non-land-use covariances as
+shows the distribution of land-use co-variances and non-land-use co-variances as
 determined for historical data aggregated to the model regions of 5 different
 flagship IAMs \TODO{cite all 5 IAMs}. A threshold value of 20 has been chosen
 based on these observations. Importantly, tails of the LUC and non-LUC overlap,
 thus there are both false positives (~10\% of non-LUC trajectories) and false
 negatives (~7\% of LUC trajectories). However, as any regional definition is
-model depedent and thus any regional aggregation is possible an automated
+model dependent and thus any regional aggregation is possible an automated
 detection mechanism is necessary.
 
 \begin{equation}\label{eqs:cov}
@@ -158,7 +158,7 @@ detection mechanism is necessary.
 Finally, consideration is taken with respect to the relative difference between
 the historic and model values in the harmonization year. In order to investigate
 the possible values that these relative differences can take, the flagship model
-values used in the SSP \TODO{CITE} and (ongoing) CMIP6 intercomparison exercises
+values used in the SSP \TODO{CITE} and (ongoing) CMIP6 inter-comparison exercises
 are used. A distribution of these differences for all models in the study is
 presented in Figure \ref{fig:dh}. Given the available data, a threshold value of
 50\% was chosen to be used as a default in \code{aneris}.
