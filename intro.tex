@@ -1,0 +1,84 @@
+\section{Introduction}
+
+Integrated Assessment Models (IAMs) are tools used to understand the complex
+interactions between energy systems, economoic systems, land use, the climate,
+and air pollution, among other sectors \TODO{cite some IAMs}. IAMs provide
+global projections of systemic change by dividing the world into a number of
+representative regions, the definition of which is distinct for each
+model. Results from IAMs are integral in a number of international studies,
+which notably include projections of climate and economic futures used in
+analyses underpinning the Intergovenmental Panel on Climate Change (IPCC)
+\TODO{cite} and the United Nations Framework Convention on Climate Unchange
+(UNFCCC)'s Paris Agreement \TODO{cite}.
+
+While IAMs are implemented in myriad ways, including simulation and
+optimization, the core inputs, outputs, and purpose are similar across different
+models. Modeling teams incorporate existing datasets of energy systems, world
+development indicators, and emissions sources and concentrations, among other
+data, in order to provide consistent historical trajectories of modeled
+variables. The models then provide estimates of future trajectories of these
+variables under various socioeconomic and technological assumptions as well as
+proposed policy constraints, e.g., targets for future Greenhouse Gas (GHG)
+emissions.
+
+Future emissions pathways are of critical importance to both of global and local
+governance concerns. For example, the United Nation's Sustainable Development
+Goals (SDGs) \TODO{CITE} speak directly to the impacts of emissions in Goal 3
+(Good Health and Well-Being) and Goal 13 (Climate Action). IAMs endogenously
+calculate many of the emissions species of import that impact the progress
+towards these SDGs by modeling the individual technologies and sectors that
+contribute towards the emissions of different air pollutants and GHGs as well as
+various mitigation technologies (e.g., NOx and SOx scrubbers on power plants)
+that are used due to regulation or implemented policies.
+
+In practice, IAMs calculate the total source intensity of emitting technologies,
+for example the total activity of coal power plant emissions in China, and
+incorporate emissions-intensity factors for individual species, for example the
+quantity of sulfur emissions from coal plants per megawatt-hour of production,
+in order to determine total emissions of a given gas species from a given
+technology. Models are then \textit{calibrated} to historical data sources which
+provide both the activity of emitting technologies as well as trajectories of
+past emissions in order to determine historical emissions factors in each model
+region for each technology.
+
+With some frequency, however, historical data is updated to incorporate new
+assumptions of source activity, new emissions accounting practices, or other
+concerns. The global climate change community has recently updated a standard
+historical emissions dataset for both anthropogenic and land-use change
+emissions \TODO{cite ceds and LUC paper} as part of the 6th phase of the Coupled
+Model Intercomparison Project \TODO{cite cmip6} (CMIP6). These historical
+emissions trajectories in conjunction with future trajectories as provided by
+IAMs are critical inputs to the climate-related modeling exercises of CMIP6.
+
+Because the process of model calibration is quite onerous, model teams initially
+incorporate updated historical datasets through the process of
+\textit{harmonization} in order to guarantee consistency with new historical
+datasets. Harmonization describes the process of updating model results to
+incorporate new historical timeseries while maintaining critical aspects of
+modeled future trajectories for variables of import. In the emissions context,
+this means that each individual combination of model region, model sector, and
+emissions species must be harmonized. Depending on the model, this can require
+the selection of thousands to tens-of-thousands of harmonization methods.
+
+Harmonization has been addressed in previous studies as it is a common practice
+in the IAM and climate change communities. For example, \TODO{cite Malte}
+describes a harmonization process using scaling routines for the 5 SRES regions
+with no sectoral definition. Further, \TODO{cite Joeri} describes the impacts of
+choosing various harmonization routines on future trajectories. Importantly, the
+choice of harmonization method to date has been determined via expert
+solicitation and has generally been applied to all trajectories for a given
+class of emissions species. 
+
+In order to incoporate the variety of possible model results and given
+relatively large increases in regional and sectoral dimensionality, an automated
+process for determining harmonization methods is needed. The remainder of this
+paper describes the methodology of the \code{aneris} codebase which implements
+such a system in Section \ref{sec:meths}. The results of applying the automated
+harmonization mechanism on two example IAM scenarios, one with emissions growth
+and another with emissions mitigation, is presented in Section
+\ref{sec:results}. Finally, the general effectiveness and potential future
+improvements on the automated methodology is discussed in Section
+\ref{sec:future}.
+
+% todo: add?
+% what aspects of harmonization are important (e.g., cumulative carbon emissions).
