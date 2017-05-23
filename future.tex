@@ -1,0 +1,42 @@
+\section{Discussion \& Future Work}\label{sec:future}
+
+This work presented a novel methodology and Python implementation of automated
+emissions harmonization for IAMs. An in-depth explanation of the processes and
+methods for determining the use of harmonization methods was provided in Section
+\ref{sec:meths}. The \code{aneris} codebase was able to satisfactorily
+harmonized over 98\% of the 2860 individual trajectories that were analyzed in
+Section \ref{sec:results}. Of the remaining trajectories, harmonization method
+overrides were applied, and the situation in which the need for overrides arose
+was discussed.
+
+The automated approach critically removes the need for expert opinion in
+determining harmonization methods for each individual combination of model
+region, sector, and emissions species while still providing a justified reason
+for each automated choice of harmonization method based on both the historical
+and future emissions trajectories. Furthermore, the automated approach continues
+to scale well as models become more detailed in both the regional and sectoral
+dimensions. Finally, expert opinion is still allowed to trump the automated
+method as determined by the algorithm via method overrides; however, these cases
+are clearly documented via the metadata provided as an output of \code{aneris}
+and thus can be individually explained. This provides not only transparency but
+also scientific integrity in the choice of harmonization methods.
+
+There are a variety of avenues for future improvement of both the \code{aneris}
+codebase and underlying methdology. As with any software project, additional
+users will provide use cases for more robust handling of input/output concerns
+and corner cases. Further configuration parameters may also be added in the
+future in order to provide overrides for all gas species in a given sector or
+region. Perhaps the most fruitful investigation will involve further refinement
+of the defaul decision tree introduce in Section \ref{sec:meths}. A key aspect
+missing from the decision tree is input from models regarding whether missing
+sources are the likely cause of a harmonization year discrepancy (suggesting the
+use of an offset method) or instead a discrepancy in emissions factors
+(suggesting the use of a ratio method)\TODO{cite Joeri}. 
+
+However, this work provides a new direction and framework in which the IAM and
+climate communities can follow in order to reduce the necessicity of expert
+opinion and increase transparency and reproducibility of harmonization
+exercises. Furthermore, it provides an open-source, tested, and documented code
+base which can be used and improved upon by these communities. Both of these are
+clear steps in a positive direction for future climate and integrated assesment
+modeling exercises.
