@@ -1,36 +1,37 @@
 \section{Results}\label{sec:results}
 
 In order to test the \code{aneris} harmonization procedure, results from the IAM
-MESSAGE-GLOBIOM \TODO{CITE} was processed. Two scenarios from the Shared Socioeconomic
-Pathways scenario library \TODO{CITE} are investigated. The reference SSP2, or
-``middle of the road'' is chosen first because MESSAGE-GLOBIOM is the marker
-scenario for this SSP. Notably, emissions from multiple sectors tend to increase
-in SSP2, thus testing the harmonization mechanism with a increasing emission
-pathway. Additionally, the SSP-45 scenario is chosen, where the ``45''
-designation refers to a scenario with end-of-century emissions resulting in
-approximately a 4.5 $\frac{\text{W}}{\text{m}^2}$ warming effect by the end of
-the century, due to both warming from Greenhouse Gases (GHGs) and fluoridated
-gases as well as cooling from aerosols. In this scenario, mitigation
-technologies and policies are enacted causing a general reduction in pollutants
-and GHGs, including (eventual) negative CO2 emissions in some regions and
-sectors due to carbon capture and sequestration and afforestation. This scenario
-explores the harmonization mechanism's response to generally decreasing emission
+MESSAGE-GLOBIOM \cite{fricko_marker_2017} was processed. Two scenarios from the
+SSP scenario library \cite{Riahi2017153,Rao2017346} are investigated. The SSP2,
+or ``middle of the road'', scenario family is chosen to be analyzed because
+MESSAGE-GLOBIOM is the marker scenario for this SSP. Of all SSP2 scenarios, the
+reference (marker) and SSP2-45 scenarios are analyzed. Notably, emissions from
+multiple sectors tend to increase in the reference scenario, thus testing the
+harmonization mechanism with an increasing emissions pathway. The SSP-45
+scenario, where the ``45'' designation refers to a scenario with end-of-century
+emissions resulting in approximately a 4.5 $\frac{\text{W}}{\text{m}^2}$
+radiative forcing due to both warming from GHGs and fluoridated gases as well as
+cooling from aerosols, is chosen because mitigation technologies and policies
+are enacted causing a general reduction in pollutants and GHGs, including
+(eventual) negative CO2 emissions in some regions and sectors due to carbon
+capture and sequestration and afforestation. This scenario explores the
+harmonization mechanism's response to generally decreasing emission
 trajectories.
 
 MESSAGE-GLOBIOM includes a representation of 11 distinct regions which can be
-mapped directly to the 5-region definition used in the RCPs. Historical data is
-taken from CEDS and LUC \TODO{get correct name}, which comprise 10 separate
-pollutant and GHG species and 13 sectors. Therefore, a total of 1430 distinct
-trajectories were harmonized for each scenario.
+mapped directly to the 5-region definition used in the SRES. Historical data is
+taken from previously described LUC and anthropogenic sources, which comprise 10
+separate pollutant and GHG species and 13 sectors. Therefore, a total of 1430
+distinct trajectories were harmonized for each scenario.
 
 The effect of harmonization overrides is analyzed by harmonizing each scenario
-first without overrides and then with overrides. Of the 1430 trajectories,
-approximately 2\% required the use of harmonization overrides after an initial
-investigation; thus, 98\% of all trajectories were satisfactorily determined
-using the default methods as chosen by the harmonization algorithm. Figure
-\ref{fig:nox} provides one such example of a emissions species and sector in
-which all regions were satisfactorily harmonized with the default methods. As
-can be seen, results with and without overrides are identical.
+first without and then with overrides. Of the 1430 trajectories, approximately
+2\% required the use of harmonization overrides after an initial investigation;
+thus, 98\% of all trajectories were satisfactorily determined using the default
+methods as chosen by the harmonization algorithm. Figure \ref{fig:nox} provides
+one such example of a emissions species and sector in which all regions were
+satisfactorily harmonized with the default methods. As can be seen, results with
+and without overrides are identical.
 
 \begin{figure}
   \begin{center}
@@ -39,7 +40,7 @@ can be seen, results with and without overrides are identical.
       \label{fig:nox}
       NOx Energy Sector harmonized (solid lines) and unharmonized (dashed lines)
       trajectories for SSP2 and SSP2-45 are presented. SSP-45 is denoted with
-      markers. Panel \textbf{a} shows 5-Region trajectories for scenarios
+      ``x'' markers. Panel \textbf{a} shows 5-Region trajectories for scenarios
       \textit{without} any overrides. Panel \textbf{b} shows 5-Region
       trajectories for scenarios \textit{with} overrides. Panels \textbf{c} and
       \textbf{d} show global trajectories without and with overrides,
@@ -49,25 +50,25 @@ can be seen, results with and without overrides are identical.
 
 The harmonization of emissions pathways is performed in order to accurately
 represent an updated historical emissions trajectory while also maintaining
-consistency with the original, unharmonized pathway. When the default methods as
-provided by the harmonization procedure distort or otherwise sufficiently
-misrepresent the underlying unharmonized results, an override method is required
-to be provided for the trajectory of the region, sector, and species in
-question. Based on the 2\% of total trajectories required to be overridden, two
-classifications were observed: regional trajectories whose \textit{magnitude}
-was overly distorted and regional trajectories whose \textit{shape} was overly
-distorted.
+consistency with the original, unharmonized pathway. As such, when the default
+methods as provided by the harmonization procedure distort or otherwise
+sufficiently misrepresent the underlying unharmonized results, an override
+method is required to be provided for the trajectory of the region, sector, and
+species in question. Based on the 2\% of total trajectories required to be
+overridden, two classifications were observed: regional trajectories whose
+\textit{magnitude} was overly distorted and regional trajectories whose
+\textit{shape} was overly distorted.
 
-Figure \ref{fig:co} presents a situation in which the magnitude of a trajectory
-is distorted. A large discrepancy (~300\% relative difference) is observed in
-the harmonization year for carbon monoxide (CO) emissions in the industrial
-sector specifically for the South Asia (SAS) MESSAGE-GLOBIOM region, which
-comprises most of the Asian subcontinent. The default method chosen
-(\code{constant_ratio} maintains model trends for the region, overall model
-results are distorted. By applying a \code{constant_offset} override, the
-regional trend and shape is maintained. With the new harmonization method for
-the SAS region, the global trajectory for industrial CO also corresponds more
-closely with the unharmonized trajectory.
+Figure \ref{fig:co} presents a case in which the magnitude of a trajectory is
+distorted. A large discrepancy ($\sim$300\% relative difference) is
+observed in the harmonization year for carbon monoxide (CO) emissions in the
+industrial sector specifically for the South Asia (SAS) MESSAGE-GLOBIOM region,
+which comprises most of the Asian subcontinent. The default method chosen
+(\code{constant_ratio}) maintains model trends for the region; however, overall
+model results are distorted. By applying a \code{constant_offset} override, the
+regional trend and magnitude is maintained. With the new harmonization method
+for the SAS region, the global trajectory for industrial CO also corresponds
+more closely with the unharmonized trajectory.
 
 \begin{figure}
   \begin{center}
@@ -90,29 +91,32 @@ closely with the unharmonized trajectory.
 
 In certain circumstances, the application of the default harmonization methods
 can affect not only the magnitude but also the shape of regional
-trajectories. Figure \ref{fig:nh3} shows emissions trajectories for ammonia
-(NH3) resulting from the agriculture sector in Asia. Again, the SAS region shows
-a large discrepancy in the harmonization year (> 150\% in this case). The
-resulting trajectory harmonized with a \code{constant_ratio} method by default
-provides a large increase after 2080 in the SSP2 reference scenario. Notably,
-the SSP2-45 scenario is not affected to the same degree. While this distortion
-affects the magnitude of the SAS trajectory, it largely affects the post-2080
-shape of the global trajectory (see Figure \ref{fig:nh3}, panel \textbf{c}). By
-using a \code{constant_offset} method as an override, this distortion is
-addressed and more accurately reflects unharmonized results both in the SAS
-region and global results for agricultural ammonia emissions.
+trajectories. Figure \ref{fig:nh3} shows an example case of emissions
+trajectories for ammonia (NH3) from the agriculture sector in Asia. Again, the
+SAS region shows a large discrepancy in the harmonization year ($>$150\% in
+this case). The resulting trajectory harmonized with the default method
+(\code{constant_ratio}) provides a large increase after 2080 in the SSP2
+reference scenario. Notably, the SSP2-45 scenario is not affected to the same
+degree. While this distortion changes the magnitude of the SAS trajectory, it
+largely affects the post-2080 shape of the global trajectory (see Figure
+\ref{fig:nh3}, panel \textbf{c}). By using a \code{constant_offset} method as an
+override, this distortion is addressed and more accurately reflects unharmonized
+results both in the SAS region and global results for agricultural ammonia
+emissions.
 
 \begin{figure}
   \begin{center}
     \includegraphics[width=\textwidth]{results_NH3_Agriculture.pdf}
     \caption[]{
       \label{fig:nh3}
-      NH3 Agriculture harmonized and unharmonized emissions are presented for
+      NH3 agricultural harmonized and unharmonized emissions are presented for
       SSP2 and SSP2-45 scenarios. Scenarios and panel layouts are identical to
       Figure \ref{fig:co}. In this case, the SAS trajectory again shows not only
       a magnitude distortion, but also a shape distortion at the tail of the
-      trajectory. Override methods have been applied to correct the distortion.
-    }
+      trajectory. Additionally, global trajectories are greatly affected by the
+      harmonization method choice (there is $\sim$20 percent relative difference
+      between trajectories in the reference scenario in 2100). Override methods
+      have been applied to correct the distortion.  }
   \end{center}
 \end{figure}
 
