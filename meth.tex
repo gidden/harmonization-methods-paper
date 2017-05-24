@@ -4,23 +4,25 @@
 
 IAM emission results are provided along a number of different dimensions,
 including, temporal (normally half decade or decade), spatial (i.e., model
-regions), gas species, and sectoral. Each individual temporal trajectory (i.e.,
-unique combinations of regions, species, and sectors) must be harmonized to the
-initial time period. Given a model trajectory, $m_{r, g, s}(t)$, historical
-trajectory, $h_{r, g, s}(t)$, and initial time period $t_i$, a harmonized
-trajectory can be calculated.
+regions), gas species, and sectoral dimensions. Each individual temporal
+trajectory, i.e., unique combinations of regions ($r$), species ($g$), and
+sectors ($s$), must be harmonized to the initial time step. Given a model
+trajectory, $m_{r, g, s}(t)$, historical trajectory, $h_{r, g, s}(t)$, and
+initial time step $t_i$, a harmonized trajectory can be calculated.
 
-In previous studies, two \textit{families} of methods have been used: those that
-operate on the ratio of base year values (i.e., $\frac{h(t_i)}{m(t_i)}$) and
-those that operate on the offset of base year values (i.e., $h(t_i) -
-m(t_i)$). The \code{aneris} code base provides a number of variations on the
-classic methods, including ratio-convergence methods shown in Equation
-\ref{eqs:ratio}, offset-convergence methods shown in Equation \ref{eqs:offset},
-and interpolation methods shown in Equation \ref{eqs:interpolate}; the
-convergence factor for associated methods is shown first in Equation
-\ref{eqs:factor}. Each is a function of time, model trajectory, historical
-trajectory, harmonization time period, and a convergence time period ($t_f$),
-where the harmonized trajectory converges to the unharmonized trajectory.
+In previous studies \cite{meinshausen_rcp_2011,rogelj_discrepancies_2011}, two
+\textit{families} of methods have been used: those that operate on the ratio of
+base year values (i.e., $\frac{h(t_i)}{m(t_i)}$) and those that operate on the
+offset of base year values (i.e., $h(t_i) - m(t_i)$). The \code{aneris} code
+base provides a number of variations on the classic methods, including
+ratio-convergence methods shown in Equation \ref{eqs:ratio}, offset-convergence
+methods shown in Equation \ref{eqs:offset}, and interpolation methods shown in
+Equation \ref{eqs:interpolate}; the convergence factor, $\beta$, for associated
+methods is shown first in Equation \ref{eqs:factor}. Note that model and
+regional indices have been dropped for clarity. Each is a function of time,
+model trajectory, historical trajectory, harmonization time step, and a
+convergence time step ($t_f$), at which point the harmonized trajectory
+converges to the unharmonized trajectory.
 
 \begin{equation}\label{eqs:factor}
   \beta(t, t_i, t_f) =
@@ -46,9 +48,9 @@ where the harmonized trajectory converges to the unharmonized trajectory.
   \end{cases}
 \end{equation}
 
-The \code{aneris} code base provides a family of methods to choose from for each
-of the harmonization cases. A summary of all available methods is provided below
-in Table \ref{tab:meths}.
+The \code{aneris} code base provides a number of methods to choose from for each
+of the harmonization families. A summary of all available methods is provided
+below in Table \ref{tab:meths}.
 
 \begin{table}[]
 \centering
@@ -56,7 +58,7 @@ in Table \ref{tab:meths}.
 \label{tab:meths}
 \begin{tabular}{|l|l|l|}
 \hline
-Method Name                             & Harmonization Type & Convergence Year\\
+Method Name                             & Harmonization Family & Convergence Year\\
 \hline
 \code{constant\_ratio}                  & ratio              & $t_f = \infty$\\
 \code{reduce\_ratio\_<year>}            & ratio              & $t_f = $\code{<year>}\\
@@ -69,13 +71,14 @@ Method Name                             & Harmonization Type & Convergence Year\
 
 \subsection{Default Method Decision Tree}\label{sec:tree}
 
-While historically expert opinion has guided the determination of harmonization
-methods to choose for a given trajectory, a new, \textit{decision tree} approach
-has been implemented in this work. In order to provide reasonable
+While historically expert opinion has guided the choice of harmonization methods
+for a given trajectory, a new, \textit{decision tree} approach has been
+implemented in this work which provides a systematic and documented
+decision-making process for method determination. In order to provide reasonable
 \textit{default} methods, the historical trajectory, unharmonized model
 trajectory, and relative difference between history and model values in the
-harmonization year are analyzed. A figure of the decision tree used in this
-analysis is shown in Figure \ref{fig:decision_tree}. 
+harmonization year are analyzed. The decision tree used in this analysis is
+shown graphically in Figure \ref{fig:decision_tree}.
 
 
 \begin{figure}
@@ -84,7 +87,9 @@ analysis is shown in Figure \ref{fig:decision_tree}.
     \caption[]{
       \label{fig:decision_tree}
       The default method decision tree used in the \code{aneris} software
-      library. Decision-making threshold are described below.}
+      library. For all decisions, upper branches represent a ``yes'' response
+      and lower branches represent a ``no'' response. Decision-making thresholds
+      are described below.}
   \end{center}
 \end{figure}
 
@@ -97,44 +102,46 @@ is absent in the initial modeling period. In such cases, an offset method is
 required as a ratio method would mask future emissions and erroneously harmonize
 the trajectory. In most cases, however, models do report values in the
 harmonization year. When model and historical values are relatively close, a
-convergence method is provided in order to be as representative as possible to
-the underlying unharmonized model results. The final model-based characteristic
-of import is whether the model reports negative emissions. Such a case is
-possible for gas species which can be extracted from the environment, as is the
-case for CO2 in future scenarios with high mitigation strategies. If a model
+convergence method is chosen in order to be as representative as possible to the
+underlying unharmonized model results. The final model-based characteristic of
+import is whether the model reports negative emissions. Such a case is possible
+for gas species which can be extracted from the environment and stored, as is
+the case for CO2 in future scenarios with high climate mitigation. If a model
 provides a trajectory that transitions from positive to negative emissions, then
 a convergence method is used in order to guarantee capture of this
 transition. Otherwise, it is possible, given the relative values between history
 and model in the harmonization year, for a negative trajectory to be
-inappropriately harmonized to positive, but decreasing, trajectory.
+inappropriately harmonized to a positive, but decreasing, trajectory.
 
 Variability of the historical trajectory is also an important characteristic
 when considering the choice of harmonization method. Such trajectories are
 normally indicative of emissions from land use sectors. Land use sectors are
 modeled with varying fidelity by IAMs, but in general proxies are used for
-emissions trajectories. Take for example the emissions of black carbon (BC) from
-grassland burning in Africa \TODO{check that this is a good sector}: for most
-models, the use of grass and paturelands is modeled, and the emissions of
-species from the burning of these lands is determined by applying a emissions
-factor to a proxy model of burning of these lands; in general, the more
-grassland usage occurs, the higher the emissions from burning of
-grasslands. Therefore, consistency in harmonization method is important due to
-the approaches taken in modeling these sectors by IAMs. In order to reliably
-detect land-use-like emissions, a measure of the co-variance of the historical
-trajectory is calculated as shown in Equation \ref{eqs:cov} and tested against a
-threshold. To determine this threshold, an analysis of the recent CEDS
-\TODO{cite ceds paper} historical data has been performed. Figure \ref{fig:cov}
-shows the distribution of land-use co-variances and non-land-use co-variances as
-determined for historical data aggregated to the model regions of 5 different
-flagship IAMs \TODO{cite all 5 IAMs}. A threshold value of 20 has been chosen
-based on these observations. Importantly, tails of the LUC and non-LUC overlap,
-thus there are both false positives (~10\% of non-LUC trajectories) and false
-negatives (~7\% of LUC trajectories). However, as any regional definition is
-model dependent and thus any regional aggregation is possible an automated
-detection mechanism is necessary.
+emissions trajectories. Take for example emissions from grassland burning: for
+most models, the use of grass and paturelands is endogenously modeled, and
+emissions from the burning of these lands is determined by applying a emissions
+factor; in general, the more grassland usage that occurs in a scenario, the
+higher the emissions from the burning thereof. Therefore, consistency in
+harmonization method is important because the effects are modeled similarly
+across regions and species. In order to reliably detect land-use-like emissions,
+a measure of the coefficient of variation of the first derivative of the
+historical trajectory is calculated as shown in Equation \ref{eqs:cov}, where
+$\sigma$ is the standard deviation, $\mu$ is the mean, and $c_v$ is the
+coefficient of variation.
+
+The value of $c_v$ is then tested against a threshold. To determine this
+threshold, an analysis of the recent CEDS and LUC historical data has been
+performed. Figure \ref{fig:cov} shows the distribution of LUC $c_v$s and non-LUC
+$c_v$s as determined for historical data aggregated to the model regions of 5
+different flagship IAMs. A threshold value of 20 has been chosen based on these
+observations as it optimally divides the two distributions. Importantly, tails
+of the LUC and non-LUC overlap, thus there are both false positives (~10\% of
+non-LUC trajectories) and false negatives (~7\% of LUC trajectories). However,
+as any regional definition is model dependent and thus any regional aggregation
+is possible an automated detection mechanism is necessary.
 
 \begin{equation}\label{eqs:cov}
-    \Omega =  \frac{\sigma(h^{\prime}(t))}{\mu(h^{\prime}(t))}
+    c_v =  \frac{\sigma(h^{\prime}(t))}{\mu(h^{\prime}(t))}
 \end{equation}
 
 
@@ -143,24 +150,23 @@ detection mechanism is necessary.
     \includegraphics[width=\textwidth]{cov.pdf}
     \caption[]{
       \label{fig:cov}
-      The distribution of $\Omega$ values for LUC and non-LUC historical
-      trajectories is shown. CEDS historical data is used for non-LUC data and
-      \TODO{cite LUC data} is used for LUC data. All historical data has been
-      aggregated from countries to IAM model regional definitions, and all gas
-      species included in the historical datasets are included in the
-      analysis. The solid black line indicates the threshold value used by
-      default in \code{aneris}.  
-    }
+      The distribution of $c_v$ values for LUC and non-LUC historical
+      trajectories is shown. CEDS historical data \cite{hoesly_historical_2017}
+      is used for non-LUC data and \cite{van_marle_historic_2017} is used for
+      LUC data. All historical data has been aggregated from countries to IAM
+      model regional definitions, and all gas species included in the historical
+      datasets are included in the analysis. The solid black line indicates the
+      threshold value used by default in \code{aneris}.  }
   \end{center}
 \end{figure}
 
 Finally, consideration is taken with respect to the relative difference between
-the historic and model values in the harmonization year. In order to investigate
-the possible values that these relative differences can take, the flagship model
-values used in the SSP \TODO{CITE} and (ongoing) CMIP6 inter-comparison exercises
-are used. A distribution of these differences for all models in the study is
-presented in Figure \ref{fig:dh}. Given the available data, a threshold value of
-50\% was chosen to be used as a default in \code{aneris}.
+the historic and model values in the harmonization time period. In order to
+investigate the possible values that these relative differences can take, the
+flagship IAMs values used in the SSP and (ongoing) CMIP6 inter-comparison
+exercises are used. A distribution of these differences for all models in the
+study is presented in Figure \ref{fig:dh}. Given the available data, a threshold
+value of 50\% was chosen to be used as a default in \code{aneris}.
 
 \begin{figure}
   \begin{center}
@@ -177,17 +183,18 @@ presented in Figure \ref{fig:dh}. Given the available data, a threshold value of
 \subsection{\code{aneris} Workflow}
 
 The full \code{aneris} workflow is comprised of a number of components shown
-graphically in Figure \ref{fig:workflow}. Unharmonized model data and
+graphically in Figure \ref{fig:workflow}. Unharmonized model data and a
 run-control configuration are read in via an Excel spreadsheet. Data is assumed
 to be in the \textit{IAM Consortium} format, i.e., using \code{Model},
 \code{Scenario}, \code{Region}, \code{Variable}, and \code{Unit} columns in
-addition to column representing each modeled time period. Users are able to
-control the harmonization process via a number of controls. First, users can
-provide \textit{override} methods for any combination of region and variable. If
-override methods are provided, they are used instead of the default methods as
-determined by the default method decision tree. Further, users can set the
-above-mentioned thresholds as well as the LUC method used in the decision
-tree. Further detail of input parameters can be found at
+addition to columns representing each modeled time period. Users are able to
+control the harmonization process via a number of options. First, users can
+provide \textit{override} methods for any combination of region and variable
+(i.e., sector and gas species). If override methods are provided, they are used
+instead of the default methods as determined by the default method decision
+tree. Furthermore, users can set the above-mentioned thresholds as well as the
+LUC method used in the decision tree (see Figure
+\ref{fig:fig:decision_tree}). Further detail of input parameters can be found at
 \hyperlink{http://aneris.readthedocs.io/en/latest/}.
 
 \begin{figure}
@@ -197,25 +204,26 @@ tree. Further detail of input parameters can be found at
       \label{fig:workflow}
       The full harmonization process as executed by \code{aneris}. Operations
       that can be configured with user-based input configurations are shown in
-      purple. The core harmonization process is shown in orange.  }
+      purple. The core harmonization process is shown in yellow.  }
   \end{center}
 \end{figure}
 
-Input data then undergoes a cleaning operation, which adds any trajectories in
-the historical dataset but not provided by the model and detects any issues that
-would cause the harmonization process to fail. The methods used to harmonize the
-data are then determined and the harmonization process is executed. Upon
-completion of the harmonization process, aggregation of common analysis regions
-is performed (e.g., the 5 RCP regions \TODO{CITE}). Finally, any exogenous
-trajectories the user provides are added. Exogenous trajectories are normally
-provided for unmodeled gases with well-accepted scenario trajectories, e.g.,
-Chlorofloro Carbons provided by WMO \TODO{CITE}. Upon completion, the harmonized
-trajectories and metadata regarding the harmonization process are returned. A
-description of all returned metadata is provided in Table \ref{tab:metadata}.
+Input data then undergoes a cleaning operation, which adds (null) model
+trajectories that exist in the historical dataset but are not provided by the
+model input and detects any issues that would cause the harmonization process to
+fail. The methods used to harmonize the data are then determined and the
+harmonization process is executed. Upon completion of the harmonization process,
+aggregation of common analysis regions is performed (e.g., the 5 SRES
+regions). Finally, any exogenous trajectories the user provides are
+added. Exogenous trajectories are normally provided for unmodeled gases with
+well-accepted scenario trajectories, e.g., chlorofluorocarbons provided by WMO
+\TODO{CITE}. Upon completion, the harmonized trajectories and meta data
+regarding the harmonization process are returned. A description of all returned
+meta data is provided in Table \ref{tab:metadata}.
 
 \begin{table}[]
 \centering
-\caption{Metadata provided by the \code{aneris} harmonization routine. This metadata is provided for every combination of region, sector, and emissions species.}
+\caption{Meta data provided by the \code{aneris} harmonization routine. This meta data is provided for every combination of region, sector, and emissions species.}
 \label{tab:metadata}
 \begin{tabular}{|p{2cm}|p{8cm}|}
 \hline
@@ -232,7 +240,7 @@ offset       & The offset value between history and model in the harmonization y
 \hline
 ratio        & The ratio value between history and model in the harmonization year.         \\
 \hline
-cov          & The covariance value of the historical trajectory.                           \\
+cov          & The coefficient of variation value of the historical trajectory.                           \\
 \hline
 unharmonized & The unharmonized value in the harmonization year.                            \\
 \hline
