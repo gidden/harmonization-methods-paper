@@ -3,21 +3,36 @@
 Integrated Assessment Models (IAMs) are tools used to understand the complex
 interactions between energy systems, economic systems, land use, the climate,
 and air pollution, among other sectors . IAMs provide global projections of
-systemic change by dividing the world into a number of representative regions,
+% * <sfujimori112256@gmail.com> 2017-05-24T20:16:51.179Z:
+% 
+% Here, Volker's paper seems well fit for the citation.
+% http://onlinelibrary.wiley.com/doi/10.1002/wene.98/abstract
+% 
+% 
+% ^.
+systemic change by dividing the world into a number of representative regions (typically 10 to 30),
 the definition of which is distinct for each model. Results from IAMs are
 integral in a number of international studies, which notably include projections
 of climate and economic futures. Recently, flagship IAMs have developed
 scenarios based on the Shared Socioeconomic Pathways (SSPs)
 \cite{van_vuuren_energy_2017, fricko_marker_2017, fujimori_ssp3:_2017,
-  calvin_ssp4:_2017, kriegler_fossil-fueled_2017} which model a variety of
-potential global futures. The SSPs are used in analyses underpinning the
-Intergovernmental Panel on Climate Change (IPCC) and the United Nations
-Framework Convention on Climate Change (UNFCCC)'s Paris Agreement \TODO{cite}.
+  calvin_ssp4:_2017, kriegler_fossil-fueled_2017} which quantify a variety of
+potential global futures. The SSPs are primarily designed to being used in analyses of broad climate research which includes earth system model (ESM) simulations, climate impact, adaptation climate mitigation studies. They consequently underpin the
+Intergovernmental Panel on Climate Change (IPCC) across working groups and the United Nations
+% * <sfujimori112256@gmail.com> 2017-05-24T20:32:22.989Z:
+% 
+% IPCC itself collects, reviews and summarizes papers. SSPs are officially independent activity from IPCC. So, I slightly changed the context. 
+% 
+% ^.
+% * <sfujimori112256@gmail.com> 2017-05-24T20:37:11.995Z:
+% 
+% I think Paris agreement is not so relevant with SSPs so I removed.
+% 
+% ^.
 
 While IAMs are implemented in myriad ways, including simulation and
 optimization, the core inputs, outputs, and purpose are similar across different
-models. Modeling teams incorporate existing datasets of energy systems, world
-development indicators, and emissions sources and concentrations, among other
+models. Modeling teams incorporate existing datasets of energy systems, land use, economic, demographic and emissions sources and concentrations, among other
 data, in order to provide consistent historical trajectories of modeled
 variables. The models then provide estimates of future trajectories of these
 variables under various socioeconomic and technological assumptions as well as
@@ -25,6 +40,28 @@ proposed policy constraints, e.g., targets for future Greenhouse Gas (GHG)
 emissions.
 
 Future emissions pathways are of critical importance to both of global and local
+% * <sfujimori112256@gmail.com> 2017-05-24T20:47:32.377Z:
+% 
+% > Future emissions pathways are of critical importance to both of global and local
+% > governance concerns. For example, the United Nation's Sustainable Development
+% > Goals (SDGs) \TODO{CITE} speak directly to the impacts of emissions in Goal 3
+% > (Good Health and Well-Being) and Goal 13 (Climate Action). IAMs endogenously
+% > calculate the trajectories many of the emissions species of import that impact
+% > the progress towards these SDGs by modeling the individual technologies and
+% > sectors that contribute towards the emissions of different air pollutants and
+% > GHGs as well as various mitigation technologies (e.g., NOx and SOx scrubbers on
+% > power plants).
+% I am not sure whether this paragraph is needed, because if we only discuss about SDGs, the emissions harmonization is not the necessity process for us essentially.
+% 
+% I would directly keen much more on the needs of harmonization and its importance. Then, the logic would be 
+% 1) SSPs will be an basis for CMIP6 (Brian's scenarioMIP GMD paper citation)
+% 2) CMIP6 uses different model outcomes (e.g. SSP1-26 IMAGE, SSP2-45 MESSAGE), which means we need somehow harmonized data set for at least base year.
+% 3) However, current IAMs emissions inventory differ a lot, which is hardly acceptable for CMIP experiments.
+% 4) 
+% 
+% 
+% 
+% ^.
 governance concerns. For example, the United Nation's Sustainable Development
 Goals (SDGs) \TODO{CITE} speak directly to the impacts of emissions in Goal 3
 (Good Health and Well-Being) and Goal 13 (Climate Action). IAMs endogenously
@@ -79,8 +116,21 @@ generally been applied to all trajectories for a given class of emissions
 species.
 
 In order to incorporate the large variety of possible model results and given
+% * <sfujimori112256@gmail.com> 2017-05-24T21:09:01.445Z:
+% 
+% I think it would be better to declare what metrics we are going to use to evaluate the methodology. In what case we can say this method succeeds or fails? That would be essentially the one of the highlight of the conclusion.
+% 
+% ^.
 relatively large increases in regional and sectoral dimensionality, an automated
 process for determining harmonization methods is needed. The remainder of this
+% * <sfujimori112256@gmail.com> 2017-05-24T21:12:03.999Z:
+% 
+% > regional and sectoral dimensionality, an automated
+% > process for determining harmonization methods is needed. The remainder of this
+% 
+% I suggest to add some explanations why detailed regional and sectoral harmonization is needed. As you mentioned, from RCPs sectoral and regional harmonization is needed. Meantime, ESM (or in this case we should say climate models) have been increasing the spatial resolution overtime and much more detailed representation become available, which essentially requires detailed information. The obvious example is AerChemMIP.
+% 
+% ^.
 paper describes the methodology of the \code{aneris} code base \TODO{cite},
 written in the Python programming language, which implements such a system in
 Section \ref{sec:meths}. The results of applying the automated harmonization
