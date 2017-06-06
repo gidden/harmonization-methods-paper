@@ -1,14 +1,6 @@
 \section{Methodology \& Implementation}\label{sec:meths}
 
 \subsection{Harmonization Methods}
-% * <sfujimori112256@gmail.com> 2017-05-24T21:26:14.081Z:
-% 
-% I am not sure but here my preference is stating from a kind of principle of the harmonization direction, which may be overview of the method in other words. More concretely, I would explain what we want to have after applying the methodology. 
-% 1) Keep the model output trajectory as much as possible
-% 2) we have to consider the CoV, dH and possibility of nagative emissions because brabra.
-% .....  
-% 
-% ^.
 
 IAM emission results are provided along a number of different dimensions,
 including, temporal (normally half decade or decade), spatial (i.e., model
@@ -16,7 +8,13 @@ regions), gas species, and sectoral dimensions. Each individual temporal
 trajectory, i.e., unique combinations of regions ($r$), species ($g$), and
 sectors ($s$), must be harmonized to the initial time step. Given a model
 trajectory, $m_{r, g, s}(t)$, historical trajectory, $h_{r, g, s}(t)$, and
-initial time step $t_i$, a harmonized trajectory can be calculated.
+initial time step $t_i$, a harmonized trajectory can be calculated. The
+``goodness of fit'' of a trajectory depends on a number of factors, most notably
+the faithful representation of the original, unharmonized, trajectory. However,
+other important factors must be considered, such the representation of negative
+trajectories (i.e., if a trajectory becomes negative, both the timing and total
+magnitude should be as close as possible) which are of critical importance for
+cumulative CO2 calculations.
 
 In previous studies \cite{meinshausen_rcp_2011,rogelj_discrepancies_2011}, two
 \textit{families} of methods have been used: those that operate on the ratio of
