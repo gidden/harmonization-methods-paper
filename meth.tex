@@ -2,19 +2,18 @@
 
 \subsection{Harmonization Methods}
 
-IAM emission results are provided along a number of different dimensions,
-including, temporal (normally half decade or decade), spatial (i.e., model
-regions), gas species, and sectoral dimensions. Each individual temporal
-trajectory, i.e., unique combinations of regions ($r$), species ($g$), and
-sectors ($s$), must be harmonized to the initial time step. Given a model
-trajectory, $m_{r, g, s}(t)$, historical trajectory, $h_{r, g, s}(t)$, and
-initial time step $t_i$, a harmonized trajectory can be calculated. The
-``goodness of fit'' of a trajectory depends on a number of factors, most notably
-the faithful representation of the original, unharmonized, trajectory. However,
-other important factors must be considered, such the representation of negative
-trajectories (i.e., if a trajectory becomes negative, both the timing and total
-magnitude should be as close as possible) which are of critical importance for
-cumulative CO2 calculations.
+IAM emission results are provided along temporal (normally half decade or
+decade), spatial (i.e., model regions), gas species, and sectoral
+dimensions. Each individual temporal trajectory, i.e., unique combinations of
+regions ($r$), species ($g$), and sectors ($s$), must be harmonized to the
+initial time step. Given a model trajectory, $m_{r, g, s}(t)$, historical
+trajectory, $h_{r, g, s}(t)$, and initial time step $t_i$, a harmonized
+trajectory can be calculated. The ``goodness of fit'' of a trajectory depends on
+a number of factors, most notably the faithful representation of the original,
+unharmonized, trajectory. However, other important factors must be considered,
+such as the representation of negative trajectories (i.e., if a trajectory
+becomes negative, both the timing and total magnitude should be as close as
+possible) which are of critical importance for cumulative CO2 calculations.
 
 In previous studies \cite{meinshausen_rcp_2011,rogelj_discrepancies_2011}, two
 \textit{families} of methods have been used: those that operate on the ratio of
@@ -24,11 +23,14 @@ base provides a number of variations on the classic methods, including
 ratio-convergence methods shown in Equation \ref{eqs:ratio}, offset-convergence
 methods shown in Equation \ref{eqs:offset}, and interpolation methods shown in
 Equation \ref{eqs:interpolate}; the convergence factor, $\beta$, for associated
-methods is shown first in Equation \ref{eqs:factor}. Note that model and
-regional indices have been dropped for clarity. Each is a function of time,
-model trajectory, historical trajectory, harmonization time step, and a
+methods is shown first in Equation \ref{eqs:factor}. Note that region, species,
+and sector indices have been dropped for clarity. Each equation is a function of
+time, model trajectory, historical trajectory, harmonization time step, and a
 convergence time step ($t_f$), at which point the harmonized trajectory
-converges to the unharmonized trajectory.
+converges to the unharmonized trajectory. The \code{aneris} code base provides a
+number of methods to choose from for each of the harmonization families. A
+summary of all available methods is provided in Table \ref{tab:meths}.
+
 
 \begin{equation}\label{eqs:factor}
   \beta(t, t_i, t_f) =
@@ -54,9 +56,6 @@ converges to the unharmonized trajectory.
   \end{cases}
 \end{equation}
 
-The \code{aneris} code base provides a number of methods to choose from for each
-of the harmonization families. A summary of all available methods is provided
-below in Table \ref{tab:meths}.
 
 \begin{table}[]
 \centering
@@ -94,8 +93,13 @@ shown graphically in Figure \ref{fig:decision_tree}.
       \label{fig:decision_tree}
       The default method decision tree used in the \code{aneris} software
       library. For all decisions, upper branches represent a ``yes'' response
-      and lower branches represent a ``no'' response. Decision-making thresholds
-      are described below.}
+      and lower branches represent a ``no'' response. $dH$ is defined as
+      $\left|\frac{h(t_i) - m(t_i)}{h(t_i)}\right|$, and decision-making
+      thresholds are described below. Finally, default choices in \textit{green}
+      label methods that will likely closely match unharmonized results, choices
+      in \textit{yellow} will likely somewhat match unharmonized results, and
+      choices in \textit{red} can be expected to have a large relative
+      difference between harmonized and unharmonized results.}
   \end{center}
 \end{figure}
 
@@ -125,15 +129,15 @@ normally indicative of emissions from land use sectors. Land use sectors are
 modeled with varying fidelity by IAMs, but in general proxies are used for
 emissions trajectories. Take for example emissions from grassland burning: for
 most models, the use of grass and paturelands is endogenously modeled, and
-emissions from the burning of these lands is determined by applying a emissions
+emissions from the burning of these lands is determined by applying an emissions
 factor; in general, the more grassland usage that occurs in a scenario, the
 higher the emissions from the burning thereof. Therefore, consistency in
 harmonization method is important because the effects are modeled similarly
 across regions and species. In order to reliably detect land-use-like emissions,
 a measure of the coefficient of variation of the first derivative of the
-historical trajectory is calculated as shown in Equation \ref{eqs:cov}, where
-$\sigma$ is the standard deviation, $\mu$ is the mean, and $c_v$ is the
-coefficient of variation.
+historical trajectory, $c_v$, is calculated as shown in Equation \ref{eqs:cov},
+where $\sigma$ is the standard deviation, and $\mu$ is the mean of the
+trajectory.
 
 The value of $c_v$ is then tested against a threshold. To determine this
 threshold, an analysis of the recent CEDS and LUC historical data has been
@@ -219,7 +223,7 @@ trajectories that exist in the historical dataset but are not provided by the
 model input and detects any issues that would cause the harmonization process to
 fail. The methods used to harmonize the data are then determined and the
 harmonization process is executed. Upon completion of the harmonization process,
-aggregation of common analysis regions is performed (e.g., the 5 SRES
+aggregation of common analysis regions is performed (e.g., the 5 RCP
 regions). Finally, any exogenous trajectories the user provides are
 added. Exogenous trajectories are normally provided for unmodeled gases with
 well-accepted scenario trajectories, e.g., chlorofluorocarbons provided by WMO
