@@ -116,7 +116,13 @@ convergence method is chosen in order to be as representative as possible to the
 underlying unharmonized model results. The final model-based characteristic of
 import is whether the model reports negative emissions. Such a case is possible
 for gas species which can be extracted from the environment and stored, as is
-the case for CO2 in future scenarios with high climate mitigation. If a model
+the case for CO2 in future scenarios with climate mitigation. If a model
+% * <sfujimori112256@gmail.com> 2017-06-07T10:07:21.265Z:
+% 
+% > with climate mitigation
+% Not necessarily high mitigation. Land use can be negative even in baseline.
+% 
+% ^.
 provides a trajectory that transitions from positive to negative emissions, then
 a convergence method is used in order to guarantee capture of this
 transition. Otherwise, it is possible, given the relative values between history
@@ -201,6 +207,12 @@ addition to columns representing each modeled time period. Users are able to
 control the harmonization process via a number of options. First, users can
 provide \textit{override} methods for any combination of region and variable
 (i.e., sector and gas species). If override methods are provided, they are used
+% * <sfujimori112256@gmail.com> 2017-06-07T10:12:45.308Z:
+% 
+% Maybe it would be better to add an explanation why we allow this option like
+% "We allow this overriding option because the default method do not meet our criteria sometimes (but usually very few cases)"
+% 
+% ^.
 instead of the default methods as determined by the default method decision
 tree. Furthermore, users can set the above-mentioned thresholds as well as the
 LUC method used in the decision tree (see Figure
@@ -225,6 +237,13 @@ fail. The methods used to harmonize the data are then determined and the
 harmonization process is executed. Upon completion of the harmonization process,
 aggregation of common analysis regions is performed (e.g., the 5 RCP
 regions). Finally, any exogenous trajectories the user provides are
+% * <sfujimori112256@gmail.com> 2017-06-07T10:17:07.935Z:
+% 
+% > (e.g., the 5 RCP
+% > regions) 
+% It might be good to show what is 5 regions (or definition) in the SM.
+% 
+% ^.
 added. Exogenous trajectories are normally provided for unmodeled gases with
 well-accepted scenario trajectories, e.g., chlorofluorocarbons provided by WMO
 \cite{wmo2014}. Upon completion, the harmonized trajectories and meta data
