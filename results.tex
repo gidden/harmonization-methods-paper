@@ -26,17 +26,35 @@ trajectories.
 MESSAGE-GLOBIOM includes a representation of 11 distinct regions which can be
 mapped directly to the 5-region definition used in the RCPs. Historical data is
 taken from previously described LUC and anthropogenic sources, which comprise 10
-% * <sfujimori112256@gmail.com> 2017-06-07T10:24:05.117Z:
-% 
-% > omprise 10
-% > separate pollutant and GHG species and 13 sectors. Therefore, a total of 1430
-% > distinct trajectories were harmonized for each scenario.
-% 
-% We may be better to show full list of sectors and species which we dealt with.
-% 
-% ^.
-separate pollutant and GHG species and 13 sectors. Therefore, a total of 1430
-distinct trajectories were harmonized for each scenario.
+separate pollutant and GHG species and 13 sectors shown in
+\ref{tab:sp}. Therefore, a total of 1430 distinct trajectories were harmonized
+for each scenario.
+
+\begin{table}[]
+  \centering
+  \caption{Harmonized Species and Sectors}
+  \label{tab:sp}
+  \begin{tabular}{|l|l|}
+    \hline
+    \textbf{Emissions Species}        & \textbf{Sectors}                    \\
+    \hline
+    Black Carbon (BC)                 & Agricultural Waste Burning          \\
+    Hexafluoroethane (C2F6)           & Agriculture                         \\
+    Tetrafluoromethane (CF4)          & Aircraft                            \\
+    Methane (CH4)                     & Energy Sector                       \\
+    Carbon Dioxide (CO2)              & Forest Burning                      \\
+    Carbon Monoxide (CO)              & Grassland Burning                   \\
+    Hydrofluorocarbons (HFCs)         & Industrial Sector                   \\
+    Nitrous Oxide (N2O)               & International Shipping              \\
+    Ammonia (NH3)                     & Residential Commercial Other        \\
+    Nitrogen Oxides (NOx)             & Solvents Production and Application \\
+    Organic Carbon (OC)               & Transportation Sector               \\
+    Sulfur Hexafluoride (SF6)         & Unharmonized                        \\
+    Sulfur Oxides (SOx)               & Waste                               \\
+    Volatile Organic Compounds (VOCs) &
+    \hline
+  \end{tabular}
+\end{table}
 
 The effect of harmonization overrides is analyzed by harmonizing each scenario
 first without and then with overrides. Of the 1430 trajectories, approximately
