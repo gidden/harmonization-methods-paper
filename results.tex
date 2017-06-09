@@ -51,14 +51,15 @@ for each scenario.
     Organic Carbon (OC)               & Transportation Sector               \\
     Sulfur Hexafluoride (SF6)         & Unharmonized                        \\
     Sulfur Oxides (SOx)               & Waste                               \\
-    Volatile Organic Compounds (VOCs) &
+    Volatile Organic Compounds (VOCs) &                                     \\
     \hline
   \end{tabular}
 \end{table}
 
 The effect of harmonization overrides is analyzed by harmonizing each scenario
 first without and then with overrides. Of the 1430 trajectories, approximately
-2\% required the use of harmonization overrides after an initial investigation;
+10\% were reported as a diagnostic (see Section \ref{sec:workflow}) of which 2\%
+required the use of harmonization overrides after an initial investigation;
 thus, 98\% of all trajectories were satisfactorily determined using the default
 methods as chosen by the harmonization algorithm. Figure \ref{fig:nox} provides
 one such example of a emissions species and sector in which all regions were
@@ -88,18 +89,6 @@ sufficiently misrepresent the underlying unharmonized results, an override
 method is required to be provided for the trajectory of the region, sector, and
 species in question. Based on the 2\% of total trajectories required to be
 overridden, two classifications were observed: regional trajectories whose
-% * <sfujimori112256@gmail.com> 2017-06-07T10:28:41.326Z:
-% 
-% > regional trajectories whose
-% > \textit{magnitude} was overly distorted and regional trajectories whose
-% > \textit{shape} was overly distorted.
-% 
-% How can we detect these results?
-% If we could have a systematic detection criteria, then it would be really worthwhile to describe.
-% Otherwise, it means that the users of this tool generally  have to see all results by their eye, which could be essentially a weak point of this tool.
-% If so, we may want to discuss that point in the discussion section,
-% 
-% ^.
 \textit{magnitude} was overly distorted and regional trajectories whose
 \textit{shape} was overly distorted.
 
