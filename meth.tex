@@ -196,28 +196,31 @@ value of 50\% was chosen to be used as a default in \code{aneris}.
   \end{center}
 \end{figure}
 
-\subsection{\code{aneris} Workflow}
+\subsection{\code{aneris} Workflow}\ref{label:workflow}
 
 The full \code{aneris} workflow is comprised of a number of components shown
 graphically in Figure \ref{fig:workflow}. Unharmonized model data and a
 run-control configuration are read in via an Excel spreadsheet. Data is assumed
 to be in the \textit{IAM Consortium} format, i.e., using \code{Model},
 \code{Scenario}, \code{Region}, \code{Variable}, and \code{Unit} columns in
-addition to columns representing each modeled time period. Users are able to
-control the harmonization process via a number of options. First, users can
-provide \textit{override} methods for any combination of region and variable
-(i.e., sector and gas species). If override methods are provided, they are used
-% * <sfujimori112256@gmail.com> 2017-06-07T10:12:45.308Z:
-% 
-% Maybe it would be better to add an explanation why we allow this option like
-% "We allow this overriding option because the default method do not meet our criteria sometimes (but usually very few cases)"
-% 
-% ^.
-instead of the default methods as determined by the default method decision
-tree. Furthermore, users can set the above-mentioned thresholds as well as the
-LUC method used in the decision tree (see Figure
-\ref{fig:decision_tree}). Further detail of input parameters can be found at
-\hyperlink{http://aneris.readthedocs.io/en/latest/}{http://aneris.readthedocs.io/en/latest/}.
+addition to columns representing each modeled time period. 
+
+Users are able to control the harmonization process via a number of options. The
+primary mechanism by which users control the process is by providing
+\textit{override} methods for any combination of region and variable (i.e.,
+sector and gas species).  In practice, it may be possible that not all default
+methods chosen will provide robust harmonized trajectories, especially if there
+is a significant difference between historical and model values in the
+harmonization year and there is significant upward or downward movement in the
+model trajectory. In such cases, override methods can ameliorate the issues
+associated with the default method choice. In order to help identify these
+cases, harmonization \textit{diagnostics} are provided which analyze the relative
+difference between harmonized and unharmonized trajectories at their mid and
+end-points. If override methods are provided, they are used instead of the
+default methods as determined by the default method decision tree. Furthermore,
+users can set the above-mentioned thresholds as well as the LUC method used in
+the decision tree (see Figure \ref{fig:decision_tree}). Further detail of input
+parameters can be found \href{http://mattgidden.com/aneris/config.html}{online}.
 
 \begin{figure}
   \begin{center}
@@ -235,20 +238,29 @@ trajectories that exist in the historical dataset but are not provided by the
 model input and detects any issues that would cause the harmonization process to
 fail. The methods used to harmonize the data are then determined and the
 harmonization process is executed. Upon completion of the harmonization process,
-aggregation of common analysis regions is performed (e.g., the 5 RCP
-regions). Finally, any exogenous trajectories the user provides are
-% * <sfujimori112256@gmail.com> 2017-06-07T10:17:07.935Z:
-% 
-% > (e.g., the 5 RCP
-% > regions) 
-% It might be good to show what is 5 regions (or definition) in the SM.
-% 
-% ^.
-added. Exogenous trajectories are normally provided for unmodeled gases with
+aggregation of common analysis regions is performed. A common regional
+aggregation used in the IAM community is the RCP regional definition, as shown
+in Figure \ref{fig:regions}. Finally, any exogenous trajectories the user provides
+are added. Exogenous trajectories are normally provided for unmodeled gases with
 well-accepted scenario trajectories, e.g., chlorofluorocarbons provided by WMO
 \cite{wmo2014}. Upon completion, the harmonized trajectories and meta data
 regarding the harmonization process are returned. A description of all returned
 meta data is provided in Table \ref{tab:metadata}.
+
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=0.85\textwidth]{regions.png}
+    \caption[]{
+      \label{fig:regions}
+      The 5 regions used in the RCPs with their 11-region constituents: Asia
+      (Central Asia, South Asia, Pacific Asia), Latin Ameria, the Middle East
+      and Africa, the OECD (North America, Western Europe, and Pacfic OECD),
+      Reforming Economies (Eastern Europe and Former Soviet Union).
+    }
+  \end{center}
+\end{figure}
+
 
 \begin{table}[]
 \centering
