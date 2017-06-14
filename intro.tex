@@ -13,8 +13,8 @@ Socioeconomic Pathways (SSPs) \cite{van_vuuren_energy_2017, fricko_marker_2017,
 quantify a variety of potential global futures. The SSPs are primarily designed
 to be used in analyses of broad climate research which include earth system
 model (ESM) simulations, climate impact, adaptation and climate mitigation
-studies. They consequently underpin the United Nations' Intergovernmental Panel
-on Climate Change (IPCC) across working groups.
+studies. They are regularly assessed by the United Nations' Intergovernmental
+Panel on Climate Change (IPCC) across working groups.
 
 While IAMs are implemented in myriad ways, including simulation and
 optimization, the core inputs, outputs, and purpose are similar across different
@@ -34,8 +34,9 @@ of marker SSP scenarios developed by the IAM community
 modeling the individual technologies and sectors that contribute towards the
 emissions of different air pollutants and GHGs as well as various mitigation
 technologies (e.g., NOx and SOx scrubbers on power plants). However, the
-historical emissions inventories used by different models can differ by large
-amounts depending on the region, sector, and emissions species being modeled.
+historical emissions inventories calculated by different models can differ by
+large amounts depending on the region, sector, and emissions species being
+modeled.
 
 In practice, IAMs calculate the total source intensity of emitting technologies,
 for example the total activity of coal power plants in China, and incorporate
@@ -43,15 +44,15 @@ emissions-intensity factors for individual gas species, for example the quantity
 of sulfur emissions from coal plants per megawatt-hour of production, in order
 to determine total emissions of a given gas species from a given
 technology. Models are then \textit{calibrated} to historical data sources which
-provide both the activity of emitting technologies as well as trajectories of
-past emissions in order to determine historical emissions factors in each model
-region for each technology.
+provide a combination of the activity of emitting technologies and trajectories
+of past emissions in order to determine historical emissions trajectories in
+each model region for each technology.
 
 With some frequency, however, historical data is updated to incorporate new
 assumptions of source activity, new emissions accounting practices, or other
 concerns. The global climate change community has recently developed a standard
 historical emissions dataset for both anthropogenic emissions (i.e., the
-Community Emissions Datasystem (CEDS) \cite{hoesly_historical_2017} and
+Community Emissions Data System (CEDS) \cite{hoesly_historical_2017} and
 land-use change (LUC) emissions \cite{van_marle_historic_2017}) which, in
 % * <sfujimori112256@gmail.com> 2017-06-07T09:59:35.820Z:
 % 
@@ -62,16 +63,19 @@ land-use change (LUC) emissions \cite{van_marle_historic_2017}) which, in
 conjunction with the SSP IAM trajectories, will be used for climate-related
 modeling exercises of CMIP6.
 
-Because the process of model calibration is quite onerous, model teams initially
-incorporate updated historical datasets through the process of
-\textit{harmonization} in order to guarantee consistency with these new
-historical datasets. Harmonization describes the process of updating model
-results to incorporate new historical time series while maintaining critical
-aspects of modeled future trajectories impacted outputs. In the emissions
-context, this means that each individual combination of model region, model
-sector, and emissions species must be harmonized. Depending on the total number
-of model regions, sectors, and emissions species, this can require the selection
-of thousands to tens-of-thousands of harmonization methods.
+When participating in intercomparison exercises in which consistency of
+historical trajectories is required (e.g., in CMIP6), model teams incorporate a
+single, common historical dataset through \textit{harmonization} in order to
+enhance comparability across models. Harmonization describes the process of
+adjusting model results to incorporate new historical time series while
+maintaining critical aspects of and providing a smooth transition to modeled
+future trajectories such that the resulting trajectories are consistent with the
+original modeled results and usable by other members of the scientific community
+involved in the exercise. In the emissions context, this means that each
+individual combination of model region, model sector, and emissions species must
+be harmonized. Depending on the total number of model regions, sectors, and
+emissions species, this can require the selection of thousands to
+tens-of-thousands of harmonization methods.
 
 Harmonization has been addressed in previous studies as it is a common practice
 in the IAM and climate change communities. For example,
@@ -80,27 +84,36 @@ regions used in the Special Report on Emissions Scenarios (SRES)
 \cite{nakicenovic2000}; however, only total emissions were harmonized in the
 exercise, thus there is no sectoral dimension. Further,
 \cite{rogelj_discrepancies_2011} describes the impacts of choosing various
-harmonization routines on future trajectories. Importantly, the choice of
-harmonization method to date has been determined via expert solicitation and has
-generally been applied to all trajectories for a given class of emissions
-species.
+harmonization routines on future trajectories. During the evaluation of the
+Representative Concentration Pathways (RCPs), IAM results have been harmonized
+by sector and the 5 RCP global regions
+\cite{vuuren_representative_2011}. Importantly, the choice of harmonization
+method to date has been determined via expert solicitation and has generally
+been applied to all trajectories for a given class of emissions species.
 
-In recent studies, i.e., the Representative Concentration Pathways (RCPs), IAM
-results have been harmonized by sector and the 5 RCP global regions
-\cite{vuuren_representative_2011}. Climate modeling efforts have continued to
-progress, however, demanding increased spatial and sectoral resolution from
-IAMs. In order to address the growing dimensionality of model outputs while
-still providing a consistent and scientifically rigorous harmonization
-procedure, an automated process for determining harmonization methods is
-needed. The remainder of this paper describes the methodology of the
+Climate modeling efforts have continued to progress, demanding increased spatial
+and sectoral resolution from IAMs. Furthermore, a new generation of climate
+scenarios which combines aspects of both the RCPs and SSPs have been developed
+in order to incorporate both physical and socioeconomic detail. In order to
+address the growing dimensionality of model outputs and support ongoing scenario
+generation and analysis efforts while still providing a consistent and
+scientifically rigorous harmonization procedure, an automated process for
+determining harmonization methods is needed. The use of an automated,
+documented, and openly available harmonization mechanism additionally allows for
+full procedural reproducibility and for direct participation by additional
+modeling teams not involved in the original exercise.
+
+The remainder of this paper describes the methodology and implementation of the
 \code{aneris} code base \cite{matthew_gidden_2017_802832}, written in the Python
 programming language (detailed documentation available
-\href{http://mattgidden.com/aneris/}{online}), which implements such a system in
-Section \ref{sec:meths}. The results of applying the automated harmonization
-mechanism on two example IAM scenarios, one with emissions growth and another
-with emissions mitigation, is presented in Section \ref{sec:results}. Finally,
-the general effectiveness and potential future improvements on the automated
-methodology is discussed in Section \ref{sec:future}.
+\href{http://mattgidden.com/aneris/}{online}). Section \ref{sec:meths} provides
+a detailed description of the underlying mathematical components of
+\code{aneris} as well as the code workflow. The results of applying the
+automated harmonization mechanism on two example IAM scenarios, one with
+emissions growth and another with emissions mitigation, is presented in Section
+\ref{sec:results}. Finally, the general effectiveness and potential future
+improvements on the automated methodology is discussed in Section
+\ref{sec:future}.
 
 % todo: add?
 % what aspects of harmonization are important (e.g., cumulative carbon emissions).
