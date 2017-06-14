@@ -103,16 +103,6 @@ shown graphically in Figure \ref{fig:decision_tree}.
   \end{center}
 \end{figure}
 
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=\textwidth]{cases.pdf}
-    \caption[]{
-      \label{fig:cases}
-      foo
-    }
-  \end{center}
-\end{figure}
-
 A number of characteristics impact the decision of which default method to
 select based on the effect of the characteristic on the potential harmonized
 trajectory. For example, it is possible for models to report zero values in the
@@ -120,24 +110,48 @@ harmonization year in situations in which technologies are introduced in future
 time periods in regions or for sectors which produce an emissions species that
 is absent in the initial modeling period. In such cases, an offset method is
 required as a ratio method would mask future emissions and erroneously harmonize
-the trajectory. In most cases, however, models do report values in the
-harmonization year. When model and historical values are relatively close, a
+the trajectory. 
+
+In most cases, however, models do report values in the harmonization
+year. Figure \ref{fig:cases} displays a number of example trajectories which
+highlight the possible issues resulting from harmonizing model results in
+different contexts. When model and historical values are relatively close, a
 convergence method is chosen in order to be as representative as possible to the
-underlying unharmonized model results. The final model-based characteristic of
-import is whether the model reports negative emissions. Such a case is possible
-for gas species which can be extracted from the environment and stored, as is
-the case for CO2 in future scenarios with climate mitigation. If a model
-% * <sfujimori112256@gmail.com> 2017-06-07T10:07:21.265Z:
-% 
-% > with climate mitigation
-% Not necessarily high mitigation. Land use can be negative even in baseline.
-% 
-% ^.
-provides a trajectory that transitions from positive to negative emissions, then
-a convergence method is used in order to guarantee capture of this
-transition. Otherwise, it is possible, given the relative values between history
-and model in the harmonization year, for a negative trajectory to be
-inappropriately harmonized to a positive, but decreasing, trajectory.
+underlying unharmonized model results (Figure \ref{fig:cases}, Panel
+\code{a}). If values are not close, the constant ratio method is chosen in order
+to provide reasonable trajectories that still incorporate modeled effects
+(Figure \ref{fig:cases}, Panel \code{b}). 
+
+Models can additionally report negative emissions in certain contexts which much
+be taken into account during harmonization. Such a case is possible for gas
+species which can be extracted from the environment and stored, as is the case
+for CO2 in future scenarios with climate mitigation. If a model provides a
+trajectory that transitions from positive to negative emissions and base year
+results are similar, then a convergence method is used in order to guarantee
+capture of this transition in a representative fashion (Figure \ref{fig:cases},
+Panel \code{c}). If the discrepancy in base year results is large, it is
+possible for a negative trajectory to be inappropriately harmonized to a
+positive, but decreasing, trajectory. As such, the constant ratio method is
+chosen (Figure \ref{fig:cases}, Panel \code{d}).
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\textwidth]{cases.pdf}
+    \caption[]{
+      \label{fig:cases}
+      The effect of different harmonization routines on model trajectories under
+      ``normal'' circumstances (Panel \code{a}), when there is a large
+      difference between historical and model values in the harmonization year
+      (Panels \code{b} and \code{d}), and when model trajectories result in
+      negative emissions by the end of the modeling time horizon (Panels
+      \code{c} and \code{d}). In each figure row (Panels \code{a}, \code{b};
+      \code{c}, \code{d}), identical model trajectories are used. In each figure
+      column, historical values are increased in the base year by an order of
+      magnitude (from 10 to 100). In each case, a subset of the potential
+      routines provide a better ``goodness of fit'' than others as described in
+      the text.  }
+  \end{center}
+\end{figure}
 
 Variability of the historical trajectory is also an important characteristic
 when considering the choice of harmonization method. Such trajectories are
