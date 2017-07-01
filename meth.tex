@@ -6,14 +6,19 @@ IAM emission results are provided along temporal (normally half decade or
 decade), spatial (i.e., model regions), gas species, and sectoral
 dimensions. Each individual temporal trajectory, i.e., unique combinations of
 regions ($r$), species ($g$), and sectors ($s$), must be harmonized to the
-initial time step. Given a model trajectory, $m_{r, g, s}(t)$, historical
-trajectory, $h_{r, g, s}(t)$, and initial time step $t_i$, a harmonized
-trajectory can be calculated. The ``goodness of fit'' of a trajectory depends on
+initial starting point. Given a model trajectory, $m_{r, g, s}(t)$, historical
+values, $h_{r, g, s}(t)$, and initial starting point $t_i$, a harmonized
+trajectory needs to be calculated. The ``goodness of fit'' of a trajectory depends on
 a number of factors, most notably the faithful representation of the original,
 unharmonized, trajectory. However, other important factors must be considered,
 such as the representation of negative trajectories (i.e., if a trajectory
 becomes negative, both the timing and total magnitude should be as close as
 possible) which are of critical importance for cumulative CO2 calculations.
+% * <ssmith@pnnl.gov> 2017-07-01T03:25:04.357Z:
+% 
+% Suggest moving this later where negative emissions are discussed. Its a bit of a tangent here.
+% 
+% ^ <ssmith@pnnl.gov> 2017-07-01T03:25:44.627Z.
 
 In previous studies \cite{meinshausen_rcp_2011,rogelj_discrepancies_2011}, two
 \textit{families} of methods have been used: those that operate on the ratio of
@@ -153,9 +158,8 @@ chosen (Figure \ref{fig:cases}, Panel \code{d}).
   \end{center}
 \end{figure}
 
-Variability of the historical trajectory is also an important characteristic
-when considering the choice of harmonization method. Such trajectories are
-normally indicative of emissions from land use sectors. Land use sectors are
+Temporal variability of the historical trajectory is also an important characteristic
+when considering the choice of harmonization method.  Emissions from forest and grassland fires, for example, vary from year to year due to a combination of meteorological conditions and anthropogenic drivers. Land use emissions are modeled by IAMs using average emission factors and do not capture conditions in a specific year.  Ratio methods for such sectors can lead to unrealistic harmonization results.
 modeled with varying fidelity by IAMs, but in general proxies are used for
 emissions trajectories. Take for example emissions from grassland burning: for
 most models, the use of grass and paturelands is endogenously modeled, and
@@ -163,7 +167,21 @@ emissions from the burning of these lands is determined by applying an emissions
 factor; in general, the more grassland usage that occurs in a scenario, the
 higher the emissions from the burning thereof. Therefore, consistency in
 harmonization method is important because the effects are modeled similarly
-across regions and species. In order to reliably detect land-use-like emissions,
+across regions and species. In order to detect land-use-like emissions,
+% * <ssmith@pnnl.gov> 2017-07-01T03:31:52.910Z:
+% 
+% > modeled with varying fidelity by IAMs, but in general proxies are used for
+% > emissions trajectories. Take for example emissions from grassland burning: for
+% > most models, the use of grass and paturelands is endogenously modeled, and
+% > emissions from the burning of these lands is determined by applying an emissions
+% > factor; in general, the more grassland usage that occurs in a scenario, the
+% > higher the emissions from the burning thereof. Therefore, consistency in
+% > harmonization method is important because the effects are modeled similarly
+% > across regions and species. 
+% 
+% Not sure I follow the logic here. I added some new text that might help. Perhaps the intermediate part could be deleted.
+% 
+% ^ <ssmith@pnnl.gov> 2017-07-01T03:32:30.453Z.
 a measure of the coefficient of variation of the first derivative of the
 historical trajectory, $c_v$, is calculated as shown in Equation \ref{eqs:cov},
 where $\sigma$ is the standard deviation, and $\mu$ is the mean of the
@@ -215,7 +233,7 @@ value of 50\% was chosen to be used as a default in \code{aneris}.
       \label{fig:dh}
       The distribution of relative differences between model and historical
       values in the harmonization year is shown. The solid black line indicates
-      the threshold value used by default in \code{aneris}.  
+      the 50\% threshold value used by default in \code{aneris}.  
     }
   \end{center}
 \end{figure}

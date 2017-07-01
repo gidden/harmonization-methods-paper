@@ -2,25 +2,30 @@
 
 Integrated Assessment Models (IAMs) are tools used to understand the complex
 interactions between energy systems, economic systems, land use, the climate,
-and air pollution, among other sectors . IAMs provide global projections of
+and air pollution. IAMs provide global projections of
 systemic change by dividing the world into a number of representative regions
 (typically 10 to 30), the definition of which is distinct for each model
 \cite{krey_global_2014}. Results from IAMs are integral in a number of
 international studies, which notably include projections of climate and economic
 futures. Recently, flagship IAMs have developed scenarios based on the Shared
+% * <ssmith@pnnl.gov> 2017-07-01T03:11:26.621Z:
+% 
+% > flagship
+% Suggest different word. "comprehensive" is one possibility.
+% 
+% ^ <ssmith@pnnl.gov> 2017-07-01T03:11:57.571Z.
 Socioeconomic Pathways (SSPs) \cite{van_vuuren_energy_2017, fricko_marker_2017,
   fujimori_ssp3:_2017, calvin_ssp4:_2017, kriegler_fossil-fueled_2017} which
-quantify a variety of potential global futures. The SSPs are primarily designed
-to be used in analyses of broad climate research which include earth system
+quantify a variety of potential global futures. The SSPs are  designed
+to be used in  research that include earth system
 model (ESM) simulations, climate impact, adaptation and climate mitigation
-studies. They are regularly assessed by the United Nations' Intergovernmental
-Panel on Climate Change (IPCC) across working groups.
+studies. 
 
 While IAMs are implemented in myriad ways, including simulation and
-optimization, the core inputs, outputs, and purpose are similar across different
-models. Modeling teams incorporate existing data sets of energy systems, land
+optimization, the core inputs, and outputs  are similar across different
+models. Modeling teams incorporate  data on energy systems, land
 use, economics, demographics and emissions sources and concentrations, among other
-data, in order to provide consistent historical trajectories of modeled
+data, in order to provide consistent future trajectories of modeled
 variables. The models then provide estimates of future trajectories of these
 variables under various socioeconomic and technological assumptions as well as
 proposed policy constraints, e.g., targets for future Greenhouse Gas (GHG)
@@ -34,28 +39,21 @@ of marker SSP scenarios developed by the IAM community
 modeling the individual technologies and sectors that contribute towards the
 emissions of different air pollutants and GHGs as well as various mitigation
 technologies (e.g., NOx and SOx scrubbers on power plants). However, the
-historical emissions inventories calculated by different models can differ by
-large amounts depending on the region, sector, and emissions species being
-modeled.
+historical emissions starting points of  models can differ by
+large amounts depending on the region, sector, and emissions species.
 
 In practice, IAMs calculate the total source intensity of emitting technologies,
 for example the total activity of coal power plants in China, and incorporate
 emissions-intensity factors for individual gas species, for example the quantity
-of sulfur emissions from coal plants per megawatt-hour of production, in order
-to determine total emissions of a given gas species from a given
-technology. Models are then \textit{calibrated} to historical data sources which
-provide a combination of the activity of emitting technologies and trajectories
-of past emissions in order to determine historical emissions trajectories in
-each model region for each technology. Due to the sometimes large uncertainties
+of sulfur emissions from coal plants per megawatt-hour of production. Models are generally \textit{calibrated} to historical data sources in one or more base years. Due to the sometimes large uncertainties
 in historical datasets, results in the historical period may differ between
-models.
+models. Models also differ in their choice of base-year, which may lag behind available inventory data. In addition, models have varying sectoral, regional, and fuel aggregations.
 
-With some frequency, historical data is updated to incorporate new assumptions
-of source activity, new emissions accounting practices, or other concerns. The
-global climate change community has recently developed a standard historical
-emissions dataset for both anthropogenic emissions (i.e., the Community
-Emissions Data System (CEDS) \cite{hoesly_historical_2017} and land-use change
-(LUC) emissions \cite{van_marle_historic_2017}) which, in
+The
+global climate change community has recently developed a new global historical
+emissions dataset for both anthropogenic  emissions (i.e., the Community
+Emissions Data System (CEDS) \cite{hoesly_historical_2017} and open-burning land-use and land-use change (LULUC)
+emissions \cite{van_marle_historic_2017}) which, in
 % * <sfujimori112256@gmail.com> 2017-06-07T09:59:35.820Z:
 % 
 % > land-use change (LUC) emissions \cite{van_marle_historic_2017}
@@ -65,15 +63,10 @@ Emissions Data System (CEDS) \cite{hoesly_historical_2017} and land-use change
 conjunction with the SSP IAM trajectories, will be used for climate-related
 modeling exercises of CMIP6.
 
-When participating in intercomparison exercises in which consistency of
-historical trajectories is required (e.g., in CMIP6), model teams incorporate a
-single, common historical dataset through \textit{harmonization} in order to
-enhance comparability across models. Harmonization describes the process of
-adjusting model results to incorporate new historical time series while
-maintaining critical aspects of and providing a smooth transition to modeled
-future trajectories such that the resulting trajectories are consistent with the
-original modeled results and usable by other members of the scientific community
-involved in the exercise. In the emissions context, this means that each
+When participating in intercomparison exercises in which a consistent historical starting point is required (e.g., in CMIP6), model teams incorporate a
+single, common historical dataset through \textit{harmonization}. Harmonization describes the process of
+adjusting model results to match the selected historical time series  such that the resulting future trajectories are also consistent with the
+original modeled results. In the emissions context, this means that each
 individual combination of model region, model sector, and emissions species must
 be harmonized. Depending on the total number of model regions, sectors, and
 emissions species, this can require the selection of thousands to
