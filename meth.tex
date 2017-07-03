@@ -9,6 +9,11 @@ regions ($r$), species ($g$), and sectors ($s$), must be harmonized to the
 initial starting point. Given a model trajectory, $m_{r, g, s}(t)$, historical
 values, $h_{r, g, s}(t)$, and initial starting point $t_i$, a harmonized
 trajectory needs to be calculated. The ``goodness of fit'' of a trajectory depends on
+% * <maarten.vandenberg@pbl.nl> 2017-07-03T21:16:50.244Z:
+% 
+% Assessing the "goodness of fit" is not  straightforward, there may be competing factors. Perhaps we should refer back to this in the discussion. 
+% 
+% ^.
 a number of factors, most notably the faithful representation of the original,
 unharmonized, trajectory. However, other important factors must be considered,
 such as the representation of negative trajectories (i.e., if a trajectory
@@ -25,6 +30,12 @@ In previous studies \cite{meinshausen_rcp_2011,rogelj_discrepancies_2011}, two
 base year values (i.e., $\frac{h(t_i)}{m(t_i)}$) and those that operate on the
 offset of base year values (i.e., $h(t_i) - m(t_i)$). The \code{aneris} code
 base provides a number of variations on the classic methods, including
+% * <maarten.vandenberg@pbl.nl> 2017-07-03T21:27:39.375Z:
+% 
+% > classic methods
+% This might be interpreted as that convergence have not been previously applied. Perhaps use " implementations"  instead of "variations" .
+% 
+% ^.
 ratio-convergence methods shown in Equation \ref{eqs:ratio}, offset-convergence
 methods shown in Equation \ref{eqs:offset}, and interpolation methods shown in
 Equation \ref{eqs:interpolate}; the convergence factor, $\beta$, for associated
@@ -35,6 +46,13 @@ convergence time step ($t_f$), at which point the harmonized trajectory
 converges to the unharmonized trajectory. The \code{aneris} code base provides a
 number of methods to choose from for each of the harmonization families. A
 summary of all available methods is provided in Table \ref{tab:meths}.
+% * <maarten.vandenberg@pbl.nl> 2017-07-03T21:34:25.905Z:
+% 
+% > A
+% > summary
+% If beta would be defined as \frac{t -t_i}{t_f - t_i}, it might better match intuition of convergence: 0 value at t = t_i and 1 at full convergence (t = t_f), with added benefit the beta parameter can also be used in the interpolation option.
+% 
+% ^.
 
 
 \begin{equation}\label{eqs:factor}
@@ -97,10 +115,21 @@ shown graphically in Figure \ref{fig:decision_tree}.
     \caption[]{
       \label{fig:decision_tree}
       The default method decision tree used in the \code{aneris} software
+% * <maarten.vandenberg@pbl.nl> 2017-07-03T21:40:43.868Z:
+% 
+% > The default method decision tree
+% yes and no might be added to the tree for improved clarity. 
+% 
+% ^.
       library. For all decisions, upper branches represent a ``yes'' response
       and lower branches represent a ``no'' response. $dH$ is defined as
       $\left|\frac{h(t_i) - m(t_i)}{h(t_i)}\right|$, and decision-making
       thresholds are described below. Finally, default choices in \textit{green}
+% * <maarten.vandenberg@pbl.nl> 2017-07-03T21:42:35.965Z:
+% 
+% for CoV and dH
+% 
+% ^.
       label methods that will likely closely match unharmonized results, choices
       in \textit{yellow} will likely somewhat match unharmonized results, and
       choices in \textit{red} can be expected to have a large relative
@@ -160,6 +189,12 @@ chosen (Figure \ref{fig:cases}, Panel \code{d}).
 
 Temporal variability of the historical trajectory is also an important characteristic
 when considering the choice of harmonization method.  Emissions from forest and grassland fires, for example, vary from year to year due to a combination of meteorological conditions and anthropogenic drivers. Land use emissions are modeled by IAMs using average emission factors and do not capture conditions in a specific year.  Ratio methods for such sectors can lead to unrealistic harmonization results.
+% * <maarten.vandenberg@pbl.nl> 2017-07-03T21:59:54.238Z:
+% 
+% > Ratio methods for such sectors can lead to unrealistic harmonization results.
+% However, using for instance an offset method may also misrepresent the emission levels. Depending on the trajectory the emission factor can be subject to unintentional changes over the century.
+% 
+% ^.
 modeled with varying fidelity by IAMs, but in general proxies are used for
 emissions trajectories. Take for example emissions from grassland burning: for
 most models, the use of grass and paturelands is endogenously modeled, and
@@ -195,10 +230,25 @@ different flagship IAMs. A threshold value of 20 has been chosen based on these
 observations as it optimally divides the two distributions. Importantly, tails
 of the LUC and non-LUC overlap, thus there are both false positives (~10\% of
 non-LUC trajectories) and false negatives (~7\% of LUC trajectories). However,
+% * <maarten.vandenberg@pbl.nl> 2017-07-03T22:07:21.157Z:
+% 
+% >  (~10\% of
+% > non-LUC trajectories) and false negatives (~7\% of LUC trajectories)
+% visually it seems to be that the false negatives are a larger share thatn the false positives?
+% 
+% ^.
 as any regional definition is model dependent and thus any regional aggregation
 is possible an automated detection mechanism is necessary.
 
 \begin{equation}\label{eqs:cov}
+% * <maarten.vandenberg@pbl.nl> 2017-07-03T22:08:21.230Z:
+% 
+% > \begin{equation}\label{eqs:cov}
+% >     c_v =  \frac{\sigma(h^{\prime}(t))}{\mu(h^{\prime}(t))}
+% > \end{equation}
+% c_v is called a covariance parameter and a variance of derivatives, what is exactly calculated?
+% 
+% ^.
     c_v =  \frac{\sigma(h^{\prime}(t))}{\mu(h^{\prime}(t))}
 \end{equation}
 
@@ -225,6 +275,12 @@ flagship IAMs values used in the SSP and (ongoing) CMIP6 inter-comparison
 exercises are used. A distribution of these differences for all models in the
 study is presented in Figure \ref{fig:dh}. Given the available data, a threshold
 value of 50\% was chosen to be used as a default in \code{aneris}.
+% * <maarten.vandenberg@pbl.nl> 2017-07-03T22:25:47.452Z:
+% 
+% > 50\%
+% What does this mean? I would expect something of the form low_value < dH < high_value?
+% 
+% ^.
 
 \begin{figure}
   \begin{center}
@@ -234,6 +290,14 @@ value of 50\% was chosen to be used as a default in \code{aneris}.
       The distribution of relative differences between model and historical
       values in the harmonization year is shown. The solid black line indicates
       the 50\% threshold value used by default in \code{aneris}.  
+% * <maarten.vandenberg@pbl.nl> 2017-07-03T22:14:59.644Z:
+% 
+% > The distribution of relative differences between model and historical
+% >       values in the harmonization year is shown. The solid black line indicates
+% >       the 50\% threshold value used by defaul
+% the asymmetry here might be interesting, do the SSP scenarios consistently underestimate emission levels, or is this an effect of history up to 2015, while scenarios start earlier (might not be interesting for this paper).
+% 
+% ^.
     }
   \end{center}
 \end{figure}
