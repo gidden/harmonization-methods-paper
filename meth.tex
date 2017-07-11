@@ -38,14 +38,15 @@ base provides a number of implementations on the classic methods, including
 % ^.
 ratio-convergence methods shown in Equation \ref{eqs:ratio}, offset-convergence
 methods shown in Equation \ref{eqs:offset}, and interpolation methods shown in
-Equation \ref{eqs:interpolate}; the convergence factor, $\beta$, for associated
-methods is shown first in Equation \ref{eqs:factor}. Note that region, species,
-and sector indices have been dropped for clarity. Each equation is a function of
-time, model trajectory, historical trajectory, harmonization time step, and a
-convergence time step ($t_f$), at which point the harmonized trajectory
-converges to the unharmonized trajectory. The \code{aneris} code base provides a
-number of methods to choose from for each of the harmonization families. A
-summary of all available methods is provided in Table \ref{tab:meths}.
+Equation \ref{eqs:interpolate}. The convergence factor, $\beta$, scales linearly
+from 1 to 0 in $[t_i, t_f)$ and is shown in Equation \ref{eqs:factor}. Note
+that region, species, and sector indices have been dropped for clarity. Each
+equation is a function of time, model trajectory, historical trajectory,
+harmonization time step, and a convergence time step ($t_f$), at which point the
+harmonized trajectory converges to the unharmonized trajectory. The
+\code{aneris} code base provides a number of methods to choose from for each of
+the harmonization families. A summary of all available methods is provided in
+Table \ref{tab:meths}.
 % * <maarten.vandenberg@pbl.nl> 2017-07-03T21:34:25.905Z:
 % 
 % > A
@@ -58,7 +59,7 @@ summary of all available methods is provided in Table \ref{tab:meths}.
 \begin{equation}\label{eqs:factor}
   \beta(t, t_i, t_f) =
   \begin{cases}
-    1 - \frac{t - t_i}{t_f - t_i},& \text{if } t \leq t_f\\
+    1 - \frac{t - t_i}{t_f - t_i},& \text{if } t < t_f\\
     0,                        & \text{otherwise}
   \end{cases}
 \end{equation}
@@ -74,7 +75,7 @@ summary of all available methods is provided in Table \ref{tab:meths}.
 \begin{equation}\label{eqs:interpolate}
   m^{int}(t, m, h, t_i, t_f) =
   \begin{cases}
-    \beta(t, t_i, t_f) (h(t_i) - m(t_f)) + m(t_f), & \text{if } t \leq t_f\\
+    \beta(t, t_i, t_f) (h(t_i) - m(t_f)) + m(t_f), & \text{if } t < t_f\\
     m(t), & \text{otherwise}
   \end{cases}
 \end{equation}
@@ -124,15 +125,15 @@ shown graphically in Figure \ref{fig:decision_tree}.
       library. For all decisions, upper branches represent a ``yes'' response
       and lower branches represent a ``no'' response. $dH$ is defined as
       $\left|\frac{h(t_i) - m(t_i)}{h(t_i)}\right|$, and decision-making
-      thresholds are described below. Finally, default choices in \textit{green}
+      thresholds are described below. Methods labeled in \textit{green}
 % * <maarten.vandenberg@pbl.nl> 2017-07-03T21:42:35.965Z:
 % 
 % for CoV and dH
 % 
 % ^.
-      label methods that will likely closely match unharmonized results, choices
+      are likely closely match unharmonized results, methods
       in \textit{yellow} will likely somewhat match unharmonized results, and
-      choices in \textit{red} can be expected to have a large relative
+      methods in \textit{red} can be expected to have a large relative
       difference between harmonized and unharmonized results.}
   \end{center}
 \end{figure}
