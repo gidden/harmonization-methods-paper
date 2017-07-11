@@ -74,7 +74,7 @@ summary of all available methods is provided in Table \ref{tab:meths}.
 \begin{equation}\label{eqs:interpolate}
   m^{int}(t, m, h, t_i, t_f) =
   \begin{cases}
-    \frac{m(t_f) - h(t_i)}{t_f - t_i}(t - t_i) + h(t_i), & \text{if } t \leq t_f\\
+    \beta(t, t_i, t_f) (h(t_i) - m(t_f)) + m(t_f), & \text{if } t \leq t_f\\
     m(t), & \text{otherwise}
   \end{cases}
 \end{equation}
