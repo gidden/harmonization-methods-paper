@@ -125,13 +125,8 @@ shown graphically in Figure \ref{fig:decision_tree}.
       library. For all decisions, upper branches represent a ``yes'' response
       and lower branches represent a ``no'' response. $dH$ is defined as
       $\left|\frac{h(t_i) - m(t_i)}{h(t_i)}\right|$, and decision-making
-      thresholds are described below. Methods labeled in \textit{green}
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T21:42:35.965Z:
-% 
-% for CoV and dH
-% 
-% ^.
-      are likely closely match unharmonized results, methods
+      thresholds for $c_v$ and $dH$ are described below. Methods labeled in
+      \textit{green} are likely to closely match unharmonized results, methods
       in \textit{yellow} will likely somewhat match unharmonized results, and
       methods in \textit{red} can be expected to have a large relative
       difference between harmonized and unharmonized results.}
@@ -227,19 +222,13 @@ The value of $c_v$ is then tested against a threshold. To determine this
 threshold, an analysis of the recent CEDS and LUC historical data has been
 performed. Figure \ref{fig:cov} shows the distribution of LUC $c_v$s and non-LUC
 $c_v$s as determined for historical data aggregated to the model regions of 5
-different IAMs \TODO{list here or elsewhere?}. A threshold value of 20 has been chosen based on these
-observations as it optimally divides the two distributions. Importantly, tails
-of the LUC and non-LUC overlap, thus there are both false positives (~10\% of
-non-LUC trajectories) and false negatives (~7\% of LUC trajectories). However,
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T22:07:21.157Z:
-% 
-% >  (~10\% of
-% > non-LUC trajectories) and false negatives (~7\% of LUC trajectories)
-% visually it seems to be that the false negatives are a larger share thatn the false positives?
-% 
-% ^.
-as any regional definition is model dependent and thus any regional aggregation
-is possible an automated detection mechanism is necessary.
+different IAMs involved in the SSP process. A threshold value of 20 has been
+chosen based on these observations as it optimally divides the two
+distributions. Importantly, tails of the LUC and non-LUC overlap, thus there are
+both false positives (~7\% of non-LUC trajectories) and false negatives (~10\%
+of LUC trajectories). However, as any regional definition is model dependent and
+thus any regional aggregation is possible an automated detection mechanism is
+necessary.
 
 \begin{equation}\label{eqs:cov}
 % * <maarten.vandenberg@pbl.nl> 2017-07-03T22:08:21.230Z:
