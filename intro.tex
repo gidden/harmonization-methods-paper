@@ -7,7 +7,7 @@ systemic change by dividing the world into a number of representative regions
 (typically 10 to 30), the definition of which is distinct for each model
 \cite{krey_global_2014}. Results from IAMs are integral in a number of
 international studies, which notably include projections of climate and economic
-futures. Recently, flagship IAMs have developed scenarios based on the Shared
+futures. Recently, the IAM community has developed scenarios based on the Shared
 % * <ssmith@pnnl.gov> 2017-07-01T03:11:26.621Z:
 % 
 % > flagship
@@ -22,10 +22,10 @@ model (ESM) simulations, climate impact, adaptation and climate mitigation
 studies. 
 
 While IAMs are implemented in myriad ways, including simulation and
-optimization, the core inputs, and outputs  are similar across different
+optimization, the core inputs and outputs  are similar across different
 models. Modeling teams incorporate  data on energy systems, land
 use, economics, demographics and emissions sources and concentrations, among other
-data, in order to provide consistent future trajectories of modeled
+data, in order to provide consistent existing trajectories of modeled
 variables. The models then provide estimates of future trajectories of these
 variables under various socioeconomic and technological assumptions as well as
 proposed policy constraints, e.g., targets for future Greenhouse Gas (GHG)
@@ -38,13 +38,7 @@ of marker SSP scenarios developed by the IAM community
 \cite{oneill_scenario_2016}. These trajectories are endogenously calculated by
 modeling the individual technologies and sectors that contribute towards the
 emissions of different air pollutants and GHGs as well as various mitigation
-technologies (e.g., NOx and SOx scrubbers on power plants). However, the
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T20:34:35.330Z:
-% 
-% I think the mitigation options are broad, the example of the scrubbers seems too narrow, I would leave it out.
-% 
-% ^.
-historical emissions starting points of  models can differ by
+technologies. However, the historical emissions starting points of  models can differ by
 large amounts depending on the region, sector, and emissions species.
 
 In practice, IAMs calculate the total source intensity of emitting technologies,
@@ -108,7 +102,7 @@ full procedural reproducibility and for direct participation by additional
 modeling teams not involved in the original exercise.
 
 The remainder of this paper describes the methodology and implementation of the
-\code{aneris} code base \cite{matthew_gidden_2017_802832}, written in the Python
+harmonization code base \code{aneris} \cite{matthew_gidden_2017_802832}, written in the Python
 % * <maarten.vandenberg@pbl.nl> 2017-07-03T21:12:05.654Z:
 % 
 % > the
@@ -125,6 +119,3 @@ emissions growth and another with emissions mitigation, is presented in Section
 \ref{sec:results}. Finally, the general effectiveness and potential future
 improvements on the automated methodology is discussed in Section
 \ref{sec:future}.
-
-% todo: add?
-% what aspects of harmonization are important (e.g., cumulative carbon emissions).
