@@ -6,8 +6,8 @@ IAM emission results are provided along temporal (normally half decade or
 decade), spatial (i.e., model regions), gas species, and sectoral
 dimensions. Each individual temporal trajectory, i.e., unique combinations of
 regions ($r$), species ($g$), and sectors ($s$), must be harmonized to the
-initial starting point. Given a model trajectory, $m_{r, g, s}(t)$, historical
-values, $h_{r, g, s}(t)$, and initial starting point $t_i$, a harmonized
+initial modeling period. Given a model trajectory, $m_{r, g, s}(t)$, historical
+values, $h_{r, g, s}(t)$, and initial modeling period $t_i$, a harmonized
 trajectory needs to be calculated. The ``goodness of fit'' of a trajectory depends on
 % * <maarten.vandenberg@pbl.nl> 2017-07-03T21:16:50.244Z:
 % 
@@ -310,13 +310,14 @@ is a significant difference between historical and model values in the
 harmonization year and there is significant upward or downward movement in the
 model trajectory. In such cases, override methods can ameliorate the issues
 associated with the default method choice. In order to help identify these
-cases, harmonization \textit{diagnostics} are provided which analyze the relative
-difference between harmonized and unharmonized trajectories at their mid and
-end-points. If override methods are provided, they are used instead of the
-default methods as determined by the default method decision tree. Furthermore,
-users can set the above-mentioned thresholds as well as the LUC method used in
-the decision tree (see Figure \ref{fig:decision_tree}). Further detail of input
-parameters can be found \href{http://mattgidden.com/aneris/config.html}{online}.
+cases, harmonization \textit{diagnostics} are provided which analyze the
+relative difference between harmonized and unharmonized trajectories at their
+mid (if $> 400$\%) and end-points (if $> 200$\%). If override methods are
+provided, they are used instead of the default methods as determined by the
+default method decision tree. Furthermore, users can set the above-mentioned
+thresholds as well as the LUC method used in the decision tree (see Figure
+\ref{fig:decision_tree}). Further detail of input parameters can be found
+\href{http://mattgidden.com/aneris/config.html}{online}.
 
 \begin{figure}
   \begin{center}
