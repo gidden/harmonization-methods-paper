@@ -218,17 +218,17 @@ historical trajectory, $c_v$, is calculated as shown in Equation \ref{eqs:cov},
 where $\sigma$ is the standard deviation, and $\mu$ is the mean of the
 trajectory.
 
-The value of $c_v$ is then tested against a threshold. To determine this
-threshold, an analysis of the recent CEDS and LUC historical data has been
-performed. Figure \ref{fig:cov} shows the distribution of LUC $c_v$s and non-LUC
-$c_v$s as determined for historical data aggregated to the model regions of 5
-different IAMs involved in the SSP process. A threshold value of $c_v < 20$ has been
-chosen based on these observations as it optimally divides the two
-distributions. Importantly, tails of the LUC and non-LUC overlap, thus there are
-both false positives (~7\% of non-LUC trajectories) and false negatives (~10\%
-of LUC trajectories). However, as any regional definition is model dependent and
-thus any regional aggregation is possible an automated detection mechanism is
-necessary.
+The value of $c_v$ is then tested against a threshold, $\tau_{c_v}$. To
+determine this threshold, an analysis of the recent CEDS and LUC historical data
+has been performed. Figure \ref{fig:cov} shows the distribution of LUC $c_v$s
+and non-LUC $c_v$s as determined for historical data aggregated to the model
+regions of 5 different IAMs involved in the SSP process. A threshold value of
+$c_v < \tau_{c_v} = 20$ has been chosen based on these observations as it
+optimally divides the two distributions. Importantly, tails of the LUC and
+non-LUC overlap, thus there are both false positives (~7\% of non-LUC
+trajectories) and false negatives (~10\% of LUC trajectories). However, as any
+regional definition is model dependent and thus any regional aggregation is
+possible an automated detection mechanism is necessary.
 
 \begin{equation}\label{eqs:cov}
 % * <maarten.vandenberg@pbl.nl> 2017-07-03T22:08:21.230Z:
@@ -264,7 +264,7 @@ investigate the possible values that these relative differences can take, the
 IAM values used in the SSP and (ongoing) CMIP6 inter-comparison
 exercises are used. A distribution of these differences for all models in the
 study is presented in Figure \ref{fig:dh}. Given the available data, a threshold
-value of $dH < 50$\% was chosen to be used as a default in \code{aneris}.
+value of $dH < \tau_{dH} = 50$\% was chosen to be used as a default in \code{aneris}.
 % * <maarten.vandenberg@pbl.nl> 2017-07-03T22:25:47.452Z:
 % 
 % > 50\%
