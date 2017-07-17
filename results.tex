@@ -35,18 +35,11 @@ shows the different trends of these two scenarios.
 MESSAGE-GLOBIOM includes a representation of 11 distinct regions which can be
 mapped directly to the 5-region definition used in the RCPs. Historical data is
 taken from previously described LUC and anthropogenic sources, which comprise 10
-separate pollutant and GHG species and 12 sectors shown in Table
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T22:41:59.852Z:
-% 
-% >  which comprise 10
-% > separate pollutant and GHG species and 13 sectors shown in Table
-% Do we correctly distinguish between the regional and global values (N2O)? The table mentions a sector "Unharmonized", which is the sector-aggregated value I assume, which also might lead to overcounting. In the table I would change this sector naming.
-% 
-% ^.
-\ref{tab:sp}. Therefore, a total of 1430 distinct trajectories were harmonized
-for each scenario.
+separate pollutant and GHG species and 12 sectors shown in Table \ref{tab:sp}. A
+total of 970 distinct trajectories were harmonized for each scenario, and
+therefore 1940 trajectories were harmonized in total.
 
-\begin{table}[]
+\begin{table}[]\begin{minipage}{\textwidth}
   \centering
   \caption{Harmonized Species and Sectors}
   \label{tab:sp}
@@ -55,28 +48,44 @@ for each scenario.
     \textbf{Emissions Species}        & \textbf{Sectors}                    \\
     \hline
     Black Carbon (BC)                 & Agricultural Waste Burning          \\
-    Hexafluoroethane (C2F6)           & Agriculture                         \\
-    Tetrafluoromethane (CF4)          & Aircraft                            \\
+    Hexafluoroethane (C2F6)
+    \footnote{\label{x_glb_all}
+      Global total trajectories are harmonized due to lack of detailed 
+      historical data.}
+                                      & Agriculture                         \\
+    Tetrafluoromethane (CF4)
+    \footnoteref{x_glb_all}               & Aircraft
+    \footnote{\label{x_glb}
+      Global sectoral trajectories are harmonized due to lack of detailed 
+      historical data.}                            \\
     Methane (CH4)                     & Energy Sector                       \\
-    Carbon Dioxide (CO2)              & Forest Burning                      \\
+    Carbon Dioxide (CO2)
+    \footnote{\label{x_co2}
+      A global trajectory for land-use CO2 is used; non-land-use sectors 
+      are harmonized for each model region.}
+                                      & Forest Burning                      \\
     Carbon Monoxide (CO)              & Grassland Burning                   \\
-    Hydrofluorocarbons (HFCs)         & Industrial Sector                   \\
-    Nitrous Oxide (N2O)               & International Shipping              \\
+    Hydrofluorocarbons (HFCs)
+    \footnoteref{x_glb_all}               & Industrial Sector                   \\
+    Nitrous Oxide (N2O)
+    \footnoteref{x_glb_all}
+                                      & International Shipping\footnoteref{x_glb}              \\
     Ammonia (NH3)                     & Residential Commercial Other        \\
     Nitrogen Oxides (NOx)             & Solvents Production and Application \\
     Organic Carbon (OC)               & Transportation Sector               \\
-    Sulfur Hexafluoride (SF6)         & Waste                               \\
+    Sulfur Hexafluoride (SF6)
+    \footnoteref{x_glb_all}               & Waste                               \\
     Sulfur Oxides (SOx)               &                                     \\
     Volatile Organic Compounds (VOCs) &                                     \\
     \hline
   \end{tabular}
-\end{table}
+\end{minipage}\end{table}
 
 The effect of harmonization overrides is analyzed by harmonizing each scenario
-first without and then with overrides. Of the 1430 trajectories, approximately
-10\% were reported as a diagnostic (see Section \ref{sec:workflow}) of which 2\%
+first without and then with overrides. Of the 970 trajectories, approximately
+10\% were reported as a diagnostic (see Section \ref{sec:workflow}) of which 3.5\%
 required the use of harmonization overrides after an initial investigation;
-thus, 98\% of all trajectories were satisfactorily harmonized using the default
+thus, 96.5\% of all trajectories were satisfactorily harmonized using the default
 methods. Figure \ref{fig:nox} provides
 one such example of an emissions species and sector in which all regions were
 satisfactorily harmonized with the default methods. As can be seen, results with
@@ -103,7 +112,7 @@ maintaining consistency with the original, unharmonized pathway. As such, when
 the default methods as provided by the harmonization procedure distort or
 otherwise sufficiently misrepresent the underlying unharmonized results, an
 override method is required to be provided for the trajectory of the region,
-sector, and species in question. The 2\% of trajectories that required overrides
+sector, and species in question. The 3.5\% of trajectories that required overrides
 clustered into two classifications: regional trajectories whose
 \textit{magnitude} was overly distorted and regional trajectories whose
 \textit{shape} was overly distorted.
