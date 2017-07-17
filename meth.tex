@@ -28,25 +28,18 @@ possible) which are of critical importance for cumulative CO2 calculations.
 In previous studies \cite{meinshausen_rcp_2011,rogelj_discrepancies_2011}, two
 \textit{families} of methods have been used: those that operate on the ratio of
 base year values (i.e., $\frac{h(t_i)}{m(t_i)}$) and those that operate on the
-offset of base year values (i.e., $h(t_i) - m(t_i)$). The \code{aneris} code
-base provides a number of implementations on the classic methods, including
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T21:27:39.375Z:
-% 
-% > classic methods
-% This might be interpreted as that convergence have not been previously applied. Perhaps use " implementations"  instead of "variations" .
-% 
-% ^.
-ratio-convergence methods shown in Equation \ref{eqs:ratio}, offset-convergence
-methods shown in Equation \ref{eqs:offset}, and interpolation methods shown in
-Equation \ref{eqs:interpolate}. The convergence factor, $\beta$, scales linearly
-from 1 to 0 in $[t_i, t_f)$ and is shown in Equation \ref{eqs:factor}. Note
-that region, species, and sector indices have been dropped for clarity. Each
-equation is a function of time, model trajectory, historical trajectory,
-harmonization time step, and a convergence time step ($t_f$), at which point the
-harmonized trajectory converges to the unharmonized trajectory. The
-\code{aneris} code base provides a number of methods to choose from for each of
-the harmonization families. A summary of all available methods is provided in
-Table \ref{tab:meths}.
+offset of base year values (i.e., $h(t_i) - m(t_i)$). \code{aneris} implements a
+number of the classic methods, including ratio-convergence shown in Equation
+\ref{eqs:ratio}, offset-convergence shown in Equation \ref{eqs:offset}, and
+interpolation shown in Equation \ref{eqs:interpolate}. The convergence factor,
+$\beta$, scales linearly from 1 to 0 in $[t_i, t_f)$ and is shown in Equation
+  \ref{eqs:factor}. Note that region, species, and sector indices have been
+  dropped for clarity. Each equation is a function of time, model trajectory,
+  historical trajectory, harmonization time step, and a convergence time step
+  ($t_f$), at which point the harmonized trajectory converges to the
+  unharmonized trajectory. \code{aneris} provides a number of methods to choose
+  from for each of the harmonization families. A summary of all available
+  methods is provided in Table \ref{tab:meths}.
 % * <maarten.vandenberg@pbl.nl> 2017-07-03T21:34:25.905Z:
 % 
 % > A
