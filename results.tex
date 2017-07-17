@@ -47,6 +47,7 @@ therefore 1940 trajectories were harmonized in total.
     \hline
     \textbf{Emissions Species}        & \textbf{Sectors}                    \\
     \hline
+    \hline
     Black Carbon (BC)                 & Agricultural Waste Burning          \\
     Hexafluoroethane (C2F6)
     \footnote{\label{x_glb_all}
@@ -83,28 +84,44 @@ therefore 1940 trajectories were harmonized in total.
 
 The effect of harmonization overrides is analyzed by harmonizing each scenario
 first without and then with overrides. Of the 970 trajectories, approximately
-10\% were reported as a diagnostic (see Section \ref{sec:workflow}) of which 3.5\%
-required the use of harmonization overrides after an initial investigation;
-thus, 96.5\% of all trajectories were satisfactorily harmonized using the default
-methods. Figure \ref{fig:nox} provides
-one such example of an emissions species and sector in which all regions were
-satisfactorily harmonized with the default methods. As can be seen, results with
-and without overrides are identical.
+10\% were reported as a diagnostic (see Section \ref{sec:workflow}) of which
+3.5\% required the use of harmonization overrides after an initial
+investigation; thus, 96.5\% of all trajectories were satisfactorily harmonized
+using the default methods. NOx generated from the Energy sector provides one
+such example of an emissions species and sector in which all regions were
+satisfactorily harmonized with the default methods. Figure \ref{fig:nox} shows
+the results of harmonization in Asia, and Table \ref{tab:nox} describes the
+parameters that underly the choice of method for each harmonized trajectory.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[width=\textwidth]{results_NOx_Energy_Sector.pdf}
+    \includegraphics[width=\textwidth]{example_NOx_Energy_Sector.pdf}
     \caption[]{
       \label{fig:nox}
       NOx Energy Sector harmonized (solid lines) and unharmonized (dashed lines)
-      trajectories for SSP2 and SSP2-45 are presented. SSP-45 is denoted with
-      ``x'' markers. Panel \textbf{a} shows 5-Region trajectories for scenarios
-      \textit{without} any overrides. Panel \textbf{b} shows 5-Region
-      trajectories for scenarios \textit{with} overrides. Panels \textbf{c} and
-      \textbf{d} show global trajectories without and with overrides,
-      respectively.  }
+      trajectories for SSP2 and SSP2-45 with historical trajectories (grey
+      lines) are presented. The SSP2 reference scenario is shown in Panels
+      \textbf{a} and \textbf{c}; the SSP-45 scenario is denoted with ``x''
+      markers in Panels \textbf{b} and \textbf{d}. The upper panels show the
+      results for endogenously modeled and harmonized regions in Asia while the
+      lower panels display the aggregate region results.  
+    }
   \end{center}
 \end{figure}
+
+\begin{table}[]
+\centering
+\caption{Key Parameters for Deciding Harmonization Methods for NOx Emissions in the Energy Sector in Asia}
+\label{tab:nox}
+\begin{tabular}{|p{1.2cm}|p{.5cm}|p{.5cm}|p{4.5cm}|p{3cm}|}
+\hline
+\textbf{Region} & \textbf{dH} & \textbf{c\_v} & \textbf{Decision Tree Traversal (Branch and Direction)} & \textbf{Method Chosen} \\ \hline
+    \hline
+CPA             & 0.35        & 2.26          & 1 (no), 2 (no), 3 (yes)                                 & reduce\_ratio\_2080    \\ \hline
+PAS             & 0.14        & 1.24          & 1 (no), 2 (no), 3 (yes)                                 & reduce\_ratio\_2080    \\ \hline
+SAS             & 0.56        & 0.58          & 1 (no), 2 (no), 3 (no), 4 (no)                          & constant\_ratio        \\ \hline
+\end{tabular}
+\end{table}
 
 The harmonization of emissions pathways is performed in order to accurately
 represent new or updated datasets of historical emissions inventories while also
