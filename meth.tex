@@ -8,22 +8,13 @@ dimensions. Each individual temporal trajectory, i.e., unique combinations of
 regions ($r$), species ($g$), and sectors ($s$), must be harmonized to the
 initial modeling period. Given a model trajectory, $m_{r, g, s}(t)$, historical
 values, $h_{r, g, s}(t)$, and initial modeling period $t_i$, a harmonized
-trajectory needs to be calculated. The ``goodness of fit'' of a trajectory depends on
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T21:16:50.244Z:
-% 
-% Assessing the "goodness of fit" is not  straightforward, there may be competing factors. Perhaps we should refer back to this in the discussion. 
-% 
-% ^.
-a number of factors, most notably the faithful representation of the original,
-unharmonized, trajectory. However, other important factors must be considered,
-such as the representation of negative trajectories (i.e., if a trajectory
-becomes negative, both the timing and total magnitude should be as close as
-possible) which are of critical importance for cumulative CO2 calculations.
-% * <ssmith@pnnl.gov> 2017-07-01T03:25:04.357Z:
-% 
-% Suggest moving this later where negative emissions are discussed. Its a bit of a tangent here.
-% 
-% ^ <ssmith@pnnl.gov> 2017-07-01T03:25:44.627Z.
+trajectory needs to be calculated. The ``goodness of fit'' of a trajectory
+depends on a number of factors, most notably the faithful representation of the
+original, unharmonized, trajectory. However, other important factors must be
+considered, such as the representation of negative trajectories (i.e., if a
+trajectory becomes negative, both the timing and total magnitude should be as
+close as possible) which are of critical importance for cumulative \cotwo
+calculations.
 
 In previous studies \cite{meinshausen_rcp_2011,rogelj_discrepancies_2011}, two
 \textit{families} of methods have been used: those that operate on the ratio of
@@ -32,21 +23,14 @@ offset of base year values (i.e., $h(t_i) - m(t_i)$). \code{aneris} implements a
 number of the classic methods, including ratio-convergence shown in Equation
 \ref{eqs:ratio}, offset-convergence shown in Equation \ref{eqs:offset}, and
 interpolation shown in Equation \ref{eqs:interpolate}. The convergence factor,
-$\beta$, scales linearly from 1 to 0 in $[t_i, t_f)$ and is shown in Equation
-  \ref{eqs:factor}. Note that region, species, and sector indices have been
-  dropped for clarity. Each equation is a function of time, model trajectory,
-  historical trajectory, harmonization time step, and a convergence time step
-  ($t_f$), at which point the harmonized trajectory converges to the
-  unharmonized trajectory. \code{aneris} provides a number of methods to choose
-  from for each of the harmonization families. A summary of all available
-  methods is provided in Table \ref{tab:meths}.
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T21:34:25.905Z:
-% 
-% > A
-% > summary
-% If beta would be defined as \frac{t -t_i}{t_f - t_i}, it might better match intuition of convergence: 0 value at t = t_i and 1 at full convergence (t = t_f), with added benefit the beta parameter can also be used in the interpolation option.
-% 
-% ^.
+$\beta$, scales linearly from 1 to 0 over $[t_i, t_f)$ and is shown in Equation
+  \ref{eqs:factor}. In all equations the region, species, and sector indices
+  have been dropped for clarity. Each equation is a function of time, model
+  trajectory, historical trajectory, harmonization time step ($t_i$), and a
+  convergence time step ($t_f$), at which point the harmonized trajectory
+  converges to the unharmonized trajectory. \codeb{aneris} provides a number of
+  methods to choose from for each of the harmonization families. A summary of
+  all available methods is provided in Table \ref{tab:meths}.
 
 
 \begin{equation}\label{eqs:factor}
@@ -95,7 +79,7 @@ Method Name                             & Harmonization Family & Convergence Yea
 
 While historically expert opinion has guided the choice of harmonization methods
 for a given trajectory, a new, \textit{decision tree} approach has been
-implemented in this work which provides a systematic and documented
+implemented in \codeb{aneris} which provides a systematic and documented
 decision-making process for method determination. In order to provide reasonable
 \textit{default} methods, the historical trajectory, unharmonized model
 trajectory, and relative difference between history and model values in the
@@ -110,8 +94,9 @@ shown graphically in Figure \ref{fig:decision_tree}.
       \label{fig:decision_tree}
       The default method decision tree used in the \code{aneris} software
       library. For all decisions, upper (purple) branches represent a ``yes''
-      response and lower (orange) branches represent a ``no'' response. $dH$ is
-      defined as $\left|\frac{h(t_i) - m(t_i)}{h(t_i)}\right|$, and
+      response and lower (orange) branches represent a ``no'' response. The
+      coefficient of variation, $c_v$, is defined in Equation \ref{eqs:cov},
+      $dH$ is defined as $\left|\frac{h(t_i) - m(t_i)}{h(t_i)}\right|$, and
       decision-making thresholds for $c_v$ and $dH$ are described below. Methods
       labeled in \textit{green} are likely to closely match unharmonized
       results, methods in \textit{yellow} will likely somewhat match
@@ -142,7 +127,7 @@ to provide reasonable trajectories that still incorporate modeled effects
 Models can additionally report negative emissions in certain contexts which must
 be taken into account during harmonization. Such a case is possible for gas
 species which can be extracted from the environment and stored, as is the case
-for CO2 in future scenarios with climate mitigation. If a model provides a
+for \cotwo in future scenarios with climate mitigation. If a model provides a
 trajectory that transitions from positive to negative emissions and base year
 results are similar, then a convergence method is used in order to guarantee
 capture of this transition in a representative fashion (Figure \ref{fig:cases},
@@ -161,49 +146,27 @@ chosen (Figure \ref{fig:cases}, Panel \code{d}).
       difference between historical and model values in the harmonization year
       (Panels \code{b} and \code{d}), and when model trajectories result in
       negative emissions by the end of the modeling time horizon (Panels
-      \code{c} and \code{d}). In each figure row (Panels \code{a}, \code{b};
-      \code{c}, \code{d}), identical model trajectories are used. In each figure
-      column, historical values are increased in the base year by an order of
-      magnitude (from 10 to 100). In each case, a subset of the potential
-      routines provide a better ``goodness of fit'' than others as described in
-      the text.  }
+      \code{c} and \code{d}). Identical model trajectories are used in each row
+      (Panels \code{a}, \code{b}; \code{c}, \code{d}). In each column,
+      historical values are increased in the base year by an order of magnitude
+      (from 10 to 100). In each Panel, a subset of the potential routines
+      provide a better ``goodness of fit'' than others as described in the text.
+    }
   \end{center}
 \end{figure}
 
-Temporal variability of the historical trajectory is also an important characteristic
-when considering the choice of harmonization method.  Emissions from forest and grassland fires, for example, vary from year to year due to a combination of meteorological conditions and anthropogenic drivers. Land use emissions are modeled by IAMs using average emission factors and do not capture conditions in a specific year.  Ratio methods for such sectors can lead to unrealistic harmonization results.
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T21:59:54.238Z:
-% 
-% > Ratio methods for such sectors can lead to unrealistic harmonization results.
-% However, using for instance an offset method may also misrepresent the emission levels. Depending on the trajectory the emission factor can be subject to unintentional changes over the century.
-% 
-% ^.
-modeled with varying fidelity by IAMs, but in general proxies are used for
-emissions trajectories. Take for example emissions from grassland burning: for
-most models, the use of grass and paturelands is endogenously modeled, and
-emissions from the burning of these lands is determined by applying an emissions
-factor; in general, the more grassland usage that occurs in a scenario, the
-higher the emissions from the burning thereof. Therefore, consistency in
-harmonization method is important because the effects are modeled similarly
-across regions and species. In order to detect land-use-like emissions,
-% * <ssmith@pnnl.gov> 2017-07-01T03:31:52.910Z:
-% 
-% > modeled with varying fidelity by IAMs, but in general proxies are used for
-% > emissions trajectories. Take for example emissions from grassland burning: for
-% > most models, the use of grass and paturelands is endogenously modeled, and
-% > emissions from the burning of these lands is determined by applying an emissions
-% > factor; in general, the more grassland usage that occurs in a scenario, the
-% > higher the emissions from the burning thereof. Therefore, consistency in
-% > harmonization method is important because the effects are modeled similarly
-% > across regions and species. 
-% 
-% Not sure I follow the logic here. I added some new text that might help. Perhaps the intermediate part could be deleted.
-% 
-% ^ <ssmith@pnnl.gov> 2017-07-01T03:32:30.453Z.
-a measure of the coefficient of variation of the first derivative of the
-historical trajectory, $c_v$, is calculated as shown in Equation \ref{eqs:cov},
-where $\sigma$ is the standard deviation, and $\mu$ is the mean of the
-trajectory.
+Temporal variability of the historical trajectory is also an important
+characteristic when considering the choice of harmonization method.  Emissions
+from forest and grassland fires, for example, vary from year to year due to a
+combination of meteorological conditions and anthropogenic drivers. Land use
+emissions are modeled by IAMs using average emission factors and do not capture
+conditions in a specific year. A longer convergence horizon is thus desired in
+order to incorporate highly variable historical data with modeled results as is
+consistency in harmonization method because the effects are modeled similarly
+across regions and species. In order to detect land-use-like emissions, a
+measure of the coefficient of variation, $c_v$, of the first derivative of the
+historical trajectory is calculated as shown in Equation \ref{eqs:cov}, where
+$\sigma$ is the standard deviation, and $\mu$ is the mean.
 
 The value of $c_v$ is then tested against a threshold, $\tau_{c_v}$. To
 determine this threshold, an analysis of the recent CEDS and LUC historical data
@@ -218,14 +181,6 @@ regional definition is model dependent and thus any regional aggregation is
 possible an automated detection mechanism is necessary.
 
 \begin{equation}\label{eqs:cov}
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T22:08:21.230Z:
-% 
-% > \begin{equation}\label{eqs:cov}
-% >     c_v =  \frac{\sigma(h^{\prime}(t))}{\mu(h^{\prime}(t))}
-% > \end{equation}
-% c_v is called a covariance parameter and a variance of derivatives, what is exactly calculated?
-% 
-% ^.
     c_v =  \frac{\sigma(h^{\prime}(t))}{\mu(h^{\prime}(t))}
 \end{equation}
 
@@ -240,8 +195,8 @@ possible an automated detection mechanism is necessary.
       is used for non-LUC data and \cite{van_marle_historic_2017} is used for
       LUC data. All historical data has been aggregated from countries to IAM
       model regional definitions, and all gas species included in the historical
-      datasets are included in the analysis. The solid black line indicates the
-      threshold value used by default in \code{aneris}.  }
+      data sets are included in the analysis. The solid black line indicates the
+      threshold value, $\tau_{c_v}$, used by default in \code{aneris}.  }
   \end{center}
 \end{figure}
 
@@ -252,12 +207,6 @@ IAM values used in the SSP and (ongoing) CMIP6 inter-comparison
 exercises are used. A distribution of these differences for all models in the
 study is presented in Figure \ref{fig:dh}. Given the available data, a threshold
 value of $\tau_{dH} = 50$\% was chosen to be used as a default in \code{aneris}.
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T22:25:47.452Z:
-% 
-% > 50\%
-% What does this mean? I would expect something of the form low_value < dH < high_value?
-% 
-% ^.
 
 \begin{figure}
   \begin{center}
@@ -266,15 +215,7 @@ value of $\tau_{dH} = 50$\% was chosen to be used as a default in \code{aneris}.
       \label{fig:dh}
       The distribution of relative differences between model and historical
       values in the harmonization year is shown. The solid black line indicates
-      the 50\% threshold value used by default in \code{aneris}.  
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T22:14:59.644Z:
-% 
-% > The distribution of relative differences between model and historical
-% >       values in the harmonization year is shown. The solid black line indicates
-% >       the 50\% threshold value used by defaul
-% the asymmetry here might be interesting, do the SSP scenarios consistently underestimate emission levels, or is this an effect of history up to 2015, while scenarios start earlier (might not be interesting for this paper).
-% 
-% ^.
+      the 50\% threshold value, $\tau_{dH}$, used by default in \code{aneris}.
     }
   \end{center}
 \end{figure}
@@ -318,7 +259,7 @@ thresholds as well as the LUC method used in the decision tree (see Figure
 \end{figure}
 
 Input data then undergoes a cleaning operation, which adds (null) model
-trajectories that exist in the historical dataset but are not provided by the
+trajectories that exist in the historical data set but are not provided by the
 model input and detects any issues that would cause the harmonization process to
 fail. The methods used to harmonize the data are then determined and the
 harmonization process is executed. Upon completion of the harmonization process,
@@ -352,7 +293,7 @@ meta data is provided in Table \ref{tab:metadata}.
 \label{tab:metadata}
 \begin{tabular}{|p{2cm}|p{8cm}|}
 \hline
-Column       & Description                                                                  \\
+\textbf{Column}       & \textbf{Description}                                      \\
 \hline
 \hline
 method       & The harmonization method used.                                               \\
