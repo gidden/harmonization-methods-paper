@@ -110,7 +110,7 @@ each harmonized trajectory.
 \label{tab:nox}
 \begin{tabular}{|p{1.2cm}|p{.5cm}|p{.5cm}|p{4.5cm}|p{3cm}|}
 \hline
-\textbf{Region} & \textbf{dH} & \textbf{c\_v} & \textbf{Decision Tree Traversal (Branch and Direction)} & \textbf{Method Chosen} \\ \hline
+\textbf{Region} & \textbf{dH} & $\mathbf{c_v}$ & \textbf{Decision Tree Traversal (Branch and Direction)} & \textbf{Default Method Chosen} \\ \hline
     \hline
 CPA             & 0.35        & 2.26          & 1 (no), 2 (no), 3 (yes)                                 & reduce\_ratio\_2080    \\ \hline
 PAS             & 0.14        & 1.24          & 1 (no), 2 (no), 3 (yes)                                 & reduce\_ratio\_2080    \\ \hline
@@ -176,14 +176,26 @@ degree. While this distortion changes the magnitude of the SAS trajectory, it
 % 
 % > Notably, the SSP2-45 scenario is not affected to the same
 % > degree.
-% First, I think other effects are in play here. The unharmonized SSP2 -ref scenario has a discontinuity in it's derivative for the SAS region. This is amplified at the regional level by the constant_ratio approach and affects the 4.5 scenario in the same manner, that just happens to lack the discontinuity. Furthermore the trend of other regions is strengthened (a stronger decrease), leading up to an even stronger discontinuity in the global total. However, the ratio approach does a better job at representing the trend in the scenario. That trade-off is not completely clear now, also refers back to goodness of fit. Secondly, more problematic effects occur when applying reduce_ratio methods, that can lead to strong magnitude and trend changes; however this should only occur (significantly) when in override mode (if I understand the implementation of dH correctly).
+% First, I think other effects are in play here. The unharmonized SSP2 -ref
+% scenario has a discontinuity in it's derivative for the SAS region. This is
+% amplified at the regional level by the constant_ratio approach and affects the
+% 4.5 scenario in the same manner, that just happens to lack the
+% discontinuity. Furthermore the trend of other regions is strengthened (a
+% stronger decrease), leading up to an even stronger discontinuity in the global
+% total. However, the ratio approach does a better job at representing the trend
+% in the scenario. That trade-off is not completely clear now, also refers back
+% to goodness of fit. Secondly, more problematic effects occur when applying
+% reduce_ratio methods, that can lead to strong magnitude and trend changes;
+% however this should only occur (significantly) when in override mode (if I
+% understand the implementation of dH correctly).
 % 
 % ^.
 largely affects the post-2080 shape of the global trajectory (see Figure
 \ref{fig:nh3}, panel \textbf{c}). By using a \code{constant_offset} method as an
 override, this distortion is addressed and more accurately reflects unharmonized
-results both in the SAS region and global results for agricultural ammonia
-emissions.
+results in the SAS region, the relative importance between regions, and global
+results for agricultural ammonia emissions, each of which contributes to a
+better ``goodness of fit'' for the harmonized SAS trajectory.
 
 \begin{figure}
   \begin{center}
@@ -195,7 +207,7 @@ emissions.
       Figure \ref{fig:co}. In this case, the SAS trajectory again shows not only
       a magnitude distortion, but also a shape distortion at the tail of the
       trajectory. Additionally, global trajectories are greatly affected by the
-      harmonization method choice (there is $\sim$20 percent relative difference
+      harmonization method choice (there is $\sim$20\% relative difference
       between trajectories in the reference scenario in 2100). Override methods
       have been applied to correct the distortion.  }
   \end{center}
