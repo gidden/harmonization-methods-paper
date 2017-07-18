@@ -1,7 +1,7 @@
 \section{Results}\label{sec:results}
 
 In order to test the \code{aneris} harmonization procedure, results from the IAM
-MESSAGE-GLOBIOM \cite{fricko_marker_2017} was processed. Two scenarios from the
+MESSAGE-GLOBIOM \cite{fricko_marker_2017} were processed. Two scenarios from the
 SSP scenario library \cite{Riahi2017153,Rao2017346} are investigated. The SSP2,
 or ``middle of the road'', scenario family is chosen to be analyzed because
 MESSAGE-GLOBIOM is the marker scenario for this SSP. Of all SSP2 scenarios, the
@@ -37,7 +37,12 @@ mapped directly to the 5-region definition used in the RCPs. Historical data is
 taken from previously described LUC and anthropogenic sources, which comprise 10
 separate pollutant and GHG species and 12 sectors shown in Table \ref{tab:sp}. A
 total of 970 distinct trajectories were harmonized for each scenario, and
-therefore 1940 trajectories were harmonized in total.
+therefore 1940 trajectories were harmonized in total. NOx generated from the
+Energy sector provides an example of an emissions species and sector in which
+all regions were satisfactorily harmonized with the default methods. Figure
+\ref{fig:nox} shows the results of harmonization in Asia, and Table
+\ref{tab:nox} describes the parameters that underlie the choice of method for
+each harmonized trajectory.
 
 \begin{table}[]\begin{minipage}{\textwidth}
   \centering
@@ -82,16 +87,6 @@ therefore 1940 trajectories were harmonized in total.
   \end{tabular}
 \end{minipage}\end{table}
 
-The effect of harmonization overrides is analyzed by harmonizing each scenario
-first without and then with overrides. Of the 970 trajectories, approximately
-10\% were reported as a diagnostic (see Section \ref{sec:workflow}) of which
-3.5\% required the use of harmonization overrides after an initial
-investigation; thus, 96.5\% of all trajectories were satisfactorily harmonized
-using the default methods. NOx generated from the Energy sector provides one
-such example of an emissions species and sector in which all regions were
-satisfactorily harmonized with the default methods. Figure \ref{fig:nox} shows
-the results of harmonization in Asia, and Table \ref{tab:nox} describes the
-parameters that underly the choice of method for each harmonized trajectory.
 
 \begin{figure}
   \begin{center}
@@ -124,34 +119,30 @@ SAS             & 0.56        & 0.58          & 1 (no), 2 (no), 3 (no), 4 (no)  
 \end{table}
 
 The harmonization of emissions pathways is performed in order to accurately
-represent new or updated datasets of historical emissions inventories while also
+represent new or updated data sets of historical emissions inventories while also
 maintaining consistency with the original, unharmonized pathway. As such, when
 the default methods as provided by the harmonization procedure distort or
 otherwise sufficiently misrepresent the underlying unharmonized results, an
 override method is required to be provided for the trajectory of the region,
-sector, and species in question. The 3.5\% of trajectories that required overrides
-clustered into two classifications: regional trajectories whose
-\textit{magnitude} was overly distorted and regional trajectories whose
-\textit{shape} was overly distorted.
+sector, and species in question. Of the 970 trajectories, approximately 10\%
+were reported as a diagnostic (see Section \ref{sec:workflow}) of which 3.5\%
+required the use of harmonization overrides after an initial investigation;
+thus, 96.5\% of all trajectories were satisfactorily harmonized using the
+default methods. The trajectories that required overrides clustered into two
+classifications: regional trajectories whose \textit{magnitude} was overly
+distorted and regional trajectories whose \textit{shape} was overly distorted.
 
 Figure \ref{fig:co} presents a case in which the magnitude of a trajectory is
 distorted. A large discrepancy ($\sim$300\% relative difference) is observed in
 the harmonization year for carbon monoxide (CO) emissions in the industrial
 sector specifically for the South Asia (SAS) MESSAGE-GLOBIOM region, which
-comprises most of the Asian subcontinent. The default method chosen
-(\code{constant_ratio}) maintains model trends for the region; however, overall
-model results are distorted. By applying a \code{constant_offset} override, the
-regional trend and magnitude is maintained. With the new harmonization method
-for the SAS region, the global trajectory for industrial CO also is
-representative the trends seen in the unharmonized trajectory and the relative
-importance of the underlying regional trajectoreis is maintained.
-% * <maarten.vandenberg@pbl.nl> 2017-07-03T22:53:14.757Z:
-% 
-% > the global trajectory for industrial CO also corresponds
-% > more closely with the unharmonized trajectory.
-% The global trajectory suffers under the constant_ratio method from changing relative importance of underlying regions, resulting in a trend change, this effect is also prevented by using a constant_offset method.
-% 
-% ^.
+comprises most of the emissions of the Asian subcontinent. The default method
+chosen (\code{constant_ratio}) maintains model trends for the region; however,
+overall model results are distorted. By applying a \code{constant_offset}
+override, the regional trend and magnitude is maintained. With the new
+harmonization method for the SAS region, the global trajectory for industrial CO
+also is representative the trends seen in the unharmonized trajectory and the
+relative importance of the underlying regional trajectories is maintained.
 
 \begin{figure}
   \begin{center}
