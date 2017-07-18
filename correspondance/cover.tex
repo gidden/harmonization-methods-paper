@@ -1,0 +1,92 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plain Cover Letter
+% LaTeX Template
+%
+% This template has been downloaded from:
+% http://www.latextemplates.com
+%
+% Original author:
+% Rensselaer Polytechnic Institute (http://www.rpi.edu/dept/arc/training/latex/resumes/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%       PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt]{letter} % Default font size of the document, change to 10pt to fit more text
+\usepackage{graphicx}
+%\usepackage{newcent} % Default font is the New Century Schoolbook PostScript font
+%\usepackage{helvet} % Uncomment this (while commenting the above line) to use the Helvetica font
+
+% Margins
+\usepackage[left=1.25in,right=1.25in,top=1.5in,bottom=1.25in]{geometry}
+%\let\raggedleft\raggedright % Pushes the date (at the top) to the left, comment this line to have the date on the right
+
+\usepackage{eso-pic,graphicx}
+ \begin{document}
+
+%----------------------------------------------------------------------------------------
+%       ADDRESSEE SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{letter}{Professor D.P. Ames\\
+Editor-in-Chief, Environmental Modelling \& Software}
+
+%----------------------------------------------------------------------------------------
+%       YOUR NAME & ADDRESS SECTION
+%----------------------------------------------------------------------------------------
+
+\address{Matthew Gidden\\
+Laimgrubengasse 17/7\\
+Vienna, Austria 1060}
+
+
+%----------------------------------------------------------------------------------------
+%       LETTER CONTENT SECTION
+%----------------------------------------------------------------------------------------
+
+\opening{Professor Ames,}
+
+Please find enclosed a manuscript entitled: ``A Methodology and Implementation
+of Automated Emissions Harmonization for Use in Integrated Assessment Models''
+which I am submitting for exclusive consideration of publication as a
+full-length article in Environmental Modelling \& Software.  This manuscript
+describes novel work in the subject area of Integrated Assessment Models (IAMs)
+and Modelling, specifically related to their use in combination with Earth
+Systems Models (ESMs). A new software library, \texttt{aneris}, is presented
+which robustly automates the process of emissions trajectory
+harmonization. Through harmonization, multiple IAMs can produce results
+consistent with a single historical data set.
+
+This capability is critical for the success of the worldwide scientific
+community efforts in the Coupled Model Intercomparison Project Phase 6 (CMIP6)
+in which results from IAMs are being used as inputs to ESMs in order to model
+future scenarios of climate change. By producing a tested, documented, and open
+source software implementation, this work
+
+\begin{itemize}
+  \item provides a mechanism by which IAMs contributing to the current process
+    of CMIP6 can produce consistent results not only within a single team but
+    among all teams
+  \item allows for other teams in the scientific community to contribute
+    consistent results to the CMIP6 process in the future
+  \item and increases the transparency and scientfic integrity of that process.
+\end{itemize}
+
+Thank you for your consideration of this work. Please address all correspondence
+concerning this manuscript to me and feel free to correspond with me by e-mail.
+
+\closing{
+Warm Regards,
+
+Matthew Gidden, Ph.D.
+}
+
+%----------------------------------------------------------------------------------------
+
+\end{letter}
+
+\end{document}
+
+
