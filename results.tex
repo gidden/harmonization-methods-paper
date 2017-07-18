@@ -37,7 +37,7 @@ mapped directly to the 5-region definition used in the RCPs. Historical data is
 taken from previously described LUC and anthropogenic sources, which comprise 10
 separate pollutant and GHG species and 12 sectors shown in Table \ref{tab:sp}. A
 total of 970 distinct trajectories were harmonized for each scenario, and
-therefore 1940 trajectories were harmonized in total. NOx generated from the
+therefore 1940 trajectories were harmonized in total. \noxx generated from the
 Energy sector provides an example of an emissions species and sector in which
 all regions were satisfactorily harmonized with the default methods. Figure
 \ref{fig:nox} shows the results of harmonization in Asia, and Table
@@ -54,34 +54,34 @@ each harmonized trajectory.
     \hline
     \hline
     Black Carbon (BC)                 & Agricultural Waste Burning          \\
-    Hexafluoroethane (C2F6)
+    Hexafluoroethane (C\textsubscript{2}F\textsubscript{6})
     \footnote{\label{x_glb_all}
       Global total trajectories are harmonized due to lack of detailed 
       historical data.}
                                       & Agriculture                         \\
-    Tetrafluoromethane (CF4)
+    Tetrafluoromethane (CF\textsubscript{4})
     \footnoteref{x_glb_all}               & Aircraft
     \footnote{\label{x_glb}
       Global sectoral trajectories are harmonized due to lack of detailed 
       historical data.}                            \\
-    Methane (CH4)                     & Energy Sector                       \\
-    Carbon Dioxide (CO2)
+    Methane (CH\textsubscript{4})                     & Energy Sector                       \\
+    Carbon Dioxide (CO\textsubscript{2})
     \footnote{\label{x_co2}
-      A global trajectory for land-use CO2 is used; non-land-use sectors 
+      A global trajectory for land-use CO\textsubscript{2} is used; non-land-use sectors 
       are harmonized for each model region.}
                                       & Forest Burning                      \\
     Carbon Monoxide (CO)              & Grassland Burning                   \\
     Hydrofluorocarbons (HFCs)
     \footnoteref{x_glb_all}               & Industrial Sector                   \\
-    Nitrous Oxide (N2O)
+    Nitrous Oxide (N\textsubscript{2}O)
     \footnoteref{x_glb_all}
                                       & International Shipping\footnoteref{x_glb}              \\
-    Ammonia (NH3)                     & Residential Commercial Other        \\
-    Nitrogen Oxides (NOx)             & Solvents Production and Application \\
+    Ammonia (\nht)                     & Residential Commercial Other        \\
+    Nitrogen Oxides (\nox)             & Solvents Production and Application \\
     Organic Carbon (OC)               & Transportation Sector               \\
-    Sulfur Hexafluoride (SF6)
+    Sulfur Hexafluoride (SF\textsubscript{6})
     \footnoteref{x_glb_all}               & Waste                               \\
-    Sulfur Oxides (SOx)               &                                     \\
+    Sulfur Oxides (SO\textsubscript{x})               &                                     \\
     Volatile Organic Compounds (VOCs) &                                     \\
     \hline
   \end{tabular}
@@ -93,7 +93,7 @@ each harmonized trajectory.
     \includegraphics[width=\textwidth]{example_NOx_Energy_Sector.pdf}
     \caption[]{
       \label{fig:nox}
-      NOx Energy Sector harmonized (solid lines) and unharmonized (dashed lines)
+      \noxx Energy Sector harmonized (solid lines) and unharmonized (dashed lines)
       trajectories for SSP2 and SSP2-45 with historical trajectories (grey
       lines) are presented. The SSP2 reference scenario is shown in Panels
       \textbf{a} and \textbf{c}; the SSP-45 scenario is denoted with ``x''
@@ -106,7 +106,7 @@ each harmonized trajectory.
 
 \begin{table}[]
 \centering
-\caption{Key Parameters for Deciding Harmonization Methods for NOx Emissions in the Energy Sector in Asia}
+\caption{Key Parameters for Deciding Harmonization Methods for \noxx Emissions in the Energy Sector in Asia}
 \label{tab:nox}
 \begin{tabular}{|p{1.2cm}|p{.5cm}|p{.5cm}|p{4.5cm}|p{3cm}|}
 \hline
@@ -166,7 +166,7 @@ relative importance of the underlying regional trajectories is maintained.
 In certain circumstances, the application of the default harmonization methods
 can affect not only the magnitude but also the shape of regional
 trajectories. Figure \ref{fig:nh3} shows an example case of emissions
-trajectories for ammonia (NH3) from the agriculture sector in Asia. Again, the
+trajectories for ammonia (\nht) from the agriculture sector in Asia. Again, the
 SAS region shows a large discrepancy in the harmonization year ($>$150\% in
 this case). The resulting trajectory harmonized with the default method
 (\code{constant_ratio}) provides a large increase after 2080 in the SSP2
@@ -190,7 +190,7 @@ emissions.
     \includegraphics[width=\textwidth]{results_NH3_Agriculture.pdf}
     \caption[]{
       \label{fig:nh3}
-      NH3 agricultural harmonized and unharmonized emissions are presented for
+      \nhtt agricultural harmonized and unharmonized emissions are presented for
       SSP2 and SSP2-45 scenarios. Scenarios and panel layouts are identical to
       Figure \ref{fig:co}. In this case, the SAS trajectory again shows not only
       a magnitude distortion, but also a shape distortion at the tail of the
