@@ -12,37 +12,37 @@ scenarios based on the Shared Socioeconomic Pathways (SSPs)
   calvin_ssp4:_2017, kriegler_fossil-fueled_2017} which quantify a variety of
 potential global futures. The SSPs are designed to be used in research that
 include earth system model (ESM) simulations, climate impact, adaptation and
-climate mitigation studies.
+climate mitigation studies \cite{vuuren_new_2013}.
 
 While IAMs are implemented in myriad ways, including simulation and
-optimization, the core inputs and outputs  are similar across different
-models. Modeling teams incorporate  data on energy systems, land
-use, economics, demographics and emissions sources and concentrations, among other
-data, in order to provide consistent existing trajectories of modeled
-variables. The models then provide estimates of future trajectories of these
-variables under various socioeconomic and technological assumptions as well as
-proposed policy constraints, e.g., targets for future Greenhouse Gas (GHG)
-emissions.
+optimization, the core inputs and outputs are similar across different
+models. Modeling teams incorporate data on energy systems, land use, economics,
+demographics and emissions sources and concentrations, among other data, in
+order to provide consistent existing trajectories of modeled variables. The
+models then provide estimates of future trajectories of these variables under
+various socioeconomic and technological assumptions as well as proposed policy
+constraints, e.g., targets for future Greenhouse Gas (GHG) emissions.
 
 The emissions trajectories calculated by IAMs are critical inputs for ongoing,
 worldwide scientific community efforts in the Coupled Model Intercomparison
 Project Phase 6 (CMIP6) \cite{eyring_overview_2016}, which is utilizing a number
-of marker SSP scenarios developed by the IAM community
+of marker SSP scenarios developed by the IAM community (ScenarioMIP)
 \cite{oneill_scenario_2016}. These trajectories are endogenously calculated by
 modeling the individual technologies and sectors that contribute towards the
 emissions of different air pollutants and GHGs as well as various mitigation
-technologies. However, the historical emissions starting points of  models can differ by
-large amounts depending on the region, sector, and emissions species.
+technologies. However, the historical emissions starting points of models can
+differ by large amounts depending on the region, sector, and emissions species.
 
 In practice, IAMs calculate the total source intensity of emitting technologies,
 for example the total activity of coal power plants in China, and incorporate
 emissions-intensity factors for individual gas species, for example the quantity
 of sulfur emissions from coal plants per megawatt-hour of production. Models are
 generally \textit{calibrated} to historical data sources in one or more base
-years. Due to the sometimes large uncertainties in historical data sets, results
-in the historical period may differ between models. Models also differ in their
-choice of base-year, which may lag behind available inventory data. In addition,
-models have varying sectoral, regional, and fuel aggregations.
+years. Results in the historical period may differ between models as a result of
+the sometimes large uncertainties in historical data sets. Other sources of
+error arise because models can also differ in their choice of base-year, which
+may lag behind available inventory data. In addition, models have varying
+sectoral, regional, and fuel aggregations.
 
 The global climate change community has recently developed a new global
 historical emissions data set for both anthropogenic emissions (i.e., the
@@ -54,7 +54,7 @@ trajectories, will be used for climate-related modeling exercises of CMIP6.
 When participating in intercomparison exercises in which a consistent historical
 starting point is required (e.g., in CMIP6), model teams incorporate a single,
 common historical data set through \textit{harmonization}. Harmonization
-describes the process of adjusting model results to match the selected
+refers to the process of adjusting model results to match a selected
 historical time series such that the resulting future trajectories are also
 consistent with the original modeled results. In the emissions context, this
 means that each individual combination of model region, model sector, and
@@ -73,8 +73,8 @@ harmonization routines on future trajectories. During the evaluation of the
 Representative Concentration Pathways (RCPs), IAM results have been harmonized
 by sector and the 5 RCP global regions
 \cite{vuuren_representative_2011}. Importantly, the choice of harmonization
-method to date has been determined via expert solicitation and has generally
-been applied to all trajectories for a given class of emissions species.
+method to date has been determined by individual experts and has generally been
+applied to all trajectories for a given class of emissions species.
 
 Climate modeling efforts have continued to progress, demanding increased spatial
 and sectoral resolution from IAMs. Furthermore, a new generation of climate
@@ -83,7 +83,7 @@ in order to incorporate both physical and socioeconomic detail. In order to
 address the growing dimensionality of model outputs and support ongoing scenario
 generation and analysis efforts while still providing a consistent and
 scientifically rigorous harmonization procedure, an automated process for
-determining harmonization methods is needed. The use of an automated,
+determining harmonization methods is preferred. The use of an automated,
 documented, and openly available harmonization mechanism additionally allows for
 full procedural reproducibility and for direct participation by additional
 modeling teams not involved in the original exercise.

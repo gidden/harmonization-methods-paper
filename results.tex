@@ -1,23 +1,18 @@
 \section{Results}\label{sec:results}
 
-In order to test the \code{aneris} harmonization procedure, results from the IAM
-MESSAGE-GLOBIOM \cite{fricko_marker_2017} were processed. Two scenarios from the
-SSP scenario library \cite{Riahi2017153,Rao2017346} are investigated. The SSP2,
-or ``middle of the road'', scenario family is chosen to be analyzed because
-MESSAGE-GLOBIOM is the marker scenario for this SSP. Of all SSP2 scenarios, the
-reference (marker) and SSP2-45 scenarios are analyzed. Notably, emissions from
-multiple sectors tend to increase in the reference scenario, thus testing the
-harmonization mechanism with an increasing emissions pathway. The SSP2-45
-scenario, where the ``45'' designation refers to a scenario with end-of-century
-emissions resulting in approximately a 4.5 $\frac{\text{W}}{\text{m}^2}$
-radiative forcing due to both warming from GHGs and fluoridated gases as well as
-cooling from aerosols, is chosen because mitigation technologies and policies
-are enacted causing a general reduction in pollutants and GHGs, including
-(eventual) negative CO2 emissions in some regions and sectors due to carbon
-capture and sequestration and afforestation. This scenario explores the
-harmonization mechanism's response to generally decreasing emission
-trajectories. The emissions of Kyoto Gases, shown in Figure \ref{fig:kyoto},
-shows the different trends of these two scenarios.
+In order to show a representative cross section of the performance of the
+\code{aneris} harmonization procedure, we focus on the harmonization of results
+of the IAM MESSAGE-GLOBIOM \cite{fricko_marker_2017}. Two scenarios from the SSP
+scenario library \cite{Riahi2017153,Rao2017346} are presented. The SSP2, or
+``middle of the road'', scenario (referred to as SSP2-Ref) is chosen to be
+analyzed because MESSAGE-GLOBIOM is the marker scenario for this SSP. We
+additionally present the results for the SSP2-based mitigation scenario leading
+to a radiative forcing of 4.5 $\frac{\text{W}}{\text{m}^2}$ (referred to as
+SSP2-4.5). The SSP2-45 scenario is chosen because mitigation technologies and
+policies are enacted causing a general reduction in pollutants and GHGs,
+including (eventual) negative CO2 emissions in some regions and sectors due to
+carbon capture and sequestration and afforestation. Figure \ref{fig:kyoto} shows
+the different trends of Kyoto Gases in each scenarios.
 
 
 \begin{figure}
@@ -195,7 +190,7 @@ largely affects the post-2080 shape of the global trajectory (see Figure
 override, this distortion is addressed and more accurately reflects unharmonized
 results in the SAS region, the relative importance between regions, and global
 results for agricultural ammonia emissions, each of which contributes to a
-better ``goodness of fit'' for the harmonized SAS trajectory.
+better harmonization quality for the harmonized SAS trajectory.
 
 \begin{figure}
   \begin{center}
@@ -214,5 +209,31 @@ better ``goodness of fit'' for the harmonized SAS trajectory.
 \end{figure}
 
 
+We investigate the aggregate effect of harmonization with all necessary override
+methods on total anthropogenic radiative forcing projections with the simple
+carbon-cycle and climate model, MAGICC6 \cite{meinshausen2011emulating,
+  meinshausen2011rcp}, for each harmonized and unharmonized scenario
+respectively as shown in Figure \ref{fig:forcing}. We find that the change due
+to harmonization is small, ranging between 1 and 2.5\% over the model
+horizon. Relative near-term differences persist in the mitigation case (SSP-4.5)
+because differences in near-term emissions define to a larger degree the
+longer-term forcing outcome due to the cumulative nature of long-lived climate
+forcers like \cotwo.  The resulting difference in forcing in 2100 is 0.04
+$\frac{\text{W}}{\text{m}^2}$ for SSP2-4.5 and 0.01
+$\frac{\text{W}}{\text{m}^2}$ for SSP2-Ref, both of which are well within
+acceptable tolerances (e.g., 0.75 $\frac{\text{W}}{\text{m}^2}$ defined for
+ScenarioMIP \cite{oneill_scenario_2016}). Thus harmonization is considered to
+have a negligible effect on key long-term climate indicators.
 
-
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\textwidth]{results_forcing.pdf}
+    \caption[]{
+      \label{fig:forcing}
+      The results of the simple climate model, MAGICC6, forced with the SSP2-Ref
+      (blue) and SSP2-4.5 (green) harmonized and unharmonized scenarios is
+      presented. The radiative forcing trajectories of harmonized and
+      unharmonized scenarios are shown in solid lines and dashed lines,
+      respectively.  }
+  \end{center}
+\end{figure}
