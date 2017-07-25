@@ -10,11 +10,11 @@ initial modeling period. Given a model trajectory, $m_{r, g, s}(t)$, historical
 values, $h_{r, g, s}(t)$, and model base year, $t_i$, a harmonized trajectory
 needs to be calculated. The \textit{harmonization quality} of a trajectory,
 i.e., how well a given harmonization algorithm performs, depends on a number of
-factors, most notably the faithful representation of the original, unharmonized,
-trajectory. This includes the representation of negative trajectories (i.e., if
-a trajectory becomes negative, both the timing and total magnitude should be as
-close as possible) which are of critical importance for cumulative \cotwo
-calculations.
+factors. Of chief import is the faithful representation of the original,
+unharmonized, trajectory as well as the representation of negative trajectories
+(i.e., if a trajectory becomes negative, both the timing and total magnitude
+should be as close as possible) which are of critical importance for cumulative
+\cotwo calculations.
 
 In previous studies \cite{meinshausen_rcp_2011,rogelj_discrepancies_2011}, two
 \textit{families} of methods have been used: those that operate on the ratio of
@@ -237,14 +237,14 @@ primary mechanism by which users control the process is by providing
 sector and gas species).  In practice, it may be possible that not all default
 methods chosen will provide robust harmonized trajectories, especially if there
 is a significant difference between historical and model values in the
-harmonization year, there is significant upward or downward movement in the
-model trajectory, or if there are known discrepancies in definition between the
-IAM and historical data source. In such cases, override methods can ameliorate
-the issues associated with the default method choice. In order to help identify
-these cases, harmonization \textit{diagnostics} are provided which analyze the
-relative difference between harmonized and unharmonized trajectories at their
-mid (if $> 400$\%) and end-points (if $> 200$\%). If override methods are
-provided, they are used instead of the default methods as determined by the
+harmonization year, if there is significant upward or downward movement in the
+model trajectory, or if there are known discrepancies in sectoral definition
+between the IAM and historical data source. In such cases, override methods can
+ameliorate the issues associated with the default method choice. In order to
+help identify these cases, harmonization \textit{diagnostics} are provided which
+analyze the relative difference between harmonized and unharmonized trajectories
+at their mid (if $> 400$\%) and end-points (if $> 200$\%). If override methods
+are provided, they are used instead of the default methods as determined by the
 default method decision tree. Furthermore, users can set the above-mentioned
 thresholds as well as the LUC method used in the decision tree (see Figure
 \ref{fig:decision_tree}). Further detail of input parameters can be found
