@@ -6,6 +6,7 @@ all: all-via-pdf
 
 all-via-pdf: $(manuscript).tex $(references)
 	pdflatex $(latexopt) $<
+	makeglossaries $(manuscript)
 	bibtex $(manuscript).aux
 	pdflatex $(latexopt) $<
 	pdflatex $(latexopt) $<
