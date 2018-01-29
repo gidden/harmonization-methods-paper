@@ -249,6 +249,7 @@ emissions growth and another with emissions mitigation, is presented in Section
 \ref{sec:results}. Finally, the general effectiveness and potential future
 improvements on the automated methodology is discussed in Section
 \ref{sec:future}.
+
 \section{Methodology \& Implementation}\label{sec:meths}
 
 \subsection{Harmonization Methods}
@@ -473,14 +474,20 @@ value of $\tau_{dH} = 50$\% was chosen to be used as a default in \code{aneris}.
   \end{center}
 \end{figure}
 
-\subsection{\code{aneris} Workflow}\label{sec:workflow}
+\subsection{\code{aneris} Workflow and Python Implementation}\label{sec:workflow}
 
-The full \code{aneris} workflow is comprised of a number of components shown
-graphically in Figure \ref{fig:workflow}. Unharmonized model data and a
-run-control configuration are read in via an Excel spreadsheet. Data is assumed
-to be in the IAMC format, i.e., using \code{Model}, \code{Scenario},
-\code{Region}, \code{Variable}, and \code{Unit} columns in addition to columns
-representing each modeled time period.
+We herein present \code{aneris}' conceptual workflow as well as specific details
+of the Python implementation. The workflow is depicted in Figure
+\ref{fig:workflow}, and the implementation is depicted in Figure
+\ref{fig:software}. 
+
+\code{aneris} is comprised of a number of conceptual workflow and software
+components shown graphically in Figures \ref{fig:workflow} and
+\ref{fig:software}, respectively. Unharmonized model data and a run-control
+configuration are read in via an Excel spreadsheet. Data is assumed to be in the
+IAMC format, i.e., using \code{Model}, \code{Scenario}, \code{Region},
+\code{Variable}, and \code{Unit} columns in addition to columns representing
+each modeled time period.
 
 Users are able to control the harmonization process via a number of options. The
 primary mechanism by which users control the process is by providing
@@ -509,6 +516,16 @@ thresholds as well as the LUC method used in the decision tree (see Figure
       The full harmonization process as executed by \code{aneris}. Operations
       that can be configured with user-based input configurations are shown in
       purple. The core harmonization process is shown in yellow.  }
+  \end{center}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[width=\textwidth]{implementation_schematic.pdf}
+    \caption[]{
+      \label{fig:software}
+      foo
+    }
   \end{center}
 \end{figure}
 
