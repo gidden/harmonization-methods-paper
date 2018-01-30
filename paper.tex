@@ -20,7 +20,6 @@
 \usepackage{calc} % allows for arithmetic on latex variables
 \usepackage{float} % allows for figures to be placed explicitly
 \usepackage{algorithm2e} % for algorithms
-\usepackage{subfig}
 \usepackage{multirow} % combining rows in tables
 \usepackage{footnote}
 \usepackage{titlesec} % for using \titleformat
@@ -28,6 +27,8 @@
 \usepackage{bashful}
 \usepackage{xspace}
 \usepackage{color}
+\usepackage{subfig}
+\usepackage{minted}
 %%%%% 
 
 %%%%% Helpers
@@ -48,6 +49,42 @@
 \makeatletter
 \newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
 \makeatother
+
+%%%python syntax highlighting
+% Default fixed font does not support bold face
+\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10} % for bold
+\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
+
+% Custom colors
+\usepackage{color}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+
+\usepackage{listings}
+
+% Python style for highlighting
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttm,
+otherkeywords={self},             % Add keywords here
+keywordstyle=\ttb\color{deepblue},
+emph={MyClass,__init__},          % Custom highlighting
+emphstyle=\ttb\color{deepred},    % Custom highlighting style
+stringstyle=\color{deepgreen},
+frame=tb,                         % Any extra options here
+showstringspaces=false            % 
+}}
+
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
 
 %%% Figure path
 \graphicspath{{./figs/}}
@@ -74,6 +111,7 @@
 \newacronym{mea}{MEA}{Middle East and North Africa}
 \newacronym{afr}{AFR}{Sub-Saharan Africa}
 \newacronym{lam}{LAM}{Latin America and the Caribbean}
+\newacronym{cli}{CLI}{Command Line Interface}
 
 %% all model names
 %% all gases
@@ -474,60 +512,120 @@ value of $\tau_{dH} = 50$\% was chosen to be used as a default in \code{aneris}.
   \end{center}
 \end{figure}
 
-\subsection{\code{aneris} Workflow and Python Implementation}\label{sec:workflow}
+\subsection{\code{aneris} Python Implementation and Workflow}\label{sec:workflow}
 
-We herein present \code{aneris}' conceptual workflow as well as specific details
-of the Python implementation. The workflow is depicted in Figure
-\ref{fig:workflow}, and the implementation is depicted in Figure
-\ref{fig:software}. 
+We herein present \code{aneris}' Python implementation and conceptual
+workflow. The implementation is depicted in Figure \ref{fig:software}, and the
+conceptual workflow is depicted in Figure \ref{fig:workflow}. The software is
+composed of three primary components: the \texttt{HarmonizationDriver},
+\texttt{Harmonizer}, and data processing routines (shown in red, green, and
+blue, respectively in Figure \ref{fig:software-workflow}).
 
-\code{aneris} is comprised of a number of conceptual workflow and software
-components shown graphically in Figures \ref{fig:workflow} and
-\ref{fig:software}, respectively. Unharmonized model data and a run-control
-configuration are read in via an Excel spreadsheet. Data is assumed to be in the
-IAMC format, i.e., using \code{Model}, \code{Scenario}, \code{Region},
-\code{Variable}, and \code{Unit} columns in addition to columns representing
-each modeled time period.
+The \texttt{HarmonizationDriver} is an object designed to interface with
+user-provided data and configuration files. Input data is assumed to be an Excel
+file the in the in the IAMC format, i.e., using \code{Model}, \code{Scenario},
+\code{Region}, \code{Variable}, and \code{Unit} columns in addition to columns
+representing each modeled time period, which is the standard format within the
+IAM community. It is responsible for downselecting data into unique combinations
+for each model and scenario and then invoking the harmonization
+process. Finally, it adds any exogenous emissions trajectories as required by
+the user and recompiles the results and writes them to disc. The
+\texttt{HarmonizationDriver} acts the primary interface for high-level users as
+shown in Listing \ref{lst:tutorial}. Furthermore, a \gls{cli} is provided 
 
-Users are able to control the harmonization process via a number of options. The
-primary mechanism by which users control the process is by providing
-\textit{override} methods for any combination of region and variable (i.e.,
-sector and gas species).  In practice, it may be possible that not all default
-methods chosen will provide robust harmonized trajectories, especially if there
-is a significant difference between historical and model values in the
-harmonization year, if there is significant upward or downward movement in the
-model trajectory, or if there are known discrepancies in sectoral definition
-between the IAM and historical data source. In such cases, override methods can
-ameliorate the issues associated with the default method choice. In order to
-help identify these cases, harmonization \textit{diagnostics} are provided which
-analyze the relative difference between harmonized and unharmonized trajectories
-at their mid (if $> 400$\%) and end-points (if $> 200$\%). If override methods
-are provided, they are used instead of the default methods as determined by the
-default method decision tree. Furthermore, users can set the above-mentioned
-thresholds as well as the LUC method used in the decision tree (see Figure
-\ref{fig:decision_tree}). Further detail of input parameters can be found
-\href{http://mattgidden.com/aneris/config.html}{online}.
+\begin{python}[caption=High-level user interaction with the \texttt{HarmonizationDriver} taken from the online \href{http://mattgidden.com/aneris/config.html}{tutorial}, label=lst:tutorial]
+from aneris.tutorial import load_data
+model, hist, driver = load_data()
+for scenario in driver.scenarios():
+    driver.harmonize(scenario)
+harmonized, metadata = driver.harmonized_results()
+\end{python}
+
+\begin{lstlisting}[language=bash, caption=bash, label=lst:cli]
+$ aneris -h
+usage: aneris [-h] [--history HISTORY] [--regions REGIONS] [--rc RC]
+              [--output_path OUTPUT_PATH] [--output_prefix OUTPUT_PREFIX]
+              input_file
+    Harmonize historical trajectories to data in the IAMC template format.
+    Example usage:
+    aneris input.xlsx --history history.csv --regions regions.csv
+positional arguments:
+  input_file            Input data file.
+optional arguments:
+  -h, --help            show this help message and exit
+  --history HISTORY     Historical emissions in the base year.
+  --regions REGIONS     Mapping of country iso-codes to native regions.
+  --rc RC               Runcontrol YAML file (see
+                        http://mattgidden.com/aneris/config.html for
+                        examples).
+  --output_path OUTPUT_PATH
+                        Path to use for output file names.
+  --output_prefix OUTPUT_PREFIX
+                        Prefix to use for output file names.
+\end{lstlisting}
+
+The \texttt{Harmonizer} is a Python class whose concern is to harmonize various
+model value trajectories given historical data and possible user method
+\textit{overrides}, i.e., non-default methods. It is used by the
+\texttt{HarmonizationDriver}; however it is also available to the user as a
+first-class object. The \texttt{Harmonizer} requires that input data conform to
+the \code{aneris} calculation data format, which expliciltly sepearates the
+emissions species from the sector contributing the emissions (these are combined
+in the single \code{Variable} column in the IAMC format). Because the
+\texttt{Harmonizer} is configure for a single instance of a model and scenario,
+the canonical data format includes columns named \texttt{region},
+\texttt{sector}, \texttt{gas}, and \texttt{units}. Once configured with
+appropriate input data (model and history) as well as potential method
+overrides, the \texttt{Harmonizer}'s \texttt{harmonize()} method can be invoked
+which returns a \texttt{pandas.DataFrame} of harmonized data. The object can
+additionally be queried directly as to its \texttt{default\_methods()},
+\texttt{methods()} (i.e., methods used with overrides), and \texttt{metadata()}
+(i.e., methods used with all branching information along each path in the
+decision tree).
+
+There are also a variety of tools and utilities provided to users and also used
+by the \texttt{HarmonizationDriver} in order to process both input and output
+data. These include an \texttt{EmissionsAggregator} class and related routines
+used to combine historical emissions to native model regions (where historical
+data is defined at a higher spatial resolution than a model; see, e.g., Figure
+\ref{fig:regions}) and a \texttt{FormatTranslator} class which defines an
+interface for translating \texttt{pandas.DataFrame}s between the IAMC format
+expected for input and output data and the calculation format used by
+\code{aneris}' \texttt{Harmonizer}.
 
 \begin{figure}
-  \begin{center}
-    \includegraphics[height=0.9\textheight]{aneris-workflow.pdf}
-    \caption[]{
-      \label{fig:workflow}
+  \subfloat[Python Implementation\label{fig:software}]{
+    \includegraphics[width=0.775\textwidth]{implementation_schematic.pdf}
+    }
+  \subfloat[Workflow\label{fig:workflow}]{
+    \includegraphics[width=0.225\textwidth]{aneris-workflow.pdf}
+    }
+    \caption{
       The full harmonization process as executed by \code{aneris}. Operations
       that can be configured with user-based input configurations are shown in
       purple. The core harmonization process is shown in yellow.  }
-  \end{center}
+    \label{fig:software-workflow}
 \end{figure}
 
-\begin{figure}
-  \begin{center}
-    \includegraphics[width=\textwidth]{implementation_schematic.pdf}
-    \caption[]{
-      \label{fig:software}
-      foo
-    }
-  \end{center}
-\end{figure}
+Users are able to control the harmonization process via a number of options
+(with examples provided
+\href{http://mattgidden.com/aneris/config.html}{online}). The primary mechanism
+by which users control the process is by providing \textit{override} methods for
+any combination of region and variable (i.e., sector and gas species).  In
+practice, it may be possible that not all default methods chosen will provide
+robust harmonized trajectories, especially if there is a significant difference
+between historical and model values in the harmonization year, if there is
+significant upward or downward movement in the model trajectory, or if there are
+known discrepancies in sectoral definition between the IAM and historical data
+source. In such cases, override methods can ameliorate the issues associated
+with the default method choice. In order to help identify these cases,
+harmonization \textit{diagnostics} are provided which analyze the relative
+difference between harmonized and unharmonized trajectories at their mid (if $>
+400$\%) and end-points (if $> 200$\%). If override methods are provided, they
+are used instead of the default methods as determined by the default method
+decision tree. Furthermore, users can set the above-mentioned thresholds as well
+as the LUC method used in the decision tree (see Figure
+\ref{fig:decision_tree}).
 
 Input data then undergoes a cleaning operation, which adds (null) model
 trajectories that exist in the historical data set but are not provided by the
