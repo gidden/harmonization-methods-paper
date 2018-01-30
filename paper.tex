@@ -18,7 +18,6 @@
 \usepackage{threeparttable} % for tables with notes
 \usepackage[capitalize, noabbrev]{cleveref} % for reference multiple figures
 \usepackage{calc} % allows for arithmetic on latex variables
-\usepackage{float} % allows for figures to be placed explicitly
 \usepackage{algorithm2e} % for algorithms
 \usepackage{multirow} % combining rows in tables
 \usepackage{footnote}
@@ -483,8 +482,8 @@ We herein present \code{aneris}' Python implementation, depicted in Figure
 \ref{fig:software}, and conceptual, depicted in Figure \ref{fig:workflow}. The
 library is composed of a number of utilities as well as three primary
 components: the \texttt{HarmonizationDriver}, \texttt{Harmonizer}, and data
-processing routines (shown in red, green, and blue, respectively in Figure
-\ref{fig:software-workflow}).
+processing routines (shown in red, green, and blue, respectively in Figures
+\ref{fig:software} and \ref{fig:workflow}).
 
 The \texttt{HarmonizationDriver} is an object designed to interface with
 user-provided data and configuration files. Input data (i.e., unharmonized model
@@ -576,23 +575,48 @@ format expected for input and output data and the calculation format used by
 \code{aneris}' \texttt{Harmonizer}.
 
 \begin{figure}
-  \subfloat[Python Implementation\label{fig:software}]{
-    \includegraphics[width=0.775\textwidth]{implementation_schematic.pdf}
+  \begin{center}
+    \includegraphics[width=\textwidth]{implementation_schematic.pdf}
+    \caption[]{
+      \label{fig:software}
+      The various objects and their relation to one another in the \code{aneris}
+      code base as well as a short description of their scope of concern.  
     }
-  \subfloat[Workflow\label{fig:workflow}]{
-    \includegraphics[width=0.225\textwidth]{aneris-workflow.pdf}
-    }
-    \caption{ Panel \ref{fig:software} shows the various objects in the
-      \code{aneris} code base as well as a short description of their scope of
-      concern. Panel \ref{fig:workflow} displays the full harmonization process
-      as executed by \code{aneris} for a single instance of a model and
-      scenario. Operations that can be configured with user-based input
-      configurations are shown in purple. Operations governed by the
-      \texttt{HarmonizationDriver} are shown in red. Data processing operations
-      are shown in blue. The core harmonization process, governed by the
-      \texttt{Harmonizer} is shown in green.  }
-    \label{fig:software-workflow}
+  \end{center}
 \end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[height=0.8\textheight]{aneris-workflow.pdf}
+    \caption[]{
+      \label{fig:workflow}
+The full harmonization process as executed by \code{aneris} for a single
+instance of a model and scenario. Operations that can be configured with
+user-based input configurations are shown in purple. Operations governed by the
+\texttt{HarmonizationDriver} are shown in red. Data processing operations are
+shown in blue. The core harmonization process, governed by the
+\texttt{Harmonizer} is shown in green. }
+  \end{center}
+\end{figure}
+
+%% \begin{figure}
+%%   \subfloat[Python Implementation\label{fig:software}]{
+%%     \includegraphics[width=0.775\textwidth]{implementation_schematic.pdf}
+%%     }
+%%   \subfloat[Workflow\label{fig:workflow}]{
+%%     \includegraphics[width=0.225\textwidth]{aneris-workflow.pdf}
+%%     }
+%%     \caption{ Panel \ref{fig:software} shows the various objects in the
+%%       \code{aneris} code base as well as a short description of their scope of
+%%       concern. Panel \ref{fig:workflow} displays the full harmonization process
+%%       as executed by \code{aneris} for a single instance of a model and
+%%       scenario. Operations that can be configured with user-based input
+%%       configurations are shown in purple. Operations governed by the
+%%       \texttt{HarmonizationDriver} are shown in red. Data processing operations
+%%       are shown in blue. The core harmonization process, governed by the
+%%       \texttt{Harmonizer} is shown in green.  }
+%%     \label{fig:software-workflow}
+%% \end{figure}
 
 The full harmonization workflow, outlined in Figure \ref{fig:workflow}, begins by
 cleaning input data, which adds (null) model trajectories that exist in the
