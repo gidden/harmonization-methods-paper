@@ -479,26 +479,26 @@ value of $\tau_{dH} = 50$\% was chosen to be used as a default in \code{aneris}.
 
 \subsection{\code{aneris} Python Implementation and Workflow}\label{sec:workflow}
 
-We herein present \code{aneris}' Python implementation and conceptual
-workflow. The implementation is depicted in Figure \ref{fig:software}, and the
-conceptual workflow is depicted in Figure \ref{fig:workflow}. The software is
-composed of three primary components: the \texttt{HarmonizationDriver},
-\texttt{Harmonizer}, and data processing routines (shown in red, green, and
-blue, respectively in Figure \ref{fig:software-workflow}).
+We herein present \code{aneris}' Python implementation, depicted in Figure
+\ref{fig:software}, and conceptual, depicted in Figure \ref{fig:workflow}. The
+library is composed of a number of utilities as well as three primary
+components: the \texttt{HarmonizationDriver}, \texttt{Harmonizer}, and data
+processing routines (shown in red, green, and blue, respectively in Figure
+\ref{fig:software-workflow}).
 
 The \texttt{HarmonizationDriver} is an object designed to interface with
-user-provided data and configuration files. Input data is assumed to be an Excel
-file the in the in the IAMC format, i.e., using \code{Model}, \code{Scenario},
-\code{Region}, \code{Variable}, and \code{Unit} columns in addition to columns
-representing each modeled time period, which is the standard format within the
-IAM community. It is responsible for downselecting data into unique combinations
-for each model and scenario and then invoking the harmonization
-process. Finally, it adds any exogenous emissions trajectories as required by
-the user and recompiles the results and writes them to disc. The
+user-provided data and configuration files. Input data (i.e., unharmonized model
+results) is assumed to be an Excel file in the standard data format within the
+IAM community, i.e., with \code{Model}, \code{Scenario}, \code{Region},
+\code{Variable}, and \code{Unit} columns in addition to columns representing
+each modeled time period. It is responsible for down-selecting data into
+separate datasets for each model and scenario, invoking the harmonization
+process on each dataset, and recompiling the results. The
 \texttt{HarmonizationDriver} acts the primary interface for high-level users as
-shown in Listing \ref{lst:tutorial}. Furthermore, a \gls{cli} is provided to
-allow users to more easily incorporate the harmonization process in scripted
-workflows (Listing \ref{lst:cli}, Figure \ref{fig:software}). 
+shown by the usage of the \texttt{driver} object in Listing
+\ref{lst:tutorial}. Furthermore, a \gls{cli} is provided to allow users to more
+easily incorporate the harmonization process in scripted workflows (Listing
+\ref{lst:cli}, Figure \ref{fig:software}).
 
 \begin{listing}[H]
 \begin{minted}{python}
@@ -544,18 +544,19 @@ optional arguments:
 \label{lst:cli}
 \end{listing}
 
-The \texttt{Harmonizer} is a Python class whose concern is to harmonize various
-model value trajectories given historical data and possible user method
-\textit{overrides}, i.e., non-default methods. It is used by the
-\texttt{HarmonizationDriver}; however it is also available to the user as a
-first-class object. The \texttt{Harmonizer} requires that input data conform to
-the \code{aneris} calculation data format, which expliciltly sepearates the
-emissions species from the sector contributing the emissions (these are combined
-in the single \code{Variable} column in the IAMC format). Because the
-\texttt{Harmonizer} is configure for a single instance of a model and scenario,
-the canonical data format includes columns named \texttt{region},
-\texttt{sector}, \texttt{gas}, and \texttt{units}. Once configured with
-appropriate input data (model and history) as well as potential method
+The \texttt{Harmonizer} is a Python class whose concern is to harmonize model
+value trajectories given historical data and possible user method
+\textit{overrides}, i.e., non-default methods (described further below). It is
+used by the \texttt{HarmonizationDriver}; however it is also available to the
+user as a first-class object. The \texttt{Harmonizer} requires that input data
+conform to the \code{aneris} calculation data format, which explicitly separates
+the emissions species from the sector contributing the emissions (these are
+combined in the single \code{Variable} column in the standard IAM
+format). Because the \texttt{Harmonizer} is designed to operate on a single
+instance of a model and scenario, the canonical data format includes
+\texttt{region}, \texttt{sector}, \texttt{gas}, and \texttt{units} columns
+without extraneous metadata columns for the model and scenario. Once configured
+with appropriate input data (model and history) as well as potential method
 overrides, the \texttt{Harmonizer}'s \texttt{harmonize()} method can be invoked
 which returns a \texttt{pandas.DataFrame} of harmonized data. The object can
 additionally be queried directly as to its \texttt{default\_methods()},
@@ -566,11 +567,12 @@ decision tree).
 There are also a variety of tools and utilities provided to users and also used
 by the \texttt{HarmonizationDriver} in order to process both input and output
 data. These include an \texttt{EmissionsAggregator} class and related routines
-used to combine historical emissions to native model regions (where historical
-data is defined at a higher spatial resolution than a model; see, e.g., Figure
-\ref{fig:regions}) and a \texttt{FormatTranslator} class which defines an
-interface for translating \texttt{pandas.DataFrame}s between the IAMC format
-expected for input and output data and the calculation format used by
+used to generate sectoral emissions totals, generate regional totals, and
+combine historical emissions to native model regions (where historical data is
+defined at a higher spatial resolution than a model; see, e.g., Figure
+\ref{fig:regions}). A \texttt{FormatTranslator} class is also provided which
+defines an interface for translating \texttt{pandas.DataFrame}s between the IAM
+format expected for input and output data and the calculation format used by
 \code{aneris}' \texttt{Harmonizer}.
 
 \begin{figure}
@@ -581,54 +583,32 @@ expected for input and output data and the calculation format used by
     \includegraphics[width=0.225\textwidth]{aneris-workflow.pdf}
     }
     \caption{ Panel \ref{fig:software} shows the various objects in the
-      \code{aneris} codebase as well as a short description of their scope of
+      \code{aneris} code base as well as a short description of their scope of
       concern. Panel \ref{fig:workflow} displays the full harmonization process
       as executed by \code{aneris} for a single instance of a model and
       scenario. Operations that can be configured with user-based input
-      configurations are shown in purple. Operations goverened by the
+      configurations are shown in purple. Operations governed by the
       \texttt{HarmonizationDriver} are shown in red. Data processing operations
       are shown in blue. The core harmonization process, governed by the
       \texttt{Harmonizer} is shown in green.  }
     \label{fig:software-workflow}
 \end{figure}
 
-Users are able to control the harmonization process via a number of options
-(with examples provided
-\href{http://mattgidden.com/aneris/config.html}{online}). The primary mechanism
-by which users control the process is by providing \textit{override} methods for
-any combination of region and variable (i.e., sector and gas species).  In
-practice, it may be possible that not all default methods chosen will provide
-robust harmonized trajectories, especially if there is a significant difference
-between historical and model values in the harmonization year, if there is
-significant upward or downward movement in the model trajectory, or if there are
-known discrepancies in sectoral definition between the IAM and historical data
-source. In such cases, override methods can ameliorate the issues associated
-with the default method choice. 
-
-In order to help identify these cases, harmonization \textit{diagnostics} are
-provided which analyze the relative difference between harmonized and
-unharmonized trajectories at their mid and end-points. These values are
-configurable by the user, but defaults of $400$\% and $200$\%, respectively, are
-provided based on experiences of using \code{aneris} to date. If override
-methods are provided, they are used instead of the default methods as determined
-by the default method decision tree. Furthermore, users can set the
-above-mentioned thresholds as well as the LUC method used in the decision tree
-(see Figure \ref{fig:decision_tree}).
-
-Input data then undergoes a cleaning operation, which adds (null) model
-trajectories that exist in the historical data set but are not provided by the
-model input and detects any issues that would cause the harmonization process to
-fail. The methods used to harmonize the data are then determined and the
-harmonization process is executed. Upon completion of the harmonization process,
-aggregation of common analysis regions is performed. A common regional
-aggregation used in the IAM community was defined in the Representative
-Concentration Pathways (RCPs) \cite{vuuren_representative_2011}, shown in Figure
-\ref{fig:regions}. Finally, any exogenous trajectories the user provides are
-added. Exogenous trajectories are normally provided for unmodeled gases with
-well-accepted scenario trajectories, e.g., chlorofluorocarbons provided by WMO
-\cite{wmo2014}. Upon completion, the harmonized trajectories and meta data
-regarding the harmonization process are returned. A description of all returned
-meta data is provided in Table \ref{tab:metadata}.
+The full harmonization workflow, outlined in Figure \ref{fig:workflow}, begins by
+cleaning input data, which adds (null) model trajectories that exist in the
+historical data set but are not provided by the model input and detects any
+issues that would cause the harmonization process to fail. The methods used to
+harmonize the data are then determined and the harmonization process is
+executed. Upon completion of the harmonization process, aggregation of common
+analysis regions is performed. A common regional aggregation used in the IAM
+community was defined in the Representative Concentration Pathways (RCPs)
+\cite{vuuren_representative_2011}, shown in Figure \ref{fig:regions}. Finally,
+any exogenous trajectories the user provides are added. Exogenous trajectories
+are normally provided for unmodeled gases with well-accepted scenario
+trajectories, e.g., chlorofluorocarbons provided by WMO \cite{wmo2014}. Upon
+completion, the harmonized trajectories and meta data regarding the
+harmonization process are returned. A description of all returned meta data is
+provided in Table \ref{tab:metadata}.
 
 
 \begin{figure}
@@ -673,6 +653,28 @@ harmonized   & The resulting harmonized value in the harmonization year.\\
 \hline
 \end{tabular}
 \end{table}
+
+Users are able to control the harmonization process via a number of options
+(with examples provided
+\href{http://mattgidden.com/aneris/config.html}{online}). The primary mechanism
+by which users control the process is by providing \textit{override} methods for
+any combination of region and variable (i.e., sector and gas species).  In
+practice, it may be possible that not all default methods chosen will provide
+robust harmonized trajectories, especially if there is a significant difference
+between historical and model values in the harmonization year, if there is
+significant upward or downward movement in the model trajectory, or if there are
+known discrepancies in sectoral definition between the IAM and historical data
+source. In such cases, users can override default methods with their method of
+choice and both the default method and override is reported in the resulting
+metadata.
+
+In order to help identify cases where overrides may be of interest,
+harmonization \textit{diagnostics} are provided which analyze the relative
+difference between harmonized and unharmonized trajectories at their mid and
+end-points. These values are configurable by the user, but defaults of $400$\%
+and $200$\%, respectively, are provided based on experiences of the authors'
+using \code{aneris} to date.
+
 \section{Results}\label{sec:results}
 
 In order to show a representative cross section of the performance of the
