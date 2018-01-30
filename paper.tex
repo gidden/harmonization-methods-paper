@@ -50,41 +50,6 @@
 \newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
 \makeatother
 
-%%%python syntax highlighting
-% Default fixed font does not support bold face
-\DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10} % for bold
-\DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
-
-% Custom colors
-\usepackage{color}
-\definecolor{deepblue}{rgb}{0,0,0.5}
-\definecolor{deepred}{rgb}{0.6,0,0}
-\definecolor{deepgreen}{rgb}{0,0.5,0}
-
-\usepackage{listings}
-
-% Python style for highlighting
-\newcommand\pythonstyle{\lstset{
-language=Python,
-basicstyle=\ttm,
-otherkeywords={self},             % Add keywords here
-keywordstyle=\ttb\color{deepblue},
-emph={MyClass,__init__},          % Custom highlighting
-emphstyle=\ttb\color{deepred},    % Custom highlighting style
-stringstyle=\color{deepgreen},
-frame=tb,                         % Any extra options here
-showstringspaces=false            % 
-}}
-
-
-% Python environment
-\lstnewenvironment{python}[1][]
-{
-\pythonstyle
-\lstset{#1}
-}
-{}
-
 
 %%% Figure path
 \graphicspath{{./figs/}}
@@ -531,26 +496,38 @@ for each model and scenario and then invoking the harmonization
 process. Finally, it adds any exogenous emissions trajectories as required by
 the user and recompiles the results and writes them to disc. The
 \texttt{HarmonizationDriver} acts the primary interface for high-level users as
-shown in Listing \ref{lst:tutorial}. Furthermore, a \gls{cli} is provided 
+shown in Listing \ref{lst:tutorial}. Furthermore, a \gls{cli} is provided to
+allow users to more easily incorporate the harmonization process in scripted
+workflows (Listing \ref{lst:cli}, Figure \ref{fig:software}). 
 
-\begin{python}[caption=High-level user interaction with the \texttt{HarmonizationDriver} taken from the online \href{http://mattgidden.com/aneris/config.html}{tutorial}, label=lst:tutorial]
+\begin{listing}[H]
+\begin{minted}{python}
 from aneris.tutorial import load_data
 model, hist, driver = load_data()
 for scenario in driver.scenarios():
     driver.harmonize(scenario)
 harmonized, metadata = driver.harmonized_results()
-\end{python}
+\end{minted}
+\caption{High-level user interaction with the \texttt{HarmonizationDriver} taken from the online \href{http://mattgidden.com/aneris/config.html}{tutorial}}
+\label{lst:tutorial}
+\end{listing}
 
-\begin{lstlisting}[language=bash, caption=bash, label=lst:cli]
+\begin{listing}[H]
+\begin{minted}{bash}
 $ aneris -h
 usage: aneris [-h] [--history HISTORY] [--regions REGIONS] [--rc RC]
               [--output_path OUTPUT_PATH] [--output_prefix OUTPUT_PREFIX]
               input_file
+
     Harmonize historical trajectories to data in the IAMC template format.
+
     Example usage:
+
     aneris input.xlsx --history history.csv --regions regions.csv
+
 positional arguments:
   input_file            Input data file.
+
 optional arguments:
   -h, --help            show this help message and exit
   --history HISTORY     Historical emissions in the base year.
@@ -562,7 +539,10 @@ optional arguments:
                         Path to use for output file names.
   --output_prefix OUTPUT_PREFIX
                         Prefix to use for output file names.
-\end{lstlisting}
+\end{minted}
+\caption{The \gls{cli} help provided by the \code{aneris} package.}
+\label{lst:cli}
+\end{listing}
 
 The \texttt{Harmonizer} is a Python class whose concern is to harmonize various
 model value trajectories given historical data and possible user method
@@ -600,10 +580,15 @@ expected for input and output data and the calculation format used by
   \subfloat[Workflow\label{fig:workflow}]{
     \includegraphics[width=0.225\textwidth]{aneris-workflow.pdf}
     }
-    \caption{
-      The full harmonization process as executed by \code{aneris}. Operations
-      that can be configured with user-based input configurations are shown in
-      purple. The core harmonization process is shown in yellow.  }
+    \caption{ Panel \ref{fig:software} shows the various objects in the
+      \code{aneris} codebase as well as a short description of their scope of
+      concern. Panel \ref{fig:workflow} displays the full harmonization process
+      as executed by \code{aneris} for a single instance of a model and
+      scenario. Operations that can be configured with user-based input
+      configurations are shown in purple. Operations goverened by the
+      \texttt{HarmonizationDriver} are shown in red. Data processing operations
+      are shown in blue. The core harmonization process, governed by the
+      \texttt{Harmonizer} is shown in green.  }
     \label{fig:software-workflow}
 \end{figure}
 
@@ -618,14 +603,17 @@ between historical and model values in the harmonization year, if there is
 significant upward or downward movement in the model trajectory, or if there are
 known discrepancies in sectoral definition between the IAM and historical data
 source. In such cases, override methods can ameliorate the issues associated
-with the default method choice. In order to help identify these cases,
-harmonization \textit{diagnostics} are provided which analyze the relative
-difference between harmonized and unharmonized trajectories at their mid (if $>
-400$\%) and end-points (if $> 200$\%). If override methods are provided, they
-are used instead of the default methods as determined by the default method
-decision tree. Furthermore, users can set the above-mentioned thresholds as well
-as the LUC method used in the decision tree (see Figure
-\ref{fig:decision_tree}).
+with the default method choice. 
+
+In order to help identify these cases, harmonization \textit{diagnostics} are
+provided which analyze the relative difference between harmonized and
+unharmonized trajectories at their mid and end-points. These values are
+configurable by the user, but defaults of $400$\% and $200$\%, respectively, are
+provided based on experiences of using \code{aneris} to date. If override
+methods are provided, they are used instead of the default methods as determined
+by the default method decision tree. Furthermore, users can set the
+above-mentioned thresholds as well as the LUC method used in the decision tree
+(see Figure \ref{fig:decision_tree}).
 
 Input data then undergoes a cleaning operation, which adds (null) model
 trajectories that exist in the historical data set but are not provided by the
