@@ -1,6 +1,6 @@
 manuscript = paper
 references = refs.bib
-latexopt   = -halt-on-error -file-line-error
+latexopt   = -halt-on-error -file-line-error -shell-esc
 
 all: all-via-pdf
 
