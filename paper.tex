@@ -234,15 +234,15 @@ regions used in the IPCC \gls{sres} \cite{nakicenovic2000}; however, only total
 emissions were harmonized in the exercise, thus there is no sectoral
 dimension. Further, \cite{rogelj_discrepancies_2011} describes the impacts of
 choosing various harmonization routines on future trajectories. During the
-evaluation of the Representative Concentration Pathways (RCPs), \gls{iam}
-results have been harmonized by sector and the 5 RCP global regions
+evaluation of the \glspl{rcp}, \gls{iam}
+results have been harmonized by sector and the 5 \gls{rcp} global regions
 \cite{vuuren_representative_2011}. Importantly, the choice of harmonization
 method to date has been determined by individual experts and has generally been
 applied to all trajectories for a given class of emissions species.
 
 Climate modeling efforts have continued to progress, demanding increased spatial
 and sectoral resolution from \glspl{iam}. Furthermore, a new generation of climate
-scenarios which combines aspects of both the RCPs and SSPs have been developed
+scenarios which combines aspects of both the \glspl{rcp} and SSPs have been developed
 in order to incorporate both physical and socio-economic detail. In order to
 address the growing dimensionality of model outputs and support ongoing scenario
 generation and analysis efforts while still providing a consistent and
@@ -660,14 +660,14 @@ shown in blue. The core harmonization process, governed by the
 %%     \label{fig:software-workflow}
 %% \end{figure}
 
-The full harmonization workflow, outlined in Figure \ref{fig:workflow}, begins by
-cleaning input data, which adds (null) model trajectories that exist in the
+The full harmonization workflow, outlined in Figure \ref{fig:workflow}, begins
+by cleaning input data, which adds (null) model trajectories that exist in the
 historical data set but are not provided by the model input and detects any
 issues that would cause the harmonization process to fail. The methods used to
 harmonize the data are then determined and the harmonization process is
 executed. Upon completion of the harmonization process, aggregation of common
-analysis regions is performed. A common regional aggregation used in the \gls{iam}
-community was defined in the Representative Concentration Pathways (RCPs)
+analysis regions is performed. A common regional aggregation used in the
+\gls{iam} community was defined in the \glspl{rcp}
 \cite{vuuren_representative_2011}, shown in Figure \ref{fig:regions}. Finally,
 any exogenous trajectories the user provides are added. Exogenous trajectories
 are normally provided for unmodeled gases with well-accepted scenario
@@ -681,7 +681,7 @@ provided in Table \ref{tab:metadata}.
     \includegraphics[width=\textwidth]{MESSAGE_11-5regions_map.pdf}
     \caption[]{
       \label{fig:regions}
-      The 5 regions used in the RCPs with their 11-region constituents: Asia
+      The 5 regions used in the \glspl{rcp} with their 11-region constituents: Asia
       (\gls{cpa}, \gls{sas}, \gls{pas}) [yellows], \gls{lam}
       [magenta], the \gls{mea} and \gls{afr} [greens], the OECD (\gls{nam},
       \gls{weu}, and \gls{pao}) [blues], and the Reforming Economies
@@ -748,7 +748,7 @@ of the \gls{iam} MESSAGE-GLOBIOM \cite{fricko_marker_2017}. Two scenarios from t
 scenario library \cite{Riahi2017153,Rao2017346} are presented. The SSP2, or
 ``middle of the road'', scenario (referred to as SSP2-Ref) is chosen to be
 analyzed because MESSAGE-GLOBIOM is the marker scenario for this SSP. This SSP2
-scenario lies between two RCPs, 6 and 8.5, with a radiative forcing level of
+scenario lies between two \glspl{rcp}, 6 and 8.5, with a radiative forcing level of
 approximately 6.5 Wm$^{-2}$. We additionally present the results for the
 SSP2-based mitigation scenario leading to a radiative forcing of 4.5 Wm$^{-2}$
 (referred to as SSP2-4.5). The SSP2-45 scenario is chosen because mitigation
@@ -778,7 +778,7 @@ Kyoto Gases in each scenarios.
 
 
 MESSAGE-GLOBIOM includes a representation of 11 distinct regions which can be
-mapped directly to the 5-region definition used in the RCPs. Historical data is
+mapped directly to the 5-region definition used in the \glspl{rcp}. Historical data is
 taken from previously described \gls{luc} and anthropogenic sources, which comprise 10
 separate pollutant and GHG species and 12 sectors shown in Table \ref{tab:sp}. A
 total of 970 distinct trajectories were harmonized for each scenario, and
