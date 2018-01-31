@@ -53,13 +53,19 @@
 %%% Figure path
 \graphicspath{{./figs/}}
 
+%%% Plural gls entries
+\newacronym[
+  \glslongpluralkey={Integrated Assessment Models},
+  \glsshortpluralkey={IAMs}
+]{iam}{IAM}{Integrated Assessment Model}
+
+
 %%% Acronyms
 \newacronym{ssps}{SSPs}{Shared Socioeconomic Pathways}
 \newacronym{rcps}{RCPs}{Representative Concentration Pathways}
 \newacronym{cmip6}{CMIP6}{Coupled Model Intercomparison Project (Phase 6)}
 \newacronym{smip}{ScenarioMIP}{Scenario Model Intercomparison Project}
 \newacronym{ceds}{CEDS}{Community Emissions Data System}
-\newacronym{iam}{IAM}{Integrated Assessment Model}
 \newacronym{esm}{ESM}{Earth System Model}
 \newacronym{ghg}{GHG}{Greenhouse Gas}
 \newacronym{luc}{LUC}{Land-use Change}
@@ -76,9 +82,6 @@
 \newacronym{afr}{AFR}{Sub-Saharan Africa}
 \newacronym{lam}{LAM}{Latin America and the Caribbean}
 \newacronym{cli}{CLI}{Command Line Interface}
-
-%% all model names
-%% all gases
 
 \makeglossaries
 
@@ -114,17 +117,17 @@ Emissions harmonization refers to the process used to match greenhouse gas (GHG)
 and air pollutant results from Integrated Assessment Models (IAMs) against a
 common source of historical emissions. To date, harmonization has been performed
 separately by individual modeling teams. For the hand-over of emission data for
-the \gls{ssps} to climate model groups, a new automated approach based on
-commonly agreed upon algorithms was developed. This work describes the novel
-methodology for determining such harmonization methods and an open-source Python
-software library implementing the methodology. Results are shown for two example
-scenarios (with and without climate policy cases) using the MESSAGE-GLOBIOM IAM
-that satisfactorily harmonize over 96\% of the total emissions trajectories
-while having a negligible effect on key long-term climate indicators. This new
-capability enhances the comparability across different models, increases
-transparency and robustness of results, and allows other teams to easily
-participate in intercomparison exercises by using the same, openly available
-harmonization mechanism.
+the Shared Socioeconomic Pathways (SSPs) to climate model groups, a new
+automated approach based on commonly agreed upon algorithms was developed. This
+work describes the novel methodology for determining such harmonization methods
+and an open-source Python software library implementing the methodology. Results
+are shown for two example scenarios (with and without climate policy cases)
+using the IAM MESSAGE-GLOBIOM that satisfactorily harmonize over 96\% of the
+total emissions trajectories while having a negligible effect on key long-term
+climate indicators. This new capability enhances the comparability across
+different models, increases transparency and robustness of results, and allows
+other teams to easily participate in intercomparison exercises by using the
+same, openly available harmonization mechanism.
 \end{abstract}
 
 \begin{keyword}
@@ -152,7 +155,7 @@ information is shown on the title page of this manuscript. Documentation for the
 
 \section{Introduction}
 
-Integrated Assessment Models (IAMs) are tools used to understand the complex
+\glspl{iam} are tools used to understand the complex
 interactions between energy, economy, land use, water, and climate systems. IAMs
 provide global projections of systemic change by dividing the world into a
 number of representative regions (typically 10 to 30), the definition of which
