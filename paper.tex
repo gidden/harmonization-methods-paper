@@ -58,16 +58,26 @@
   \glslongpluralkey={Integrated Assessment Models},
   \glsshortpluralkey={IAMs}
 ]{iam}{IAM}{Integrated Assessment Model}
+\newacronym[
+  \glslongpluralkey={Shared Socioeconomic Pathways},
+  \glsshortpluralkey={SSPs}
+]{ssp}{SSP}{Shared Socioeconomic Pathway}
+\newacronym[
+  \glslongpluralkey={Representative Concentration Pathways},
+  \glsshortpluralkey={RCPs}
+]{rcp}{RCP}{Representative Concentration Pathway}
+\newacronym[
+  \glslongpluralkey={Greenhouse Gases},
+  \glsshortpluralkey={GHGs}
+]{ghg}{GHG}{Greenhouse Gas}
 
 
 %%% Acronyms
-\newacronym{ssps}{SSPs}{Shared Socioeconomic Pathways}
-\newacronym{rcps}{RCPs}{Representative Concentration Pathways}
+\newacronym{sres}{SRES}{Special Report on Emissions Scenarios}
 \newacronym{cmip6}{CMIP6}{Coupled Model Intercomparison Project (Phase 6)}
 \newacronym{smip}{ScenarioMIP}{Scenario Model Intercomparison Project}
 \newacronym{ceds}{CEDS}{Community Emissions Data System}
 \newacronym{esm}{ESM}{Earth System Model}
-\newacronym{ghg}{GHG}{Greenhouse Gas}
 \newacronym{luc}{LUC}{Land-use Change}
 \newacronym{luluc}{LULUC}{Land-use and Land-use Change}
 \newacronym{weu}{WEU}{Western Europe}
@@ -162,11 +172,11 @@ number of representative regions (typically 10 to 30), the definition of which
 is distinct for each model \cite{krey_global_2014}. Results from \glspl{iam} are
 integral in a number of international studies, which notably include projections
 of climate and economic futures. Recently, the \gls{iam} community has developed
-scenarios based on the \gls{ssps}
+scenarios based on the \glspl{ssp}
 \cite{van_vuuren_energy_2017, fricko_marker_2017, fujimori_ssp3:_2017,
   calvin_ssp4:_2017, kriegler_fossil-fueled_2017} which quantify a variety of
 potential global futures. The SSPs are designed to be used in research that
-include earth system model (ESM) simulations, climate impact, adaptation and
+include \gls{esm} simulations, climate impact, adaptation and
 climate mitigation studies \cite{vuuren_new_2013}.
 
 While \glspl{iam} are implemented in myriad ways, including simulation and
@@ -178,10 +188,10 @@ models then provide estimates of future trajectories of these variables under
 various socio-economic and technological assumptions as well as proposed policy
 constraints, e.g., targets for future Greenhouse Gas (GHG) emissions.
 
-The emissions trajectories calculated by \glspl{iam} are critical inputs for ongoing,
-worldwide scientific community efforts in the Coupled Model Intercomparison
-Project Phase 6 (CMIP6) \cite{eyring_overview_2016}, which is utilizing a number
-of marker SSP scenarios developed by the \gls{iam} community (ScenarioMIP)
+The emissions trajectories calculated by \glspl{iam} are critical inputs for
+ongoing, worldwide scientific community efforts in the \gls{cmip6}
+\cite{eyring_overview_2016}, which is utilizing a number of marker SSP scenarios
+developed by the \gls{iam} community (\gls{smip})
 \cite{oneill_scenario_2016}. These trajectories are endogenously calculated by
 modeling the individual technologies and sectors that contribute towards the
 emissions of different air pollutants and GHGs as well as various mitigation
@@ -201,13 +211,13 @@ aggregations.
 
 The global climate change community has recently developed a new global
 historical emissions data set for both anthropogenic emissions (i.e., the
-Community Emissions Data System (CEDS) \cite{hoesly_historical_2017} and
-open-burning land-use and land-use change (LULUC) emissions
+\gls{ceds} \cite{hoesly_historical_2017} and
+open-burning \gls{luluc} emissions
 \cite{van_marle_historic_2017}) which, in conjunction with the SSP IAM
-trajectories, will be used for climate-related modeling exercises of CMIP6.
+trajectories, will be used for climate-related modeling exercises of \gls{cmip6}.
 
 When participating in intercomparison exercises in which a consistent historical
-starting point is required (e.g., in CMIP6), model teams incorporate a single,
+starting point is required (e.g., in \gls{cmip6}), model teams incorporate a single,
 common historical data set through \textit{harmonization}. Harmonization
 refers to the process of adjusting model results to match a selected
 historical time series such that the resulting future trajectories are also
@@ -220,13 +230,12 @@ thousands to tens-of-thousands of harmonization methods.
 Harmonization has been addressed in previous studies as it is a common practice
 in the \gls{iam} and climate change communities. For example,
 \cite{meinshausen_rcp_2011} describes the use of scaling routines for the 5
-regions used in the Special Report on Emissions Scenarios (SRES)
-\cite{nakicenovic2000}; however, only total emissions were harmonized in the
-exercise, thus there is no sectoral dimension. Further,
-\cite{rogelj_discrepancies_2011} describes the impacts of choosing various
-harmonization routines on future trajectories. During the evaluation of the
-Representative Concentration Pathways (RCPs), \gls{iam} results have been harmonized
-by sector and the 5 RCP global regions
+regions used in the IPCC \gls{sres} \cite{nakicenovic2000}; however, only total
+emissions were harmonized in the exercise, thus there is no sectoral
+dimension. Further, \cite{rogelj_discrepancies_2011} describes the impacts of
+choosing various harmonization routines on future trajectories. During the
+evaluation of the Representative Concentration Pathways (RCPs), \gls{iam}
+results have been harmonized by sector and the 5 RCP global regions
 \cite{vuuren_representative_2011}. Importantly, the choice of harmonization
 method to date has been determined by individual experts and has generally been
 applied to all trajectories for a given class of emissions species.
@@ -453,9 +462,9 @@ information of the entire historical time period is utilized.
 \end{equation}
 
 The value of $c_v$ is then tested against a threshold, $\tau_{c_v}$. To
-determine this threshold, an analysis of the recent CEDS and LUC historical data
-has been performed. Figure \ref{fig:cov} shows the distribution of LUC $c_v$s
-and non-LUC $c_v$s as determined for historical data aggregated to the model
+determine this threshold, an analysis of the recent \gls{ceds} and \gls{luc} historical data
+has been performed. Figure \ref{fig:cov} shows the distribution of \gls{luc} $c_v$s
+and non-\gls{luc} $c_v$s as determined for historical data aggregated to the model
 regions of 5 different \glspl{iam} involved in the SSP process: AIM-CGE, IMAGE, GCAM4,
 MESSAGE-GLOBIOM, and REMIND-MAGPIE \TODO{add refs}, each of which have varying
 definitions of native model regions comprising different collections of
@@ -465,8 +474,8 @@ and emissions species \footnote{A full listing of all sectors and species is
   presented in the case-study discussion in Section \ref{sec:results}, Table
   \ref{tab:sp}}. A threshold value of $\tau_{c_v} = 20$ has been chosen based on
 these observations as it optimally divides the two distributions. Importantly,
-tails of the LUC and non-LUC overlap, thus there are both false positives (~7\%
-of non-LUC trajectories) and false negatives (~10\% of LUC
+tails of the \gls{luc} and non-\gls{luc} overlap, thus there are both false positives (~7\%
+of non-\gls{luc} trajectories) and false negatives (~10\% of \gls{luc}
 trajectories). However, as any regional definition is model dependent and thus
 any regional aggregation is possible an automated detection mechanism is
 necessary.
@@ -477,10 +486,10 @@ necessary.
     \includegraphics[width=\textwidth]{cov.pdf}
     \caption[]{
       \label{fig:cov}
-      The distribution of $c_v$ values for LUC and non-LUC historical
-      trajectories is shown. CEDS historical data \cite{hoesly_historical_2017}
-      is used for non-LUC data and \cite{van_marle_historic_2017} is used for
-      LUC data. All historical data has been aggregated from their native
+      The distribution of $c_v$ values for \gls{luc} and non-\gls{luc} historical
+      trajectories is shown. \gls{ceds} historical data \cite{hoesly_historical_2017}
+      is used for non-\gls{luc} data and \cite{van_marle_historic_2017} is used for
+      \gls{luc} data. All historical data has been aggregated from their native
       spatial resolution (i.e., individual countries) to \gls{iam} model regional
       definitions (i.e., collections of countries), and all gas species included
       in the historical data sets are included in the analysis. The solid black
@@ -492,7 +501,7 @@ necessary.
 Finally, consideration is taken with respect to the relative difference between
 the historic and model values in the harmonization time period. In order to
 investigate the possible values that these relative differences can take, the
-\gls{iam} values used in the SSP and (ongoing) CMIP6 inter-comparison
+\gls{iam} values used in the SSP and (ongoing) \gls{cmip6} inter-comparison
 exercises are used. A distribution of these differences for all models in the
 study is presented in Figure \ref{fig:dh}. Given the available data, a threshold
 value of $\tau_{dH} = 50$\% was chosen to be used as a default in \code{aneris}.
@@ -667,17 +676,16 @@ completion, the harmonized trajectories and meta data regarding the
 harmonization process are returned. A description of all returned meta data is
 provided in Table \ref{tab:metadata}.
 
-
 \begin{figure}
   \begin{center}
     \includegraphics[width=\textwidth]{MESSAGE_11-5regions_map.pdf}
     \caption[]{
       \label{fig:regions}
       The 5 regions used in the RCPs with their 11-region constituents: Asia
-      (Central Asia, South Asia, Pacific Asia) [yellows], Latin America
-      [magenta], the Middle East and Africa [greens], the OECD (North America,
-      Western Europe, and Pacific OECD) [blues], and the Reforming Economies
-      (Eastern Europe and Former Soviet Union) [reds].  }
+      (\gls{cpa}, \gls{sas}, \gls{pas}) [yellows], \gls{lam}
+      [magenta], the \gls{mea} and \gls{afr} [greens], the OECD (\gls{nam},
+      \gls{weu}, and \gls{pao}) [blues], and the Reforming Economies
+      (\gls{eeu} and \gls{fsu}) [reds].  }
   \end{center}
 \end{figure}
 
@@ -771,7 +779,7 @@ Kyoto Gases in each scenarios.
 
 MESSAGE-GLOBIOM includes a representation of 11 distinct regions which can be
 mapped directly to the 5-region definition used in the RCPs. Historical data is
-taken from previously described LUC and anthropogenic sources, which comprise 10
+taken from previously described \gls{luc} and anthropogenic sources, which comprise 10
 separate pollutant and GHG species and 12 sectors shown in Table \ref{tab:sp}. A
 total of 970 distinct trajectories were harmonized for each scenario, and
 therefore 1940 trajectories were harmonized in total. \noxx generated from the
@@ -946,7 +954,7 @@ forcers like \cotwo.  The resulting difference in forcing in 2100 is 0.04
 $\frac{\text{W}}{\text{m}^2}$ for SSP2-4.5 and 0.01
 $\frac{\text{W}}{\text{m}^2}$ for SSP2-Ref, both of which are well within
 acceptable tolerances (e.g., 0.75 $\frac{\text{W}}{\text{m}^2}$ defined for
-ScenarioMIP \cite{oneill_scenario_2016}). Thus harmonization is considered to
+\gls{smip} \cite{oneill_scenario_2016}). Thus harmonization is considered to
 have a negligible effect on key long-term climate indicators.
 
 \begin{figure}
