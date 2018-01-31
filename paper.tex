@@ -161,7 +161,7 @@ provide global projections of systemic change by dividing the world into a
 number of representative regions (typically 10 to 30), the definition of which
 is distinct for each model \cite{krey_global_2014}. Results from \glspl{iam} are
 integral in a number of international studies, which notably include projections
-of climate and economic futures. Recently, the IAM community has developed
+of climate and economic futures. Recently, the \gls{iam} community has developed
 scenarios based on the \gls{ssps}
 \cite{van_vuuren_energy_2017, fricko_marker_2017, fujimori_ssp3:_2017,
   calvin_ssp4:_2017, kriegler_fossil-fueled_2017} which quantify a variety of
@@ -181,7 +181,7 @@ constraints, e.g., targets for future Greenhouse Gas (GHG) emissions.
 The emissions trajectories calculated by \glspl{iam} are critical inputs for ongoing,
 worldwide scientific community efforts in the Coupled Model Intercomparison
 Project Phase 6 (CMIP6) \cite{eyring_overview_2016}, which is utilizing a number
-of marker SSP scenarios developed by the IAM community (ScenarioMIP)
+of marker SSP scenarios developed by the \gls{iam} community (ScenarioMIP)
 \cite{oneill_scenario_2016}. These trajectories are endogenously calculated by
 modeling the individual technologies and sectors that contribute towards the
 emissions of different air pollutants and GHGs as well as various mitigation
@@ -218,14 +218,14 @@ regions, sectors, and emissions species, this can require the selection of
 thousands to tens-of-thousands of harmonization methods.
 
 Harmonization has been addressed in previous studies as it is a common practice
-in the IAM and climate change communities. For example,
+in the \gls{iam} and climate change communities. For example,
 \cite{meinshausen_rcp_2011} describes the use of scaling routines for the 5
 regions used in the Special Report on Emissions Scenarios (SRES)
 \cite{nakicenovic2000}; however, only total emissions were harmonized in the
 exercise, thus there is no sectoral dimension. Further,
 \cite{rogelj_discrepancies_2011} describes the impacts of choosing various
 harmonization routines on future trajectories. During the evaluation of the
-Representative Concentration Pathways (RCPs), IAM results have been harmonized
+Representative Concentration Pathways (RCPs), \gls{iam} results have been harmonized
 by sector and the 5 RCP global regions
 \cite{vuuren_representative_2011}. Importantly, the choice of harmonization
 method to date has been determined by individual experts and has generally been
@@ -249,7 +249,7 @@ in the Python programming language (detailed documentation available
 \href{http://mattgidden.com/aneris/}{online}). Section \ref{sec:meths} provides
 a detailed description of the underlying mathematical components of
 \code{aneris} as well as the procedural workflow. The results of applying the
-automated harmonization mechanism on two example IAM scenarios, one with
+automated harmonization mechanism on two example \gls{iam} scenarios, one with
 emissions growth and another with emissions mitigation, is presented in Section
 \ref{sec:results}. Finally, the general effectiveness and potential future
 improvements on the automated methodology is discussed in Section
@@ -259,7 +259,7 @@ improvements on the automated methodology is discussed in Section
 
 \subsection{Harmonization Methods}
 
-IAM emission results are provided along temporal (normally half decade or
+\gls{iam} emission results are provided along temporal (normally half decade or
 decade), spatial (i.e., model regions), gas species, and sectoral
 dimensions. Each individual temporal trajectory, i.e., unique combinations of
 regions ($r$), species ($g$), and sectors ($s$), must be harmonized to the
@@ -347,7 +347,7 @@ preferred harmonization algorithm. In order to provide reasonable
 \textit{default} methods, the historical trajectory, unharmonized model
 trajectory, and relative difference between history and model values in the
 harmonization year are analyzed. The decision tree used in this analysis is a
-result of collaborative efforts between IAM teams and is shown graphically in
+result of collaborative efforts between \gls{iam} teams and is shown graphically in
 Figure \ref{fig:decision_tree}.
 
 
@@ -481,7 +481,7 @@ necessary.
       trajectories is shown. CEDS historical data \cite{hoesly_historical_2017}
       is used for non-LUC data and \cite{van_marle_historic_2017} is used for
       LUC data. All historical data has been aggregated from their native
-      spatial resolution (i.e., individual countries) to IAM model regional
+      spatial resolution (i.e., individual countries) to \gls{iam} model regional
       definitions (i.e., collections of countries), and all gas species included
       in the historical data sets are included in the analysis. The solid black
       line indicates the threshold value, $\tau_{c_v}$, used by default in
@@ -492,7 +492,7 @@ necessary.
 Finally, consideration is taken with respect to the relative difference between
 the historic and model values in the harmonization time period. In order to
 investigate the possible values that these relative differences can take, the
-IAM values used in the SSP and (ongoing) CMIP6 inter-comparison
+\gls{iam} values used in the SSP and (ongoing) CMIP6 inter-comparison
 exercises are used. A distribution of these differences for all models in the
 study is presented in Figure \ref{fig:dh}. Given the available data, a threshold
 value of $\tau_{dH} = 50$\% was chosen to be used as a default in \code{aneris}.
@@ -521,7 +521,7 @@ processing routines (shown in red, green, and blue, respectively in Figures
 The \texttt{HarmonizationDriver} is an object designed to interface with
 user-provided data and configuration files. Input data (i.e., unharmonized model
 results) is assumed to be an Excel file in the standard data format within the
-IAM community, i.e., with \code{Model}, \code{Scenario}, \code{Region},
+\gls{iam} community, i.e., with \code{Model}, \code{Scenario}, \code{Region},
 \code{Variable}, and \code{Unit} columns in addition to columns representing
 each modeled time period. It is responsible for down-selecting data into
 separate datasets for each model and scenario, invoking the harmonization
@@ -551,7 +551,7 @@ usage: aneris [-h] [--history HISTORY] [--regions REGIONS] [--rc RC]
               [--output_path OUTPUT_PATH] [--output_prefix OUTPUT_PREFIX]
               input_file
 
-    Harmonize historical trajectories to data in the IAMC template format.
+    Harmonize historical trajectories to data in the IAM template format.
 
     Example usage:
 
@@ -583,7 +583,7 @@ used by the \texttt{HarmonizationDriver}; however it is also available to the
 user as a first-class object. The \texttt{Harmonizer} requires that input data
 conform to the \code{aneris} calculation data format, which explicitly separates
 the emissions species from the sector contributing the emissions (these are
-combined in the single \code{Variable} column in the standard IAM
+combined in the single \code{Variable} column in the standard \gls{iam}
 format). Because the \texttt{Harmonizer} is designed to operate on a single
 instance of a model and scenario, the canonical data format includes
 \texttt{region}, \texttt{sector}, \texttt{gas}, and \texttt{units} columns
@@ -603,7 +603,7 @@ used to generate sectoral emissions totals, generate regional totals, and
 combine historical emissions to native model regions (where historical data is
 defined at a higher spatial resolution than a model; see, e.g., Figure
 \ref{fig:regions}). A \texttt{FormatTranslator} class is also provided which
-defines an interface for translating \texttt{pandas.DataFrame}s between the IAM
+defines an interface for translating \texttt{pandas.DataFrame}s between the \gls{iam}
 format expected for input and output data and the calculation format used by
 \code{aneris}' \texttt{Harmonizer}.
 
@@ -657,7 +657,7 @@ historical data set but are not provided by the model input and detects any
 issues that would cause the harmonization process to fail. The methods used to
 harmonize the data are then determined and the harmonization process is
 executed. Upon completion of the harmonization process, aggregation of common
-analysis regions is performed. A common regional aggregation used in the IAM
+analysis regions is performed. A common regional aggregation used in the \gls{iam}
 community was defined in the Representative Concentration Pathways (RCPs)
 \cite{vuuren_representative_2011}, shown in Figure \ref{fig:regions}. Finally,
 any exogenous trajectories the user provides are added. Exogenous trajectories
@@ -720,7 +720,7 @@ practice, it may be possible that not all default methods chosen will provide
 robust harmonized trajectories, especially if there is a significant difference
 between historical and model values in the harmonization year, if there is
 significant upward or downward movement in the model trajectory, or if there are
-known discrepancies in sectoral definition between the IAM and historical data
+known discrepancies in sectoral definition between the \gls{iam} and historical data
 source. In such cases, users can override default methods with their method of
 choice and both the default method and override is reported in the resulting
 metadata.
@@ -736,7 +736,7 @@ using \code{aneris} to date.
 
 In order to show a representative cross section of the performance of the
 \code{aneris} harmonization procedure, we focus on the harmonization of results
-of the IAM MESSAGE-GLOBIOM \cite{fricko_marker_2017}. Two scenarios from the SSP
+of the \gls{iam} MESSAGE-GLOBIOM \cite{fricko_marker_2017}. Two scenarios from the SSP
 scenario library \cite{Riahi2017153,Rao2017346} are presented. The SSP2, or
 ``middle of the road'', scenario (referred to as SSP2-Ref) is chosen to be
 analyzed because MESSAGE-GLOBIOM is the marker scenario for this SSP. This SSP2
@@ -986,8 +986,8 @@ not only transparency and reproducibility, but also scientific integrity in the
 choice of harmonization methods.
 
 The use of an open-source, automated harmonization process also provides
-benefits to the wider climate science and IAM communities. By providing a
-standard mechanism for harmonization, the IAM community can directly provide
+benefits to the wider climate science and \gls{iam} communities. By providing a
+standard mechanism for harmonization, the \gls{iam} community can directly provide
 input into the harmonization algorithms and rules for their default
 selection. Additionally, modeling teams are easily capable of executing
 identical harmonization procedures in order to participate in ongoing and
@@ -1008,7 +1008,7 @@ discrepancy (suggesting the use of an offset method) or instead a significant
 difference in emissions factors (suggesting the use of a ratio method)
 \cite{rogelj_discrepancies_2011}.
 
-This work provides a new direction and framework which the IAM and climate
+This work provides a new direction and framework which the \gls{iam} and climate
 communities can build upon in order to reduce the necessity of consistent expert
 opinion and increase transparency and reproducibility of harmonization
 exercises. Furthermore, it provides an open-source, tested, and documented
