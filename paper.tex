@@ -188,6 +188,7 @@ models then provide estimates of future trajectories of these variables under
 various socio-economic and technological assumptions as well as proposed policy
 constraints, e.g., targets for future \gls{ghg} emissions.
 
+
 The emissions trajectories calculated by \glspl{iam} are critical inputs for
 ongoing, worldwide scientific community efforts in the \gls{cmip6}
 \cite{eyring_overview_2016}, which is utilizing a number of marker \gls{ssp} scenarios
@@ -745,25 +746,35 @@ using \code{aneris} to date.
 
 In order to show a representative cross section of the performance of the
 \code{aneris} harmonization procedure, we focus on the harmonization of results
-of the \gls{iam} MESSAGE-GLOBIOM \cite{fricko_marker_2017}. Two scenarios from the \gls{ssp}
-scenario library \cite{Riahi2017153,Rao2017346} are presented. The SSP2, or
-``middle of the road'', scenario (referred to as SSP2-Ref) is chosen to be
-analyzed because MESSAGE-GLOBIOM is the marker scenario for this \gls{ssp}. This SSP2
-scenario lies between two \glspl{rcp}, 6 and 8.5, with a radiative forcing level of
-approximately 6.5 Wm$^{-2}$. We additionally present the results for the
-SSP2-based mitigation scenario leading to a radiative forcing of 4.5 Wm$^{-2}$
-(referred to as SSP2-4.5). The SSP2-45 scenario is chosen because mitigation
-technologies and policies are enacted causing a general reduction in pollutants
-and \glspl{ghg}, including (eventual) negative \cotwo emissions in some regions and
-sectors due to carbon capture and sequestration and afforestation. A scenario in
-which negative emissions play a role in mitigation strategies is particularly
-important because of the sensitivity of key indicators, such as end-of-century
-radiative forcing (which is used to estimate mean global temperature increase),
-to the timing and magnitude of net-zero and total negative \cotwo
-emissions. Therefore, these two scenarios represent two relative extreme cases
-in the use of a harmonization approach and thus provide a case study as to its
-general applicability. Figure \ref{fig:kyoto} shows the different trends of
-Kyoto Gases in each scenarios.
+of the \gls{iam} MESSAGE-GLOBIOM \cite{fricko_marker_2017}. Two scenarios from
+the \gls{ssp} scenario library\footnote{We refer the reader to the broad
+  literature discussing the SSPs, e.g.,
+  \cite{vuuren_new_2013,oneill_scenario_2016, oneill_new_2013} for a more in
+  depth discussion of the scenario architecture and design.} are presented. The
+SSP2 \cite{Riahi2017153,Rao2017346}, or ``middle of the road'', scenario
+(referred to as SSP2-Ref) is chosen to be analyzed because MESSAGE-GLOBIOM is
+the marker scenario\footnote{The concept of ``marker'' scenarios are used to
+  illustrate distinctive scenario types within the SSP scenario framework. See
+  \cite{vuuren_new_2013} and \cite{Riahi2017153} for a more lengthy
+  description.} for this \gls{ssp}. This SSP2 scenario lies between two
+\glspl{rcp}, 6 and 8.5, with a radiative forcing\footnote{Radiative forcing is a
+  measurement of the capacity for different emissions species to affect
+  tropopausal irradiance and has a relationship to global mean equilibrium
+  temperature change. We refer the reader to \cite{IPCCWG1PhysicalStocker2013}
+  for a more detailed discussion.} level of approximately 6.5 Wm$^{-2}$. We
+additionally present the results for the SSP2-based mitigation scenario leading
+to a radiative forcing of 4.5 Wm$^{-2}$ (referred to as SSP2-4.5). The SSP2-45
+scenario is chosen because mitigation technologies and policies are enacted
+causing a general reduction in pollutants and \glspl{ghg}, including (eventual)
+negative \cotwo emissions in some regions and sectors due to carbon capture and
+sequestration and afforestation. A scenario in which negative emissions play a
+role in mitigation strategies is particularly important because of the
+sensitivity of key indicators, such as end-of-century radiative forcing (which
+is used to estimate mean global temperature increase), to the timing and
+magnitude of net-zero and total negative \cotwo emissions. Therefore, these two
+scenarios represent two relative extreme cases in the use of a harmonization
+approach and thus provide a case study as to its general applicability. Figure
+\ref{fig:kyoto} shows the different trends of Kyoto Gases in each scenarios.
 
 
 \begin{figure}
@@ -944,11 +955,16 @@ better harmonization quality for the harmonized SAS trajectory.
 
 We investigate the aggregate effect of harmonization with all necessary override
 methods on total anthropogenic radiative forcing projections with the simple
-carbon-cycle and climate model, MAGICC6 \cite{meinshausen2011emulating,
+carbon-cycle and climate model, MAGICC\footnote{MAGICC is a reduced complexity
+  climate model which incorporates future trajectories of forcing agents (i.e.,
+  emissions) to estimate future radiative forcing and mean global temperature
+  response. We refer the reader to the
+  \href{http://wiki.magicc.org/index.php?title=Model_Description}{MAGICC wiki}
+  for a more in-depth description.} \cite{meinshausen2011emulating,
   meinshausen2011rcp}, for each harmonized and unharmonized scenario
 respectively as shown in Figure \ref{fig:forcing}. We find that the change due
-to harmonization is small, ranging between 1 and 2.5\% over the model
-horizon. Relative near-term differences persist in the mitigation case (SSP-4.5)
+to harmonization is small, ranging between 1 and 2.5\% over the modeled time
+period. Relative near-term differences persist in the mitigation case (SSP-4.5)
 because differences in near-term emissions define to a larger degree the
 longer-term forcing outcome due to the cumulative nature of long-lived climate
 forcers like \cotwo.  The resulting difference in forcing in 2100 is 0.04
@@ -970,16 +986,17 @@ have a negligible effect on key long-term climate indicators.
       respectively.  }
   \end{center}
 \end{figure}
+
 \section{Discussion \& Future Work}\label{sec:future}
 
 This work presented a novel methodology and Python implementation of automated
-emissions harmonization for \glspl{iam}, \code{aneris}. An in-depth explanation of the
-processes and methods for determining the use of harmonization methods was
-provided in Section \ref{sec:meths}. \code{aneris} was able to satisfactorily
-harmonized over 96\% of the 1940 individual trajectories that were analyzed in
-Section \ref{sec:results}. Of the remaining trajectories, harmonization method
-overrides were applied, and example situations in overrides were needed were
-discussed.
+emissions harmonization for \glspl{iam}, \code{aneris}. An in-depth explanation
+of the processes and methods for determining the use of harmonization methods
+was provided in Section \ref{sec:meths}. \code{aneris} was able to
+satisfactorily harmonized over 96\% of the 1940 individual trajectories that
+were analyzed in Section \ref{sec:results}. Of the remaining trajectories,
+harmonization method overrides were applied, and a discussion was provided
+detailing why overrides were deemed necessary.
 
 The automated approach drastically reduces the need for expert opinion in
 determining harmonization methods for each individual combination of model
