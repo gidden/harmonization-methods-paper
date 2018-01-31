@@ -173,21 +173,25 @@ representative regions (typically 10 to 30), the definition of which is distinct
 for each model \cite{krey_global_2014}. Results from \glspl{iam} are integral in
 a number of international studies, which notably include projections of climate
 and economic futures. Recently, the \gls{iam} community has developed scenarios
-based on the \glspl{ssp} \cite{van_vuuren_energy_2017, fricko_marker_2017,
-  fujimori_ssp3:_2017, calvin_ssp4:_2017, kriegler_fossil-fueled_2017} which
+based on the \glspl{ssp} \cite{fujimori_ssp3:_2017, van_vuuren_energy_2017,
+  calvin_ssp4:_2017, fricko_marker_2017, kriegler_fossil-fueled_2017} which
 quantify a variety of potential global futures. The \glspl{ssp} are designed to
 be used in research that include \gls{esm} simulations, climate impact,
 adaptation and climate mitigation studies \cite{vuuren_new_2013}.
 
-While \glspl{iam} are implemented in myriad ways, including simulation and
-optimization, the core inputs and outputs are similar across different
-models. Modeling teams incorporate data on energy systems, land use, economics,
-demographics and emissions sources and concentrations, among other data, in
-order to provide consistent existing trajectories of modeled variables. The
-models then provide estimates of future trajectories of these variables under
-various socio-economic and technological assumptions as well as proposed policy
-constraints, e.g., targets for future \gls{ghg} emissions.
-
+While \glspl{iam} are implemented in myriad ways\footnote{IAM models are
+  numerous and have a long history in the scientific literature. Various IAMs
+  have collaborated to produce
+  \href{http://themasites.pbl.nl/models/advance/index.php/ADVANCE_wiki}{community
+    IAM documentation} which readers can access for a full treatment of model
+  implementation and features.}, including simulation and optimization, the core
+inputs and outputs are similar across different models. Modeling teams
+incorporate data on energy systems, land use, economics, demographics and
+emissions sources and concentrations, among other data, in order to provide
+consistent existing trajectories of modeled variables. The models then provide
+estimates of future trajectories of these variables under various socio-economic
+and technological assumptions as well as proposed policy constraints, e.g.,
+targets for future \gls{ghg} emissions.
 
 The emissions trajectories calculated by \glspl{iam} are critical inputs for
 ongoing, worldwide scientific community efforts in the \gls{cmip6}
@@ -350,6 +354,45 @@ Method Name                             & Harmonization Family & Convergence Yea
 \end{tabular}
 \end{table}
 
+\subsection{The Conceptual Basis for Choosing Harmonization Methods}\label{sec:concept}
+
+The goals of any harmonization exercise is threefold: aligning model results in
+the harmonization year to a common historical data source, faithfully
+representing the original \gls{iam}’s internal consistency between the driver
+of emissions (e.g. energy use) and emissions, and maintaining critical
+parameters from the original scenario design. All harmonization methods achieve
+the first goal by design. If the difference between the model base year and
+historical values are small, considering the second and third goals leads to a
+\code{reduce\_ratio} method that converges prior to the final model year as the
+natural best choice. It preserves the ratio of \gls{iam} output and emissions
+inventory in the base year while also matching the original model output at some
+point in the modeled time period. It furthermore maintains the consistency of
+the model's usage of energy technology, volume of agricultural activities, and
+abatement options with harmonized emissions trajectory.
+
+However, other concerns may lead to a better-informed choice than using a
+blanket \code{reduce\_ratio} method for all emissions trajectories. For example,
+emissions from \gls{luluc} are known to have high year-to-year variation, and
+therefore historical data may change drastically depending on the base year
+considered. In such a situation, a \code{reduce\_ratio} that converges at a year
+past the modeled time period is a better choice in order to smooth out
+discrepancies between the historical data used to develop model and the new data
+source being used for harmonization.
+
+Separately, if there are large discrepancies between the model results in the
+base year and the historic data used for harmonization, convergence methods can
+result in harmonized trajectories that do not faithfully represent the
+underlying drivers of emissions. Furthermore, if models report negative
+emissions, as is possible in scenarios designed to depict the deployment of
+climate mitigation policies with large \cotwo reductions and eventual storage,
+then end-of-century emissions characteristics can be of chief import in order to
+faithfully match the design parameters of the original scenarios, such as global
+mean temperature and other climate metrics.
+
+Accordingly, we have developed a \textit{decision tree} approach to
+harmonization method choice, discussed in Section \ref{sec:tree}, in order to
+balance each of these concerns and use cases in a robust and automated manner.
+
 \subsection{Default Method Decision Tree}\label{sec:tree}
 
 A \textit{decision tree} approach has been implemented in \codeb{aneris} which
@@ -374,38 +417,42 @@ Figure \ref{fig:decision_tree}.
       $dH$ is defined as $\left|\frac{h(t_i) - m(t_i)}{h(t_i)}\right|$, and
       decision-making thresholds for $c_v$ and $dH$ are described below.  Where
       present, convergence years of default methods are provided below the
-      method name in parentheses.  Methods labeled in \textit{green} are likely
-      to closely match unharmonized results, methods in \textit{yellow} will
-      likely somewhat match unharmonized results, and methods in \textit{red}
-      can be expected to have a large relative difference between harmonized and
+      method name in parentheses.  Convergence years are chosen in order to
+      balance the three harmonization goals discussed in Section
+      \ref{sec:concept}. Methods labeled in \textit{green} are likely to closely
+      match unharmonized results, methods in \textit{yellow} will likely
+      somewhat match unharmonized results, and methods in \textit{red} can be
+      expected to have a large relative difference between harmonized and
       unharmonized results.}
   \end{center}
 \end{figure}
 
 A number of characteristics impact the decision of which default method to
 select based on the effect of the characteristic on the potential harmonized
-trajectory. For example, it is possible for models to report zero values in the
-harmonization year in situations in which technologies are introduced in future
-time periods in regions or for sectors which produce an emissions species that
-is absent in the initial modeling period. In such cases, an offset method is
-required as a ratio method would mask future emissions and erroneously harmonize
-the trajectory. 
+trajectory. For example, it is rare but possible for models to report zero
+values in the harmonization year in situations in which technologies are
+introduced in future time periods in regions or for sectors which produce an
+emissions species that is absent in the initial modeling period. In such cases,
+an offset method is required as a ratio method would mask future emissions and
+erroneously harmonize the trajectory.
 
 In most cases, however, models do report values in the harmonization
-year. Figure \ref{fig:cases} displays a number of illustrative example
-trajectories which highlight the possible issues resulting from harmonizing
-model results in different contexts. Panels \code{a} and \code{b} highlight
-examples where model results peak mid-century, behavior that is seen in a number
-of scenarios with general emissions mitigation effects, such as pollution
-controls applied by developing nations on transport and industry sectors. Panel
-\code{a} highlights a case where model base-year values and history are relative
-close whereas Panel \code{b} shows a situation where model values and history
-are relatively far apart. Panels \code{c} and \code{d} show similar model
-trajectories that peak mid-century but also have negative emissions. Models can
-report negative emissions in contexts in which a gas species which can be
-extracted from the environment and stored, as is the case for \cotwo in future
-scenarios with climate mitigation enacted via the deployment of carbon capture
-and sequestration technologies or direct carbon capture technologies. Again, the
+year. Figure \ref{fig:cases} displays a number of example trajectories which
+highlight the possible issues resulting from harmonizing model results in
+different contexts. These trajectories do not correspond to specific model
+results; rather they serve as illustrative examples of the kinds of trajectories
+observed in practice. Panels \code{a} and \code{b} highlight examples where
+model results peak mid-century, behavior that is seen in a number of scenarios
+with general emissions mitigation effects, such as pollution controls applied by
+developing nations on transport and industry sectors. Panel \code{a} highlights
+a case where model base-year values and history are relative close whereas Panel
+\code{b} shows a situation where model values and history are relatively far
+apart. Panels \code{c} and \code{d} show similar model trajectories that peak
+mid-century but also have negative emissions. Models can report negative
+emissions in contexts in which a gas species which can be extracted from the
+environment and stored, as is the case for \cotwo in future scenarios with
+climate mitigation enacted via the deployment of carbon capture and
+sequestration technologies or direct carbon capture technologies. Again, the
 relative difference with historical values differ between the panels to explore
 harmonization method choices in each situation.
 
@@ -429,18 +476,17 @@ ratio method is chosen (Figure \ref{fig:cases}, Panel \code{d}).
     \includegraphics[width=\textwidth]{cases.pdf}
     \caption[]{
       \label{fig:cases}
-      The effect of different harmonization routines on model trajectories under
-      ``normal'' circumstances (Panel \code{a}), when there is a large
-      difference between historical and model values in the harmonization year
-      (Panels \code{b} and \code{d}), and when model trajectories result in
-      negative emissions by the end of the modeling time horizon (Panels
-      \code{c} and \code{d}). Identical model trajectories are used in each row
-      (Panels \code{a}, \code{b}; \code{c}, \code{d}). In each column,
-      historical values are increased in the base year by an order of magnitude
-      (from 10 to 100). In each Panel, a subset of the potential routines
-      provide a better harmonization quality than others as described in the
-      text.
-    }
+      We present here a number of illustrative examples of the effect of
+      different harmonization routines on model trajectories under ``normal''
+      circumstances (Panel \code{a}), when there is a large difference between
+      historical and model values in the harmonization year (Panels \code{b} and
+      \code{d}), and when model trajectories result in negative emissions by the
+      end of the modeling time horizon (Panels \code{c} and \code{d}). Identical
+      model trajectories are used in each row (Panels \code{a}, \code{b};
+      \code{c}, \code{d}). In each column, historical values are increased in
+      the base year by an order of magnitude (from 10 to 100). In each Panel, a
+      subset of the potential routines provide a better harmonization quality
+      than others as described in the text.  }
   \end{center}
 \end{figure}
 
@@ -464,11 +510,14 @@ information of the entire historical time period is utilized.
 \end{equation}
 
 The value of $c_v$ is then tested against a threshold, $\tau_{c_v}$. To
-determine this threshold, an analysis of the recent \gls{ceds} and \gls{luc} historical data
-has been performed. Figure \ref{fig:cov} shows the distribution of \gls{luc} $c_v$s
-and non-\gls{luc} $c_v$s as determined for historical data aggregated to the model
-regions of 5 different \glspl{iam} involved in the \gls{ssp} process: AIM-CGE, IMAGE, GCAM4,
-MESSAGE-GLOBIOM, and REMIND-MAGPIE \TODO{add refs}, each of which have varying
+determine this threshold, an analysis of the recent \gls{ceds} and \gls{luc}
+historical data has been performed. Figure \ref{fig:cov} shows the distribution
+of \gls{luc} $c_v$s and non-\gls{luc} $c_v$s as determined for historical data
+aggregated to the model regions of 5 different \glspl{iam} involved in the
+\gls{ssp} process: AIM-CGE \cite{fujimori_ssp3:_2017},
+IMAGE\cite{van_vuuren_energy_2017}, GCAM4\cite{calvin_ssp4:_2017},
+MESSAGE-GLOBIOM\cite{fricko_marker_2017}, and
+REMIND-MAGPIE\cite{kriegler_fossil-fueled_2017}, each of which have varying
 definitions of native model regions comprising different collections of
 countries. Therefore, each data point comprising Figure \ref{fig:cov} represents
 a realization of $c_v$ for a single combination of native model region, sector,
@@ -476,11 +525,11 @@ and emissions species \footnote{A full listing of all sectors and species is
   presented in the case-study discussion in Section \ref{sec:results}, Table
   \ref{tab:sp}}. A threshold value of $\tau_{c_v} = 20$ has been chosen based on
 these observations as it optimally divides the two distributions. Importantly,
-tails of the \gls{luc} and non-\gls{luc} overlap, thus there are both false positives (~7\%
-of non-\gls{luc} trajectories) and false negatives (~10\% of \gls{luc}
-trajectories). However, as any regional definition is model dependent and thus
-any regional aggregation is possible an automated detection mechanism is
-necessary.
+tails of the \gls{luc} and non-\gls{luc} overlap, thus there are both false
+positives (~7\% of non-\gls{luc} trajectories) and false negatives (~10\% of
+\gls{luc} trajectories). However, as any regional definition is model dependent
+and thus any regional aggregation is possible an automated detection mechanism
+is necessary.
 
 
 \begin{figure}
