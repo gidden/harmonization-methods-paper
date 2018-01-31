@@ -296,7 +296,7 @@ depend on a convergence factor, $\beta$, which scales linearly from 1 to 0 over
 $[t_i, t_f)$ and is shown in Equation \ref{eqs:factor}. The use of the
   convergence factor implies that the ratio or offset applied in the base year
   ($t_i$) decays to the unharmonized model result (i.e., the convergence factor
-  is 0) in the convergence year ($t_f$). In cases where the convergency factor
+  is 0) in the convergence year ($t_f$). In cases where the convergence factor
   is applied over the entire time horizon, the convergence year is taken to be
   $t_f = \infty$.
 
@@ -502,7 +502,7 @@ modeled similarly across regions and species. In order to detect emissions with
 a high amount of variation, a measure of the coefficient of variation, $c_v$, of
 the first derivative of the historical trajectory is calculated using the
 standard deviation, $\sigma$, and the mean, $\mu$, as shown in Equation
-\ref{eqs:cov}. For a single realiziation of $c_v$, the first derivative
+\ref{eqs:cov}. For a single realization of $c_v$, the first derivative
 information of the entire historical time period is utilized.
 
 \begin{equation}\label{eqs:cov}
@@ -647,7 +647,7 @@ combined in the single \code{Variable} column in the standard \gls{iam}
 format). Because the \texttt{Harmonizer} is designed to operate on a single
 instance of a model and scenario, the canonical data format includes
 \texttt{region}, \texttt{sector}, \texttt{gas}, and \texttt{units} columns
-without extraneous metadata columns for the model and scenario. Once configured
+without extraneous meta-data columns for the model and scenario. Once configured
 with appropriate input data (model and history) as well as potential method
 overrides, the \texttt{Harmonizer}'s \texttt{harmonize()} method can be invoked
 which returns a \texttt{pandas.DataFrame} of harmonized data. The object can
@@ -1092,7 +1092,7 @@ of these are clear steps in a positive direction for future climate and
 integrated assessment modeling exercises.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Acknowledgements}
+\section*{Acknowledgments}
 
 The authors would like to acknowledge a number of colleagues who helped
 contribute both discussion and feedback regarding this work including Drs. Elmar
