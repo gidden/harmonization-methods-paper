@@ -92,6 +92,7 @@
 \newacronym{afr}{AFR}{Sub-Saharan Africa}
 \newacronym{lam}{LAM}{Latin America and the Caribbean}
 \newacronym{cli}{CLI}{Command Line Interface}
+\newacronym{wmo}{WMO}{World Meteorological Organization}
 
 \makeglossaries
 
@@ -661,8 +662,8 @@ shown in blue. The core harmonization process, governed by the
 %% \end{figure}
 
 The full harmonization workflow, outlined in Figure \ref{fig:workflow}, begins
-by cleaning input data, which adds (null) model trajectories that exist in the
-historical data set but are not provided by the model input and detects any
+by cleaning input data, which adds (0-valued) model trajectories that exist in
+the historical data set but are not provided by the model input and detects any
 issues that would cause the harmonization process to fail. The methods used to
 harmonize the data are then determined and the harmonization process is
 executed. Upon completion of the harmonization process, aggregation of common
@@ -671,10 +672,10 @@ analysis regions is performed. A common regional aggregation used in the
 \cite{vuuren_representative_2011}, shown in Figure \ref{fig:regions}. Finally,
 any exogenous trajectories the user provides are added. Exogenous trajectories
 are normally provided for unmodeled gases with well-accepted scenario
-trajectories, e.g., chlorofluorocarbons provided by WMO \cite{wmo2014}. Upon
-completion, the harmonized trajectories and meta data regarding the
-harmonization process are returned. A description of all returned meta data is
-provided in Table \ref{tab:metadata}.
+trajectories, e.g., chlorofluorocarbons provided by the \gls{wmo}
+\cite{wmo2014}. Upon completion, the harmonized trajectories and meta data
+regarding the harmonization process are returned. A description of all returned
+meta data is provided in Table \ref{tab:metadata}.
 
 \begin{figure}
   \begin{center}
