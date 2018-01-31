@@ -128,7 +128,7 @@ harmonization mechanism.
 \end{abstract}
 
 \begin{keyword}
-Integrated Assessment Models, Climate Change, Harmonization, Air Pollution 
+Integrated Assessment Models, Harmonization, Greenhouse Gases (GHGs), Air Pollution 
 \end{keyword}
 
 \end{frontmatter}
@@ -273,19 +273,14 @@ should be as close as possible) which are of critical importance for cumulative
 In previous studies \cite{meinshausen_rcp_2011,rogelj_discrepancies_2011}, two
 \textit{families} of methods have been used: those that operate on the ratio of
 base year values (i.e., $\frac{h(t_i)}{m(t_i)}$) and those that operate on the
-offset of base year values (i.e., $h(t_i) - m(t_i)$). A number of the classic
-methods are implemented in \code{aneris} including ratio-convergence shown in
-Equation \ref{eqs:ratio}, offset-convergence shown in Equation \ref{eqs:offset},
-and interpolation shown in Equation \ref{eqs:interpolate}. The convergence
-factor, $\beta$, scales linearly from 1 to 0 over $[t_i, t_f)$ and is shown in
-  Equation \ref{eqs:factor}. In all equations the region, species, and sector
-  indices have been dropped for clarity. Each equation is a function of time,
-  model trajectory, historical trajectory, base year ($t_i$), and a convergence
-  year ($t_f$), at which point the harmonized trajectory converges to the
-  unharmonized trajectory. \codeb{aneris} provides a number of methods to choose
-  from for each of the harmonization families. A summary of all available
-  methods is provided in Table \ref{tab:meths}.
-
+offset of base year values (i.e., $h(t_i) - m(t_i)$). Both families of functions
+depend on a convergence factor, $\beta$, which scales linearly from 1 to 0 over
+$[t_i, t_f)$ and is shown in Equation \ref{eqs:factor}. The use of the
+  convergence factor implies that the ratio or offset applied in the base year
+  ($t_i$) decays to the unharmonized model result (i.e., the convergence factor
+  is 0) in the convergence year ($t_f$). In cases where the convergency factor
+  is applied over the entire time horizon, the convergence year is taken to be
+  $t_f = \infty$.
 
 \begin{equation}\label{eqs:factor}
   \beta(t, t_i, t_f) =
@@ -294,6 +289,18 @@ factor, $\beta$, scales linearly from 1 to 0 over $[t_i, t_f)$ and is shown in
     0,                        & \text{otherwise}
   \end{cases}
 \end{equation}
+
+A number of the classic methods are implemented in \code{aneris} including
+ratio-convergence shown in Equation \ref{eqs:ratio}, offset-convergence shown in
+Equation \ref{eqs:offset}, and interpolation shown in Equation
+\ref{eqs:interpolate}. In all equations the region, species, and sector indices
+have been dropped for clarity. Each equation is a function of time, model
+trajectory, historical trajectory, base year ($t_i$), and a convergence year
+($t_f$), at which point the harmonized trajectory converges to the unharmonized
+trajectory. \codeb{aneris} provides a number of methods to choose from for each
+of the harmonization families. A summary of all available methods is provided in
+Table \ref{tab:meths}. 
+
 
 \begin{equation}\label{eqs:ratio}
   m^{rat}(t, m, h, t_i, t_f) = [\beta(t, t_i, t_f) (\frac{h(t_i)}{m(t_i)} - 1) + 1] m(t)
@@ -314,7 +321,7 @@ factor, $\beta$, scales linearly from 1 to 0 over $[t_i, t_f)$ and is shown in
 
 \begin{table}[h!]
 \centering
-\caption{All Harmonization Methods Provided in \code{aneris}}
+\caption{All harmonization methods provided in \code{aneris}. A Convergence year of $\infty$ is provided for the \code{constant\_ratio} and \code{constant\_offset} methods are listed as $\beta = 1$ for all model years in both cases.}
 \label{tab:meths}
 \begin{tabular}{|l|l|l|}
 \hline
@@ -351,11 +358,13 @@ Figure \ref{fig:decision_tree}.
       response and lower (orange) branches represent a ``no'' response. The
       coefficient of variation, $c_v$, is defined in Equation \ref{eqs:cov},
       $dH$ is defined as $\left|\frac{h(t_i) - m(t_i)}{h(t_i)}\right|$, and
-      decision-making thresholds for $c_v$ and $dH$ are described below. Methods
-      labeled in \textit{green} are likely to closely match unharmonized
-      results, methods in \textit{yellow} will likely somewhat match
-      unharmonized results, and methods in \textit{red} can be expected to have
-      a large relative difference between harmonized and unharmonized results.}
+      decision-making thresholds for $c_v$ and $dH$ are described below.  Where
+      present, convergence years of default methods are provided below the
+      method name in parentheses.  Methods labeled in \textit{green} are likely
+      to closely match unharmonized results, methods in \textit{yellow} will
+      likely somewhat match unharmonized results, and methods in \textit{red}
+      can be expected to have a large relative difference between harmonized and
+      unharmonized results.}
   \end{center}
 \end{figure}
 
@@ -369,26 +378,37 @@ required as a ratio method would mask future emissions and erroneously harmonize
 the trajectory. 
 
 In most cases, however, models do report values in the harmonization
-year. Figure \ref{fig:cases} displays a number of example trajectories which
-highlight the possible issues resulting from harmonizing model results in
-different contexts. When model and historical values are relatively close, a
-convergence method is chosen in order to be as representative as possible to the
-underlying unharmonized model results (Figure \ref{fig:cases}, Panel
-\code{a}). If values are not close, the constant ratio method is chosen in order
-to provide reasonable trajectories that still incorporate modeled effects
-(Figure \ref{fig:cases}, Panel \code{b}). 
+year. Figure \ref{fig:cases} displays a number of illustrative example
+trajectories which highlight the possible issues resulting from harmonizing
+model results in different contexts. Panels \code{a} and \code{b} highlight
+examples where model results peak mid-century, behavior that is seen in a number
+of scenarios with general emissions mitigation effects, such as pollution
+controls applied by developing nations on transport and industry sectors. Panel
+\code{a} highlights a case where model base-year values and history are relative
+close whereas Panel \code{b} shows a situation where model values and history
+are relatively far apart. Panels \code{c} and \code{d} show similar model
+trajectories that peak mid-century but also have negative emissions. Models can
+report negative emissions in contexts in which a gas species which can be
+extracted from the environment and stored, as is the case for \cotwo in future
+scenarios with climate mitigation enacted via the deployment of carbon capture
+and sequestration technologies or direct carbon capture technologies. Again, the
+relative difference with historical values differ between the panels to explore
+harmonization method choices in each situation.
 
-Models can additionally report negative emissions in certain contexts which must
-be taken into account during harmonization. Such a case is possible for gas
-species which can be extracted from the environment and stored, as is the case
-for \cotwo in future scenarios with climate mitigation. If a model provides a
-trajectory that transitions from positive to negative emissions and base year
-results are similar, then a convergence method is used in order to guarantee
-capture of this transition in a representative fashion (Figure \ref{fig:cases},
-Panel \code{c}). If the discrepancy in base year results is large, it is
-possible for a negative trajectory to be inappropriately harmonized to a
-positive, but decreasing, trajectory. As such, the constant ratio method is
-chosen (Figure \ref{fig:cases}, Panel \code{d}).
+When model and historical values are relatively close, a convergence method is
+chosen in order to be as representative as possible to the underlying
+unharmonized model results (Figure \ref{fig:cases}, Panel \code{a}). If values
+are not close, the constant ratio method is chosen in order to provide
+reasonable trajectories that still incorporate modeled effects (Figure
+\ref{fig:cases}, Panel \code{b}).
+
+If a model provides a trajectory that transitions from positive to negative
+emissions and base year results are similar, then a convergence method is used
+in order to guarantee capture of this transition in a representative fashion
+(Figure \ref{fig:cases}, Panel \code{c}). If the discrepancy in base year
+results is large, it is possible for a negative trajectory to be inappropriately
+harmonized to a positive, but decreasing, trajectory. As such, the constant
+ratio method is chosen (Figure \ref{fig:cases}, Panel \code{d}).
 
 \begin{figure}
   \begin{center}
@@ -422,23 +442,31 @@ modeled similarly across regions and species. In order to detect emissions with
 a high amount of variation, a measure of the coefficient of variation, $c_v$, of
 the first derivative of the historical trajectory is calculated using the
 standard deviation, $\sigma$, and the mean, $\mu$, as shown in Equation
-\ref{eqs:cov}.
+\ref{eqs:cov}. For a single realiziation of $c_v$, the first derivative
+information of the entire historical time period is utilized.
+
+\begin{equation}\label{eqs:cov}
+    c_v =  \frac{\sigma(h^{\prime}(t))}{\mu(h^{\prime}(t))}
+\end{equation}
 
 The value of $c_v$ is then tested against a threshold, $\tau_{c_v}$. To
 determine this threshold, an analysis of the recent CEDS and LUC historical data
 has been performed. Figure \ref{fig:cov} shows the distribution of LUC $c_v$s
 and non-LUC $c_v$s as determined for historical data aggregated to the model
-regions of 5 different IAMs involved in the SSP process. A threshold value of
-$\tau_{c_v} = 20$ has been chosen based on these observations as it
-optimally divides the two distributions. Importantly, tails of the LUC and
-non-LUC overlap, thus there are both false positives (~7\% of non-LUC
-trajectories) and false negatives (~10\% of LUC trajectories). However, as any
-regional definition is model dependent and thus any regional aggregation is
-possible an automated detection mechanism is necessary.
-
-\begin{equation}\label{eqs:cov}
-    c_v =  \frac{\sigma(h^{\prime}(t))}{\mu(h^{\prime}(t))}
-\end{equation}
+regions of 5 different IAMs involved in the SSP process: AIM-CGE, IMAGE, GCAM4,
+MESSAGE-GLOBIOM, and REMIND-MAGPIE \TODO{add refs}, each of which have varying
+definitions of native model regions comprising different collections of
+countries. Therefore, each data point comprising Figure \ref{fig:cov} represents
+a realization of $c_v$ for a single combination of native model region, sector,
+and emissions species \footnote{A full listing of all sectors and species is
+  presented in the case-study discussion in Section \ref{sec:results}, Table
+  \ref{tab:sp}}. A threshold value of $\tau_{c_v} = 20$ has been chosen based on
+these observations as it optimally divides the two distributions. Importantly,
+tails of the LUC and non-LUC overlap, thus there are both false positives (~7\%
+of non-LUC trajectories) and false negatives (~10\% of LUC
+trajectories). However, as any regional definition is model dependent and thus
+any regional aggregation is possible an automated detection mechanism is
+necessary.
 
 
 \begin{figure}
@@ -449,10 +477,12 @@ possible an automated detection mechanism is necessary.
       The distribution of $c_v$ values for LUC and non-LUC historical
       trajectories is shown. CEDS historical data \cite{hoesly_historical_2017}
       is used for non-LUC data and \cite{van_marle_historic_2017} is used for
-      LUC data. All historical data has been aggregated from countries to IAM
-      model regional definitions, and all gas species included in the historical
-      data sets are included in the analysis. The solid black line indicates the
-      threshold value, $\tau_{c_v}$, used by default in \code{aneris}.  }
+      LUC data. All historical data has been aggregated from their native
+      spatial resolution (i.e., individual countries) to IAM model regional
+      definitions (i.e., collections of countries), and all gas species included
+      in the historical data sets are included in the analysis. The solid black
+      line indicates the threshold value, $\tau_{c_v}$, used by default in
+      \code{aneris}.  }
   \end{center}
 \end{figure}
 
@@ -699,7 +729,7 @@ end-points. These values are configurable by the user, but defaults of $400$\%
 and $200$\%, respectively, are provided based on experiences of the authors'
 using \code{aneris} to date.
 
-\section{Results}\label{sec:results}
+\section{Case Study: Harmonizing Results from a Global IAM}\label{sec:results}
 
 In order to show a representative cross section of the performance of the
 \code{aneris} harmonization procedure, we focus on the harmonization of results
@@ -712,9 +742,16 @@ approximately 6.5 Wm$^{-2}$. We additionally present the results for the
 SSP2-based mitigation scenario leading to a radiative forcing of 4.5 Wm$^{-2}$
 (referred to as SSP2-4.5). The SSP2-45 scenario is chosen because mitigation
 technologies and policies are enacted causing a general reduction in pollutants
-and GHGs, including (eventual) negative CO2 emissions in some regions and
-sectors due to carbon capture and sequestration and afforestation. Figure
-\ref{fig:kyoto} shows the different trends of Kyoto Gases in each scenarios.
+and GHGs, including (eventual) negative \cotwo emissions in some regions and
+sectors due to carbon capture and sequestration and afforestation. A scenario in
+which negative emissions play a role in mitigation strategies is particularly
+important because of the sensitivity of key indicators, such as end-of-century
+radiative forcing (which is used to estimate mean global temperature increase),
+to the timing and magnitude of net-zero and total negative \cotwo
+emissions. Therefore, these two scenarios represent two relative extreme cases
+in the use of a harmonization approach and thus provide a case study as to its
+general applicability. Figure \ref{fig:kyoto} shows the different trends of
+Kyoto Gases in each scenarios.
 
 
 \begin{figure}
@@ -838,7 +875,7 @@ chosen (\code{constant_ratio}) maintains model trends for the region; however,
 overall model results are distorted. By applying a \code{constant_offset}
 override, the regional trend and magnitude is maintained. With the new
 harmonization method for the SAS region, the global trajectory for industrial CO
-also is representative the trends seen in the unharmonized trajectory and the
+also is representative of the trends seen in the unharmonized trajectory and the
 relative importance of the underlying regional trajectories is maintained.
 
 \begin{figure}
