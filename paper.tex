@@ -918,9 +918,9 @@ each harmonized trajectory.
 \hline
 \textbf{Region} & \textbf{dH} & $\mathbf{c_v}$ & \textbf{Decision Tree Traversal (Branch and Direction)} & \textbf{Default Method Chosen} \\ \hline
     \hline
-CPA             & 0.35        & 2.26          & 1 (no), 2 (no), 3 (yes)                                 & reduce\_ratio\_2080    \\ \hline
-PAS             & 0.14        & 1.24          & 1 (no), 2 (no), 3 (yes)                                 & reduce\_ratio\_2080    \\ \hline
-SAS             & 0.56        & 0.58          & 1 (no), 2 (no), 3 (no), 4 (no)                          & constant\_ratio        \\ \hline
+\gls{cpa}             & 0.35        & 2.26          & 1 (no), 2 (no), 3 (yes)                                 & reduce\_ratio\_2080    \\ \hline
+\gls{pas}             & 0.14        & 1.24          & 1 (no), 2 (no), 3 (yes)                                 & reduce\_ratio\_2080    \\ \hline
+\gls{sas}             & 0.56        & 0.58          & 1 (no), 2 (no), 3 (no), 4 (no)                          & constant\_ratio        \\ \hline
 \end{tabular}
 \end{table}
 
@@ -941,63 +941,76 @@ distorted and regional trajectories whose \textit{shape} was overly distorted.
 Figure \ref{fig:co} presents a case in which the magnitude of a trajectory is
 distorted. A large discrepancy ($\sim$300\% relative difference) is observed in
 the harmonization year for carbon monoxide (CO) emissions in the industrial
-sector specifically for the South Asia (SAS) MESSAGE-GLOBIOM region, which
-comprises most of the emissions of the Asian subcontinent. The default method
-chosen (\code{constant_ratio}) maintains model trends for the region; however,
-overall model results are distorted. By applying a \code{constant_offset}
-override, the regional trend and magnitude is maintained. With the new
-harmonization method for the SAS region, the global trajectory for industrial CO
-also is representative of the trends seen in the unharmonized trajectory and the
-relative importance of the underlying regional trajectories is maintained.
+sector specifically for the \gls{sas} and \gls{afr} MESSAGE-GLOBIOM
+regions. Furthermore, emissions in both regions see relatively large expansion
+or contraction, depending on the scenario; therefore, both regions are
+candidates for choosing harmonization method overrides. The default method
+chosen in both cases (\code{constant_ratio}) maintains model trends for the
+region; however, overall model results are distorted. By applying a
+\code{constant_offset} overrides, the regional trends and magnitudes are
+maintained. Through the use of harmonization overrides also ameliorates issues
+seen in the harmonized global trajectory of industrial CO (Figure \ref{fig:co},
+Panel \textbf{c}). Not only does the global trajectory with overrides more
+accurately match the original unharmonized model behavior and magnitude of
+emissions, but the relative importance of the underlying regional trajectories
+is also maintained.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[width=\textwidth]{results_CO_Industrial_Sector.pdf}
+    \includegraphics[height=0.8\textheight]{sep_regions_results_CO_Industrial_Sector.pdf}
     \caption[]{
       \label{fig:co}
-      CO Industrial Sector harmonized and unharmonized emissions are presented
-      for SSP2 and SSP2-45 scenarios. Scenarios as denoted identically to Figure
-      \ref{fig:nox}. Panels \textbf{a} and \textbf{b} show harmonized and
-      overridden-harmonized (respectively) regional trajectories for the 3
-      MESSAGE-GLOBIOM regions that comprise the R5ASIA region: Centrally Planned
-      Asia (CPA), Other Pacific Asia (PAS), and South Asia (SAS). Notably, the
-      SAS regional trajectory displays a distorted trajectory due to the
-      harmonization-year difference between history and model results in both
-      scenarios. The distortion is large enough to affect global results, as
-      shown in Panels \textbf{c} and \textbf{d}.  
-}
+      CO Industrial Sector harmonized (without markers) and unharmonized (with
+      markers) emissions are presented for SSP2 (purple lines) and SSP2-45 (red
+      lines) scenarios. Panel \textbf{a} shows harmonized and
+      overridden-harmonized (respectively) trajectories for the \gls{sas} region
+      while panels \textbf{b} and \textbf{c} show similar trajectories for the
+      \gls{afr} region and (total) global emissions, respectively. Notably, the
+      \gls{sas} and \gls{afr} regional trajectory displays a distorted
+      trajectory due to the harmonization-year difference between history and
+      model results in both scenarios. The distortion is large enough to affect
+      global results, as shown in Panel \textbf{c}.  }
   \end{center}
 \end{figure}
+
 
 In certain circumstances, the application of the default harmonization methods
 can affect not only the magnitude but also the shape of regional
 trajectories. Figure \ref{fig:nh3} shows an example case of emissions
-trajectories for ammonia (\nht) from the agriculture sector in Asia. Again, the
-SAS region shows a large discrepancy in the harmonization year ($>$150\% in this
-case). The resulting trajectory harmonized with the default method
+trajectories for ammonia (\nht) from the agriculture sector. Again, the
+\gls{sas} region shows a large discrepancy in the harmonization year ($>$150\%
+in this case). The resulting trajectory harmonized with the default method
 (\code{constant_ratio}) provides a large increase after 2080 in the SSP2
 reference scenario. Notably, the SSP2-45 scenario is not affected to the same
-degree. While this distortion changes the magnitude of the SAS trajectory, it
-largely affects the post-2080 shape of the global trajectory (see Figure
-\ref{fig:nh3}, panel \textbf{c}). By using a \code{constant_offset} method as an
-override, this distortion is addressed and more accurately reflects unharmonized
-results in the SAS region, the relative importance between regions, and global
-results for agricultural ammonia emissions, each of which contributes to a
-better harmonization quality for the harmonized SAS trajectory.
+degree. While this distortion changes the magnitude of the \gls{sas} trajectory,
+it largely affects the post-2080 shape of the global trajectory (Figure
+\ref{fig:nh3}, Panel \textbf{b}). For example, in the original model result,
+\gls{SAS} \nht agricultural emissions contribute $\sim$30\% of total global
+emissions, whereas in the unharmonized case with default methods, \gls{SAS}
+comprises $\sim$50\% of global emissions. By using a \code{constant_offset}
+method as an override, this distortion is addressed and more accurately reflects
+unharmonized results in the \gls{sas} region, the relative importance between
+regions, and global results for agricultural ammonia emissions, each of which
+contributes to a better harmonization quality for the harmonized \gls{sas}
+trajectory. The harmonized emissions using overrides result in a contribution of
+$\sim$32\% of total global emissions by the \gls{SAS} region which aligns
+closely with the unharmonized model results.
 
 \begin{figure}
   \begin{center}
-    \includegraphics[width=\textwidth]{results_NH3_Agriculture.pdf}
+    \includegraphics[width=\textwidth]{sep_regions_results_NH3_Agriculture.pdf}
     \caption[]{
       \label{fig:nh3}
       \nhtt agricultural harmonized and unharmonized emissions are presented for
-      SSP2 and SSP2-45 scenarios. Scenarios and panel layouts are identical to
-      Figure \ref{fig:co}. In this case, the SAS trajectory again shows not only
-      a magnitude distortion, but also a shape distortion at the tail of the
-      trajectory. Additionally, global trajectories are greatly affected by the
-      harmonization method choice (there is $\sim$20\% relative difference
-      between trajectories in the reference scenario in 2100). Override methods
-      have been applied to correct the distortion.  }
+      SSP2 and SSP2-45 scenarios. Panel \textbf{a} shows harmonized and
+      overridden-harmonized (respectively) trajectories for the \gls{sas}
+      region, and panel \textbf{b} shows the global total trajectory. In this
+      case, the \gls{sas} trajectory again shows not only a magnitude distortion, but
+      also a shape distortion at the tail of the trajectory. Additionally,
+      global trajectories are greatly affected by the harmonization method
+      choice (there is $\sim$20\% relative difference between trajectories in
+      the reference scenario in 2100). Override methods have been applied to
+      correct the distortion.  }
   \end{center}
 \end{figure}
 
