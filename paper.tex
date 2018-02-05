@@ -131,14 +131,14 @@ separately by individual modeling teams. For the hand-over of emission data for
 the Shared Socioeconomic Pathways (SSPs) to climate model groups, a new
 automated approach based on commonly agreed upon algorithms was developed. This
 work describes the novel methodology for determining such harmonization methods
-and an open-source Python software library implementing the methodology. Results
-are shown for two example scenarios (with and without climate policy cases)
-using the IAM MESSAGE-GLOBIOM that satisfactorily harmonize over 96\% of the
-total emissions trajectories while having a negligible effect on key long-term
-climate indicators. This new capability enhances the comparability across
-different models, increases transparency and robustness of results, and allows
-other teams to easily participate in intercomparison exercises by using the
-same, openly available harmonization mechanism.
+and an open-source Python software library implementing the methodology. A case
+study is presented for two example scenarios (with and without climate policy
+cases) using the IAM MESSAGE-GLOBIOM that satisfactorily harmonize over 96\% of
+the total emissions trajectories while having a negligible effect on key
+long-term climate indicators. This new capability enhances the comparability
+across different models, increases transparency and robustness of results, and
+allows other teams to easily participate in intercomparison exercises by using
+the same, openly available harmonization mechanism.
 \end{abstract}
 
 \begin{keyword}
@@ -157,9 +157,9 @@ Integrated Assessment Models, Harmonization, Greenhouse Gases (GHGs), Air Pollut
 \texttt{aneris}, first made available in 2017, is available online at
 \url{https://github.com/gidden/aneris} as a free and open-source Python software
 library (approximately 2000 lines of code). The \texttt{aneris} software was
-developed by the lead author, Matthew J. Gidden, Ph.D., whose contact
-information is shown on the title page of this manuscript. Documentation for the
-\texttt{aneris} Python package, including software requirements, is available
+developed by the lead author whose contact information is shown on the title
+page of this manuscript. Documentation for the \texttt{aneris} Python package,
+including software requirements, is available
 \href{http://mattgidden.com/aneris/}{online}.
 
 \newpage
@@ -260,10 +260,10 @@ modeling teams not involved in the original exercise.
 
 The remainder of this paper describes the methodology and implementation of the
 harmonization software \code{aneris} \cite{matthew_gidden_2017_802832}, written
-in the Python programming language (detailed documentation available
+in the Python programming language (detailed documentation is available
 \href{http://mattgidden.com/aneris/}{online}). Section \ref{sec:meths} provides
 a detailed description of the underlying mathematical components of
-\code{aneris} as well as the procedural workflow. The results of applying the
+\code{aneris} as well as the procedural workflow. A case study of applying the
 automated harmonization mechanism on two example \gls{iam} scenarios, one with
 emissions growth and another with emissions mitigation, is presented in Section
 \ref{sec:results}. Finally, the general effectiveness and potential future
@@ -272,7 +272,46 @@ improvements on the automated methodology is discussed in Section
 
 \section{Methodology \& Implementation}\label{sec:meths}
 
-\subsection{Harmonization Methods}
+\subsection{The Conceptual Basis for Choosing Harmonization Methods}\label{sec:concept}
+
+The goals of any harmonization exercise is threefold: aligning model results in
+the harmonization year to a common historical data source, faithfully
+representing the original \gls{iam}’s internal consistency between the driver of
+emissions (e.g. energy use) and emissions, and maintaining critical parameters
+from the original scenario design. Any harmonization method achieves the first
+goal by design. If the difference between the model base year and historical
+values are small, considering the second and third goals leads to a method
+choice that matches modeled drivers (e.g., a \code{ratio} method discussed in
+Section \ref{sec:harm-methods}) and converges prior to the final model year. It
+preserves the relationship between \gls{iam} output and emissions inventory in
+the base year while also matching the original model output at some point in the
+modeled time period. It furthermore maintains the consistency of the model's
+usage of energy technology, volume of agricultural activities, and abatement
+options with harmonized emissions trajectory.
+
+However, other concerns may lead to a better-informed choice than using a
+blanket method for all emissions trajectories. For example, emissions from
+\gls{luluc} are known to have high year-to-year variation, and therefore
+historical data may change drastically depending on the base year considered. In
+such a situation, a method that converges at a year past the modeled time period
+is a better choice in order to smooth out discrepancies between the historical
+data used to develop model and the new data source being used for harmonization.
+
+Separately, if there are large discrepancies between the model results in the
+base year and the historic data used for harmonization, convergence methods can
+result in harmonized trajectories that do not faithfully represent the
+underlying drivers of emissions. Furthermore, if models report negative
+emissions, as is possible in scenarios designed to depict the deployment of
+climate mitigation policies with large \cotwo reductions and eventual storage,
+then end-of-century emissions characteristics can be of chief import in order to
+faithfully match the design parameters of the original scenarios, such as global
+mean temperature and other climate metrics.
+
+Accordingly, we have developed a \textit{decision tree} approach to
+harmonization method choice, discussed in Section \ref{sec:tree}, in order to
+balance each of these concerns and use cases in a robust and automated manner.
+
+\subsection{Harmonization Methods}\label{sec:harm-methods}
 
 \gls{iam} emission results are provided along temporal (normally half decade or
 decade), spatial (i.e., model regions), gas species, and sectoral
@@ -353,45 +392,6 @@ Method Name                             & Harmonization Family & Convergence Yea
 \hline
 \end{tabular}
 \end{table}
-
-\subsection{The Conceptual Basis for Choosing Harmonization Methods}\label{sec:concept}
-
-The goals of any harmonization exercise is threefold: aligning model results in
-the harmonization year to a common historical data source, faithfully
-representing the original \gls{iam}’s internal consistency between the driver
-of emissions (e.g. energy use) and emissions, and maintaining critical
-parameters from the original scenario design. All harmonization methods achieve
-the first goal by design. If the difference between the model base year and
-historical values are small, considering the second and third goals leads to a
-\code{reduce\_ratio} method that converges prior to the final model year as the
-natural best choice. It preserves the ratio of \gls{iam} output and emissions
-inventory in the base year while also matching the original model output at some
-point in the modeled time period. It furthermore maintains the consistency of
-the model's usage of energy technology, volume of agricultural activities, and
-abatement options with harmonized emissions trajectory.
-
-However, other concerns may lead to a better-informed choice than using a
-blanket \code{reduce\_ratio} method for all emissions trajectories. For example,
-emissions from \gls{luluc} are known to have high year-to-year variation, and
-therefore historical data may change drastically depending on the base year
-considered. In such a situation, a \code{reduce\_ratio} that converges at a year
-past the modeled time period is a better choice in order to smooth out
-discrepancies between the historical data used to develop model and the new data
-source being used for harmonization.
-
-Separately, if there are large discrepancies between the model results in the
-base year and the historic data used for harmonization, convergence methods can
-result in harmonized trajectories that do not faithfully represent the
-underlying drivers of emissions. Furthermore, if models report negative
-emissions, as is possible in scenarios designed to depict the deployment of
-climate mitigation policies with large \cotwo reductions and eventual storage,
-then end-of-century emissions characteristics can be of chief import in order to
-faithfully match the design parameters of the original scenarios, such as global
-mean temperature and other climate metrics.
-
-Accordingly, we have developed a \textit{decision tree} approach to
-harmonization method choice, discussed in Section \ref{sec:tree}, in order to
-balance each of these concerns and use cases in a robust and automated manner.
 
 \subsection{Default Method Decision Tree}\label{sec:tree}
 
@@ -521,7 +521,7 @@ REMIND-MAGPIE\cite{kriegler_fossil-fueled_2017}, each of which have varying
 definitions of native model regions comprising different collections of
 countries. Therefore, each data point comprising Figure \ref{fig:cov} represents
 a realization of $c_v$ for a single combination of native model region, sector,
-and emissions species \footnote{A full listing of all sectors and species is
+and emissions species\footnote{A full listing of all sectors and species is
   presented in the case-study discussion in Section \ref{sec:results}, Table
   \ref{tab:sp}}. A threshold value of $\tau_{c_v} = 20$ has been chosen based on
 these observations as it optimally divides the two distributions. Importantly,
@@ -571,12 +571,11 @@ value of $\tau_{dH} = 50$\% was chosen to be used as a default in \code{aneris}.
 
 \subsection{\code{aneris} Python Implementation and Workflow}\label{sec:workflow}
 
-We herein present \code{aneris}' Python implementation, depicted in Figure
-\ref{fig:software}, and conceptual, depicted in Figure \ref{fig:workflow}. The
-library is composed of a number of utilities as well as three primary
-components: the \texttt{HarmonizationDriver}, \texttt{Harmonizer}, and data
-processing routines (shown in red, green, and blue, respectively in Figures
-\ref{fig:software} and \ref{fig:workflow}).
+We herein present \code{aneris}' Python implementation and conceptual
+design.. The library is composed of a number of utilities as well as three
+primary components: the \texttt{HarmonizationDriver}, \texttt{Harmonizer}, and
+data processing routines shown in red, green, and blue, respectively in Figures
+\ref{fig:software} and \ref{fig:workflow}.
 
 The \texttt{HarmonizationDriver} is an object designed to interface with
 user-provided data and configuration files. Input data (i.e., unharmonized model
@@ -636,10 +635,10 @@ optional arguments:
 \label{lst:cli}
 \end{listing}
 
-The \texttt{Harmonizer} is a Python class whose concern is to harmonize model
-value trajectories given historical data and possible user method
-\textit{overrides}, i.e., non-default methods (described further below). It is
-used by the \texttt{HarmonizationDriver}; however it is also available to the
+The \texttt{Harmonizer} is a class whose concern is to harmonize model value
+trajectories given historical data and possible user method \textit{overrides},
+i.e., non-default methods (described further in Section \ref{sec:overrides}). It
+is used by the \texttt{HarmonizationDriver}; however it is also available to the
 user as a first-class object. The \texttt{Harmonizer} requires that input data
 conform to the \code{aneris} calculation data format, which explicitly separates
 the emissions species from the sector contributing the emissions (these are
@@ -712,31 +711,32 @@ shown in blue. The core harmonization process, governed by the
 %% \end{figure}
 
 The full harmonization workflow, outlined in Figure \ref{fig:workflow}, begins
-by cleaning input data, which adds (0-valued) model trajectories that exist in
-the historical data set but are not provided by the model input and detects any
-issues that would cause the harmonization process to fail. The methods used to
-harmonize the data are then determined and the harmonization process is
-executed. Upon completion of the harmonization process, aggregation of common
-analysis regions is performed. A common regional aggregation used in the
-\gls{iam} community was defined in the \glspl{rcp}
-\cite{vuuren_representative_2011}, shown in Figure \ref{fig:regions}. Finally,
-any exogenous trajectories the user provides are added. Exogenous trajectories
-are normally provided for unmodeled gases with well-accepted scenario
-trajectories, e.g., chlorofluorocarbons provided by the \gls{wmo}
-\cite{wmo2014}. Upon completion, the harmonized trajectories and meta data
-regarding the harmonization process are returned. A description of all returned
-meta data is provided in Table \ref{tab:metadata}.
+by cleaning input data. Cleaning operations include adding (0-valued) model
+trajectories that exist in the historical data set but are not provided by the
+model input and detecting any issues that would cause the harmonization process
+to fail. The methods used to harmonize the data are then determined and the
+harmonization process is executed. Upon completion of the harmonization process,
+spatial aggregation to common analysis regions is performed. For example, the
+5-region aggregation developed in the \glspl{rcp}
+\cite{vuuren_representative_2011} process is commonly used in the \gls{iam}
+community and is shown in Figure \ref{fig:regions}. Finally, any exogenous
+trajectories the user provides are added. Exogenous trajectories are normally
+provided for unmodeled gases with well-accepted scenario trajectories, e.g.,
+chlorofluorocarbons provided by the \gls{wmo} \cite{wmo2014}. Upon completion,
+the harmonized trajectories and meta data regarding the harmonization process
+are returned. A description of all returned meta data is provided in Table
+\ref{tab:metadata}.
 
 \begin{figure}
   \begin{center}
     \includegraphics[width=\textwidth]{MESSAGE_11-5regions_map.pdf}
     \caption[]{
       \label{fig:regions}
-      The 5 regions used in the \glspl{rcp} with their 11-region constituents: Asia
-      (\gls{cpa}, \gls{sas}, \gls{pas}) [yellows], \gls{lam}
-      [magenta], the \gls{mea} and \gls{afr} [greens], the OECD (\gls{nam},
-      \gls{weu}, and \gls{pao}) [blues], and the Reforming Economies
-      (\gls{eeu} and \gls{fsu}) [reds].  }
+      The 5 regions used in the \glspl{rcp} with their MESSAGE-GLOBIOM 11-region
+      constituents: Asia (\gls{cpa}, \gls{sas}, \gls{pas}) [yellows], \gls{lam}
+      [magenta], Africa and the Middle East (\gls{mea} and \gls{afr}) [greens],
+      the OECD (\gls{nam}, \gls{weu}, and \gls{pao}) [blues], and the Reforming
+      Economies (\gls{eeu} and \gls{fsu}) [reds].  }
   \end{center}
 \end{figure}
 
@@ -770,6 +770,8 @@ harmonized   & The resulting harmonized value in the harmonization year.\\
 \end{tabular}
 \end{table}
 
+\subsection{User-Defined Override Methods}\label{sec:overrides} 
+
 Users are able to control the harmonization process via a number of options
 (with examples provided
 \href{http://mattgidden.com/aneris/config.html}{online}). The primary mechanism
@@ -789,7 +791,7 @@ harmonization \textit{diagnostics} are provided which analyze the relative
 difference between harmonized and unharmonized trajectories at their mid and
 end-points. These values are configurable by the user, but defaults of $400$\%
 and $200$\%, respectively, are provided based on experiences of the authors'
-using \code{aneris} to date.
+use of \code{aneris} to date.
 
 \section{Case Study: Harmonizing Results from a Global IAM}\label{sec:results}
 
@@ -819,11 +821,12 @@ negative \cotwo emissions in some regions and sectors due to carbon capture and
 sequestration and afforestation. A scenario in which negative emissions play a
 role in mitigation strategies is particularly important because of the
 sensitivity of key indicators, such as end-of-century radiative forcing (which
-is used to estimate mean global temperature increase), to the timing and
+is used to estimate mean global temperature response), to the timing and
 magnitude of net-zero and total negative \cotwo emissions. Therefore, these two
-scenarios represent two relative extreme cases in the use of a harmonization
-approach and thus provide a case study as to its general applicability. Figure
-\ref{fig:kyoto} shows the different trends of Kyoto Gases in each scenarios.
+scenarios represent two bounding cases in the use of a harmonization approach
+and thus provide a case study as to its general applicability. Figure
+\ref{fig:kyoto} shows the different trends of Kyoto Gases, a measure of
+aggregate \gls{ghg} emissions, in each scenarios.
 
 
 \begin{figure}
@@ -839,16 +842,19 @@ approach and thus provide a case study as to its general applicability. Figure
 
 
 MESSAGE-GLOBIOM includes a representation of 11 distinct regions which can be
-mapped directly to the 5-region definition used in the \glspl{rcp}. Historical data is
-taken from previously described \gls{luc} and anthropogenic sources, which comprise 10
-separate pollutant and \gls{ghg} species and 12 sectors shown in Table \ref{tab:sp}. A
-total of 970 distinct trajectories were harmonized for each scenario, and
-therefore 1940 trajectories were harmonized in total. \noxx generated from the
-Energy sector provides an example of an emissions species and sector in which
-all regions were satisfactorily harmonized with the default methods. Figure
-\ref{fig:nox} shows the results of harmonization in Asia, and Table
-\ref{tab:nox} describes the parameters that underlie the choice of method for
-each harmonized trajectory.
+mapped directly to the 5-region definition used in the \glspl{rcp}. Historical
+data is taken from previously described \gls{luc} and anthropogenic sources,
+which comprise 10 separate pollutant and \gls{ghg} species and 12 sectors shown
+in Table \ref{tab:sp}. A total of 970 distinct trajectories were harmonized for
+each scenario, and therefore 1940 trajectories were harmonized in total. \noxx
+generated from the Energy sector provides an example of an emissions species and
+sector in which all regions were satisfactorily harmonized with the default
+methods. Figure \ref{fig:nox} shows the results of harmonization in Asia, and
+Table \ref{tab:nox} describes the parameters that underlie the choice of method
+for each harmonized trajectory. Importantly, the default methods provide
+regional trajectories for both the reference and mitigation scenarios closely
+matching the unharmonized model behavior and also result in global aggregates
+that agree with the unharmonized trajectory over the modeled time period.
 
 \begin{table}[]\begin{minipage}{\textwidth}
   \centering
@@ -941,19 +947,19 @@ distorted and regional trajectories whose \textit{shape} was overly distorted.
 Figure \ref{fig:co} presents a case in which the magnitude of a trajectory is
 distorted. A large discrepancy ($\sim$300\% relative difference) is observed in
 the harmonization year for carbon monoxide (CO) emissions in the industrial
-sector specifically for the \gls{sas} and \gls{afr} MESSAGE-GLOBIOM
-regions. Furthermore, emissions in both regions see relatively large expansion
-or contraction, depending on the scenario; therefore, both regions are
-candidates for choosing harmonization method overrides. The default method
-chosen in both cases (\code{constant_ratio}) maintains model trends for the
-region; however, overall model results are distorted. By applying a
-\code{constant_offset} overrides, the regional trends and magnitudes are
-maintained. Through the use of harmonization overrides also ameliorates issues
-seen in the harmonized global trajectory of industrial CO (Figure \ref{fig:co},
-Panel \textbf{c}). Not only does the global trajectory with overrides more
-accurately match the original unharmonized model behavior and magnitude of
-emissions, but the relative importance of the underlying regional trajectories
-is also maintained.
+sector specifically for the \gls{sas} and \gls{afr} regions. Furthermore,
+emissions in both regions see relatively large expansion or contraction,
+depending on the scenario; therefore, both regions are candidates for choosing
+harmonization method overrides. The default method chosen in both cases
+(\code{constant_ratio}) maintains model trends for the region; however, overall
+model results are distorted as can be seen in both the regional and global
+panels in Figure \ref{fig:co}. By applying \code{constant_offset} overrides, the
+regional trends and magnitudes are maintained. The use of harmonization
+overrides also ameliorates issues seen in the harmonized global trajectory of
+industrial CO (Figure \ref{fig:co}, Panel \textbf{c}). Not only does the global
+trajectory with overrides more accurately match the original unharmonized model
+behavior and magnitude of emissions, but the relative importance of the
+underlying regional trajectories is also maintained.
 
 \begin{figure}
   \begin{center}
@@ -984,17 +990,18 @@ in this case). The resulting trajectory harmonized with the default method
 reference scenario. Notably, the SSP2-45 scenario is not affected to the same
 degree. While this distortion changes the magnitude of the \gls{sas} trajectory,
 it largely affects the post-2080 shape of the global trajectory (Figure
-\ref{fig:nh3}, Panel \textbf{b}). For example, in the original model result,
-\gls{sas} \nht agricultural emissions contribute $\sim$30\% of total global
+\ref{fig:nh3}, Panel \textbf{b}) as well as the relative regional contributions
+to the global aggregate trajectory. For example, in the original model result,
+\gls{sas} \nht~ agricultural emissions contribute $\sim$30\% of total global
 emissions, whereas in the unharmonized case with default methods, \gls{sas}
-comprises $\sim$50\% of global emissions. By using a \code{constant_offset}
-method as an override, this distortion is addressed and more accurately reflects
-unharmonized results in the \gls{sas} region, the relative importance between
-regions, and global results for agricultural ammonia emissions, each of which
-contributes to a better harmonization quality for the harmonized \gls{sas}
-trajectory. The harmonized emissions using overrides result in a contribution of
-$\sim$32\% of total global emissions by the \gls{sas} region which aligns
-closely with the unharmonized model results.
+comprises $\sim$50\% of global emissions by 2100. By using a
+\code{constant_offset} method as an override, this distortion is addressed and
+more accurately reflects unharmonized results in the \gls{sas} region, the
+relative importance between regions, and global results for agricultural ammonia
+emissions, each of which contributes to a better harmonization quality for the
+harmonized \gls{sas} trajectory. The harmonized emissions using overrides result
+in a contribution of $\sim$32\% of total global emissions by the \gls{sas}
+region which aligns closely with the unharmonized model results.
 
 \begin{figure}
   \begin{center}
@@ -1097,12 +1104,12 @@ difference in emissions factors (suggesting the use of a ratio method)
 \cite{rogelj_discrepancies_2011}.
 
 This work provides a new direction and framework which the \gls{iam} and climate
-communities can build upon in order to reduce the necessity of consistent expert
-opinion and increase transparency and reproducibility of harmonization
-exercises. Furthermore, it provides an open-source, tested, and documented
-software library which can be used and improved upon by these communities. Both
-of these are clear steps in a positive direction for future climate and
-integrated assessment modeling exercises.
+science communities can build upon in order to reduce the necessity of
+consistent expert opinion and increase transparency and reproducibility of
+harmonization exercises. Furthermore, it provides an open-source, tested, and
+documented software library which can be used and improved upon by these
+communities. Both of these are clear steps in a positive direction for future
+climate and integrated assessment modeling exercises.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Acknowledgments}
