@@ -1,0 +1,116 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Plain Cover Letter
+% LaTeX Template
+%
+% This template has been downloaded from:
+% http://www.latextemplates.com
+%
+% Original author:
+% Rensselaer Polytechnic Institute (http://www.rpi.edu/dept/arc/training/latex/resumes/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%       PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt]{letter} % Default font size of the document, change to 10pt to fit more text
+\usepackage{graphicx}
+%\usepackage{newcent} % Default font is the New Century Schoolbook PostScript font
+%\usepackage{helvet} % Uncomment this (while commenting the above line) to use the Helvetica font
+
+% Margins
+\usepackage[left=1.25in,right=1.25in,top=1.5in,bottom=1.25in]{geometry}
+%\let\raggedleft\raggedright % Pushes the date (at the top) to the left, comment this line to have the date on the right
+
+\usepackage{eso-pic,graphicx}
+ \begin{document}
+
+%----------------------------------------------------------------------------------------
+%       ADDRESSEE SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{letter}{
+    Professor S. Reis\\
+    Editor, Environmental Modelling \& Software\\
+    \hfill\break
+    Professor D.P. Ames\\
+    Editor-in-Chief, Environmental Modelling \& Software\\
+  }
+
+%----------------------------------------------------------------------------------------
+%       YOUR NAME & ADDRESS SECTION
+%----------------------------------------------------------------------------------------
+
+\address{Matthew Gidden\\
+Laimgrubengasse 17/7\\
+Vienna, Austria 1060}
+
+
+%----------------------------------------------------------------------------------------
+%       LETTER CONTENT SECTION
+%----------------------------------------------------------------------------------------
+
+\opening{Professors Reis and Ames,}
+
+Please find enclosed our revised manuscript and response to reviewers regarding
+the submitted manuscript entitled: ``A Methodology and Implementation of
+Automated Emissions Harmonization for Use in Integrated Assessment Models''
+(Ref: \texttt{ENVSOFT\_2017\_668}).
+
+We very much appreciate the time and thoroughness taken by the three reviewers
+of our manuscript, and believe that the resulting revised manuscript is
+non-trivially improved over the submitted version. While we have provided direct
+responses to each point made by the reviewers in the attached response document,
+we summarize their primary suggestions below:
+
+\begin{itemize}
+\item We should better explain the intuition behind the harmonization method choices
+\item We should greatly expand on the implementation details of the software
+\item We should clarify and add a listing of all used acronyms
+\item We should provide more context and sources of further reading for various terms and models discussed in the text.
+\item We should consider framing the results section as a case study.
+\end{itemize}
+
+We have fully addressed and taken on board these core suggestions in the revised
+manuscript. In order to better prime the discussion in the \textit{Methodology \&
+  Implementation} section, we have written an introductory subsection entitled
+\textit{The Conceptual Basis for Choosing Harmonization Methods} which outlines
+the intuition for various methods to be used in the harmonization process. We
+have greatly expanded the \textit{Python Implementation and Workflow} subsection
+to include specific details of the software implementation, code snippets and
+CLI listings, and a new figure (Figure 5 in the text) which provides a graphical
+description of the implementation.
+
+We have additionally made use of a global acronyms table which identifies and
+lists all acronyms used in the text and have placed this table at the end of the
+manuscript for readers' reference. In all instances raised by the reviewers for
+further clarification on terms and models, we have added footnotes with an
+additional description and links or references for further reading on the
+topic. Finally, we have reframed slightly the last section, renaming it to
+\textit{Case Study: Harmonizing Results from a Global IAM}. We agree with
+Reviewer 3 that even in its initial form it is in fact a study of a specific use
+case with \texttt{aneris} that details both the positive aspects (that the vast
+majority of trajectories were harmonized satisfactorily) as well as what we did
+to solve specific cases where default methods led to non-preferable harmonized
+results.
+
+After revision, we believe that the manuscript has been improved over the
+initially submitted draft. The authors would like to thank the reviewers for
+their constructive comments and suggestions as well as for their time taken to
+review our article. We would also again like to thank you again for your
+consideration of this work.
+
+\closing{
+Warm Regards,
+
+Matthew Gidden, Ph.D.
+}
+
+%----------------------------------------------------------------------------------------
+
+\end{letter}
+
+\end{document}
+
+
