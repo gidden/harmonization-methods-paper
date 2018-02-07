@@ -171,7 +171,7 @@ global projections of systemic change by dividing the world into a number of
 representative regions (typically 10 to 30), the definition of which is distinct
 for each model \cite{krey_global_2014}. Results from \glspl{iam} are integral in
 a number of international studies, which notably include projections of climate
-and economic futures. Recently, the \gls{iam} community has developed scenarios
+and energy futures. Recently, the \gls{iam} community has developed scenarios
 based on the \glspl{ssp} \cite{fujimori_ssp3:_2017, van_vuuren_energy_2017,
   calvin_ssp4:_2017, fricko_marker_2017, kriegler_fossil-fueled_2017} which
 quantify a variety of potential global futures. The \glspl{ssp} are designed to
@@ -301,7 +301,7 @@ base year and the historic data used for harmonization, convergence methods can
 result in harmonized trajectories that do not faithfully represent the
 underlying drivers of emissions. Furthermore, if models report negative
 emissions, as is possible in scenarios designed to depict the deployment of
-climate mitigation policies with large \cotwo reductions and eventual storage,
+climate mitigation policies with large \cotwo reductions and storage,
 then end-of-century emissions characteristics can be of chief import in order to
 faithfully match the design parameters of the original scenarios, such as global
 mean temperature and other climate metrics.
@@ -346,9 +346,9 @@ $[t_i, t_f)$ and is shown in Equation \ref{eqs:factor}. The use of the
   \end{cases}
 \end{equation}
 
-A number of the classic methods are implemented in \code{aneris} including
+A number  methods are implemented in \code{aneris} including
 ratio-convergence shown in Equation \ref{eqs:ratio}, offset-convergence shown in
-Equation \ref{eqs:offset}, and interpolation shown in Equation
+Equation \ref{eqs:offset}, and linear interpolation shown in Equation
 \ref{eqs:interpolate}. In all equations the region, species, and sector indices
 have been dropped for clarity. Each equation is a function of time, model
 trajectory, historical trajectory, base year ($t_i$), and a convergence year
@@ -414,7 +414,7 @@ Figure \ref{fig:decision_tree}.
       response and lower (orange) branches represent a ``no'' response. The
       coefficient of variation, $c_v$, is defined in Equation \ref{eqs:cov},
       $dH$ is defined as $\left|\frac{h(t_i) - m(t_i)}{h(t_i)}\right|$, and
-      decision-making thresholds for $c_v$ and $dH$ are described below.  Where
+      decision-making thresholds for $c_v$ and $dH$ are described in the main text.  Where
       present, convergence years of default methods are provided below the
       method name in parentheses.  Convergence years are chosen in order to
       balance the three harmonization goals discussed in Section
@@ -428,12 +428,11 @@ Figure \ref{fig:decision_tree}.
 
 A number of characteristics impact the decision of which default method to
 select based on the effect of the characteristic on the potential harmonized
-trajectory. For example, it is rare but possible for models to report zero
-values in the harmonization year in situations in which technologies are
-introduced in future time periods in regions or for sectors which produce an
-emissions species that is absent in the initial modeling period. In such cases,
+trajectory. For example, it is rare but possible for a sector to have emissions 
+reported in the historical data, but the model to report zero for the harmonization year, 
+with non-zero future values. In such cases,
 an offset method is required as a ratio method would mask future emissions and
-erroneously harmonize the trajectory.
+erroneously harmonize the trajectory to zero.
 
 In most cases, however, models do report values in the harmonization
 year. Figure \ref{fig:cases} displays a number of example trajectories which
@@ -448,10 +447,9 @@ a case where model base-year values and history are relative close whereas Panel
 \code{b} shows a situation where model values and history are relatively far
 apart. Panels \code{c} and \code{d} show similar model trajectories that peak
 mid-century but also have negative emissions. Models can report negative
-emissions in contexts in which a gas species which can be extracted from the
-environment and stored, as is the case for \cotwo in future scenarios with
+emissions for \cotwo in future scenarios with
 climate mitigation enacted via the deployment of carbon capture and
-sequestration technologies or direct carbon capture technologies. Again, the
+storage technologies. Again, the
 relative difference with historical values differ between the panels to explore
 harmonization method choices in each situation.
 
@@ -548,7 +546,7 @@ is necessary.
   \end{center}
 \end{figure}
 
-Finally, consideration is taken with respect to the relative difference between
+Finally, the default harmonization decisions depend on the relative difference between
 the historic and model values in the harmonization time period. In order to
 investigate the possible values that these relative differences can take, the
 \gls{iam} values used in the \gls{ssp} and (ongoing) \gls{cmip6} inter-comparison
@@ -634,7 +632,7 @@ optional arguments:
 \label{lst:cli}
 \end{listing}
 
-The \texttt{Harmonizer} is a class whose concern is to harmonize model value
+The \texttt{Harmonizer} is a class whose task is to harmonize model value
 trajectories given historical data and possible user method \textit{overrides},
 i.e., non-default methods (described further in Section \ref{sec:overrides}). It
 is used by the \texttt{HarmonizationDriver}; however it is also available to the
@@ -671,7 +669,7 @@ format expected for input and output data and the calculation format used by
     \caption[]{
       \label{fig:software}
       The various objects and their relation to one another in the \code{aneris}
-      code base as well as a short description of their scope of concern.  
+      code base as well as a short description of their scope.  
     }
   \end{center}
 \end{figure}
@@ -698,8 +696,8 @@ shown in blue. The core harmonization process, governed by the
 %%     \includegraphics[width=0.225\textwidth]{aneris-workflow.pdf}
 %%     }
 %%     \caption{ Panel \ref{fig:software} shows the various objects in the
-%%       \code{aneris} code base as well as a short description of their scope of
-%%       concern. Panel \ref{fig:workflow} displays the full harmonization process
+%%       \code{aneris} code base as well as a short description of their scope.
+%%       Panel \ref{fig:workflow} displays the full harmonization process
 %%       as executed by \code{aneris} for a single instance of a model and
 %%       scenario. Operations that can be configured with user-based input
 %%       configurations are shown in purple. Operations governed by the
@@ -710,8 +708,8 @@ shown in blue. The core harmonization process, governed by the
 %% \end{figure}
 
 The full harmonization workflow, outlined in Figure \ref{fig:workflow}, begins
-by cleaning input data. Cleaning operations include adding (0-valued) model
-trajectories that exist in the historical data set but are not provided by the
+by cleaning input data. Cleaning operations include adding model
+trajectories with 0 values where a sector/emission combination exists in the historical data set but are not provided by the
 model input and detecting any issues that would cause the harmonization process
 to fail. The methods used to harmonize the data are then determined and the
 harmonization process is executed. Upon completion of the harmonization process,
@@ -785,10 +783,10 @@ source. In such cases, users can override default methods with their method of
 choice and both the default method and override is reported in the resulting
 metadata.
 
-In order to help identify cases where overrides may be of interest,
-harmonization \textit{diagnostics} are provided which analyze the relative
+In order to help identify cases where overrides may be needed,
+harmonization \textit{diagnostics} are provided which report the relative
 difference between harmonized and unharmonized trajectories at their mid and
-end-points. These values are configurable by the user, but defaults of $400$\%
+end-points when these values exceed specified threshold. The diagnostic reporting thresholds  are configurable by the user, but defaults of $400$\%
 and $200$\%, respectively, are provided based on experiences of the authors'
 use of \code{aneris} to date.
 
@@ -796,21 +794,18 @@ use of \code{aneris} to date.
 
 In order to show a representative cross section of the performance of the
 \code{aneris} harmonization procedure, we focus on the harmonization of results
-of the \gls{iam} MESSAGE-GLOBIOM \cite{fricko_marker_2017}. Two scenarios from
+of the \gls{iam} MESSAGE-GLOBIOM \cite{fricko_marker_2017}. Harmonization results for two scenarios from
 the \gls{ssp} scenario library\footnote{We refer the reader to the broad
   literature discussing the SSPs, e.g.,
   \cite{vuuren_new_2013,oneill_scenario_2016, oneill_new_2013} for a more in
-  depth discussion of the scenario architecture and design.} are presented. The
-SSP2 \cite{Riahi2017153,Rao2017346}, or ``middle of the road'', scenario
-(referred to as SSP2-Ref) is chosen to be analyzed because MESSAGE-GLOBIOM is
-the marker scenario\footnote{The concept of ``marker'' scenarios are used to
-  illustrate distinctive scenario types within the SSP scenario framework. See
+  depth discussion of the scenario architecture and design.} are presented here. We use the
+SSP2-reference\cite{Riahi2017153,Rao2017346}, or ``middle of the road'', scenario
+(referred to as SSP2-Ref) as an example because MESSAGE-GLOBIOM is
+the marker scenario\footnote{The ``marker'' scenario concept is used to
+  designate the archetype scenario used as a reference within each SSP scenario family. See
   \cite{vuuren_new_2013} and \cite{Riahi2017153} for a more lengthy
   description.} for this \gls{ssp}. This SSP2 scenario lies between two
-\glspl{rcp}, 6 and 8.5, with a radiative forcing\footnote{Radiative forcing is a
-  measurement of the capacity for different emissions species to affect
-  tropopausal irradiance and has a relationship to global mean equilibrium
-  temperature change. We refer the reader to \cite{IPCCWG1PhysicalStocker2013}
+\glspl{rcp}, 6 and 8.5, with a radiative forcing\footnote{Radiative forcing in this concept is the energy inbalance at the top of the atmsophere caused by anthropogenic influences relative to a pre-industrial reference point. Higher radiative forcing leads to larger global changes, such as surface temperture. We refer the reader to \cite{IPCCWG1PhysicalStocker2013}
   for a more detailed discussion.} level of approximately 6.5 Wm$^{-2}$. We
 additionally present the results for the SSP2-based mitigation scenario leading
 to a radiative forcing of 4.5 Wm$^{-2}$ (referred to as SSP2-4.5). The SSP2-45
@@ -822,7 +817,7 @@ role in mitigation strategies is particularly important because of the
 sensitivity of key indicators, such as end-of-century radiative forcing (which
 is used to estimate mean global temperature response), to the timing and
 magnitude of net-zero and total negative \cotwo emissions. Therefore, these two
-scenarios represent two bounding cases in the use of a harmonization approach
+scenarios represent two contrasting cases in the use of a harmonization approach
 and thus provide a case study as to its general applicability. Figure
 \ref{fig:kyoto} shows the different trends of Kyoto Gases, a measure of
 aggregate \gls{ghg} emissions, in each scenarios.
@@ -840,20 +835,20 @@ aggregate \gls{ghg} emissions, in each scenarios.
 \end{figure}
 
 
-MESSAGE-GLOBIOM includes a representation of 11 distinct regions which can be
-mapped directly to the 5-region definition used in the \glspl{rcp}. Historical
+MESSAGE-GLOBIOM includes a representation of 11 distinct regions, and harmonization is performed at the native regional resolution of each model. Historical
 data is taken from previously described \gls{luc} and anthropogenic sources,
 which comprise 10 separate pollutant and \gls{ghg} species and 12 sectors shown
 in Table \ref{tab:sp}. A total of 970 distinct trajectories were harmonized for
-each scenario, and therefore 1940 trajectories were harmonized in total. \noxx
+each scenario, and therefore 1940 trajectories were harmonized in total for these two illustrative scenarios. 
+\noxx
 generated from the Energy sector provides an example of an emissions species and
 sector in which all regions were satisfactorily harmonized with the default
 methods. Figure \ref{fig:nox} shows the results of harmonization in Asia, and
 Table \ref{tab:nox} describes the parameters that underlie the choice of method
 for each harmonized trajectory. Importantly, the default methods provide
-regional trajectories for both the reference and mitigation scenarios closely
-matching the unharmonized model behavior and also result in global aggregates
-that agree with the unharmonized trajectory over the modeled time period.
+regional trajectories for both the reference and mitigation scenarios that
+match the general unharmonized model behavior and also result in global aggregated emissions
+that are similar to the unharmonized trajectory.
 
 \begin{table}[]\begin{minipage}{\textwidth}
   \centering
@@ -956,7 +951,7 @@ panels in Figure \ref{fig:co}. By applying \code{constant_offset} overrides, the
 regional trends and magnitudes are maintained. The use of harmonization
 overrides also ameliorates issues seen in the harmonized global trajectory of
 industrial CO (Figure \ref{fig:co}, Panel \textbf{c}). Not only does the global
-trajectory with overrides more accurately match the original unharmonized model
+trajectory with overrides more closely match the original unharmonized model
 behavior and magnitude of emissions, but the relative importance of the
 underlying regional trajectories is also maintained.
 
@@ -967,14 +962,13 @@ underlying regional trajectories is also maintained.
       \label{fig:co}
       CO Industrial Sector harmonized (without markers) and unharmonized (with
       markers) emissions are presented for SSP2 (purple lines) and SSP2-45 (red
-      lines) scenarios. Panel \textbf{a} shows harmonized and
-      overridden-harmonized (respectively) trajectories for the \gls{sas} region
-      while panels \textbf{b} and \textbf{c} show similar trajectories for the
+      lines) scenarios. The left column shows the deault harmonization and the right column shows harmonization with overrides. Panel \textbf{a} shows  trajectories for the \gls{sas} region
+      while panels \textbf{b} and \textbf{c} show  trajectories for the
       \gls{afr} region and (total) global emissions, respectively. Notably, the
-      \gls{sas} and \gls{afr} regional trajectory displays a distorted
-      trajectory due to the harmonization-year difference between history and
+      \gls{sas} and \gls{afr} regional trajectories are distorted
+      when the default methods are used due to the harmonization-year difference between history and
       model results in both scenarios. The distortion is large enough to affect
-      global results, as shown in Panel \textbf{c}.  }
+      global results, as shown in Panel \textbf{c}.  The use of overrides (right column) results in better consistantcy with the unharmonized model scenario at the regional and global levels. }
   \end{center}
 \end{figure}
 
@@ -992,7 +986,7 @@ it largely affects the post-2080 shape of the global trajectory (Figure
 \ref{fig:nh3}, Panel \textbf{b}) as well as the relative regional contributions
 to the global aggregate trajectory. For example, in the original model result,
 \gls{sas} \nht~ agricultural emissions contribute $\sim$30\% of total global
-emissions, whereas in the unharmonized case with default methods, \gls{sas}
+emissions, whereas in the harmonized case with default methods, \gls{sas}
 comprises $\sim$50\% of global emissions by 2100. By using a
 \code{constant_offset} method as an override, this distortion is addressed and
 more accurately reflects unharmonized results in the \gls{sas} region, the
@@ -1063,7 +1057,7 @@ of the processes and methods for determining the use of harmonization methods
 was provided in Section \ref{sec:meths}. \code{aneris} was able to
 satisfactorily harmonized over 96\% of the 1940 individual trajectories that
 were analyzed in Section \ref{sec:results}. Of the remaining trajectories,
-harmonization method overrides were applied, and a discussion was provided
+harmonization method overrides were applied, and  discussion was provided
 detailing why overrides were deemed necessary.
 
 The automated approach drastically reduces the need for expert opinion in
@@ -1071,7 +1065,7 @@ determining harmonization methods for each individual combination of model
 region, sector, and emissions species while still providing a justifiable
 explanation for each automated choice of harmonization method based on both the
 historical and future emissions trajectories. Furthermore, the automated
-approach continues to scale well as models become more detailed in both the
+approach should continue to scale well as models become more detailed in both the
 regional and sectoral dimensions. Finally, expert opinion is still allowed to
 trump the automated method as determined by the algorithm via method overrides;
 however, these cases are clearly documented via the meta data provided as an
@@ -1091,7 +1085,7 @@ consistent with prior efforts.
 
 There are a variety of avenues for future improvement of both the \code{aneris}
 software and underlying methodology. As with any software project, additional
-users will provide use cases for more robust handling of input/output concerns
+users will provide use cases for more robust handling of input/output issues
 and corner cases. Further configuration parameters can also be added in the
 future in order to provide overrides for all gas species in a given sector or
 region. Perhaps the most fruitful investigation will involve further refinement
