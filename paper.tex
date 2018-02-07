@@ -76,6 +76,7 @@
 \newacronym{sres}{SRES}{Special Report on Emissions Scenarios}
 \newacronym{cmip6}{CMIP6}{Coupled Model Intercomparison Project (Phase 6)}
 \newacronym{smip}{ScenarioMIP}{Scenario Model Intercomparison Project}
+\newacronym{amip}{AerChemMIP}{Aerosol Chemistry Model Intercomparison Project}
 \newacronym{ceds}{CEDS}{Community Emissions Data System}
 \newacronym{esm}{ESM}{Earth System Model}
 \newacronym{luc}{LULUC}{Land-use and Land-use Change}
@@ -194,14 +195,15 @@ targets for future \gls{ghg} emissions.
 
 The emissions trajectories calculated by \glspl{iam} are critical inputs for
 ongoing, worldwide scientific community efforts in the \gls{cmip6}
-\cite{eyring_overview_2016}, which is utilizing a number of marker \gls{ssp} scenarios
-developed by the \gls{iam} community (\gls{smip})
-\cite{oneill_scenario_2016}. These trajectories are endogenously calculated by
-modeling the individual technologies and sectors that contribute towards the
-emissions of different air pollutants and \glspl{ghg} as well as various
-mitigation technologies. However, the historical emissions starting points of
-models can differ by large amounts depending on the region, sector, and
-emissions species.
+\cite{eyring_overview_2016}, which is utilizing a number of marker \gls{ssp}
+scenarios developed by the \gls{iam} community
+(\gls{smip}\cite{oneill_scenario_2016},
+\gls{amip}\cite{collins_aerchemmip:_2017}). These trajectories are endogenously
+calculated by modeling the individual technologies and sectors that contribute
+towards the emissions of different air pollutants and \glspl{ghg} as well as
+various mitigation technologies. However, the historical emissions starting
+points of models can differ by large amounts depending on the region, sector,
+and emissions species.
 
 In practice, \glspl{iam} calculate the total source intensity of emitting
 technologies, for example the total activity of coal power plants in China, and
@@ -216,7 +218,7 @@ and fuel aggregations.
 
 The global climate change community has recently developed a new global
 historical emissions data set for both anthropogenic emissions (i.e., the
-\gls{ceds} \cite{hoesly_historical_2017} and open-burning \gls{luc} emissions
+\gls{ceds} \cite{hoesly_historical_2018} and open-burning \gls{luc} emissions
 \cite{van_marle_historic_2017}) which, in conjunction with the \gls{ssp}
 \gls{iam} trajectories, will be used for climate-related modeling exercises of
 \gls{cmip6}.
@@ -535,7 +537,7 @@ is necessary.
     \caption[]{
       \label{fig:cov}
       The distribution of $c_v$ values for \gls{luc} and non-\gls{luc} historical
-      trajectories is shown. \gls{ceds} historical data \cite{hoesly_historical_2017}
+      trajectories is shown. \gls{ceds} historical data \cite{hoesly_historical_2018}
       is used for non-\gls{luc} data and \cite{van_marle_historic_2017} is used for
       \gls{luc} data. All historical data has been aggregated from their native
       spatial resolution (i.e., individual countries) to \gls{iam} model regional

@@ -34,4 +34,7 @@ realclean: clean
 zip:
 	zip paper.zip *.tex *.eps *.bib
 
+bib:
+	python ~/work/publications/zo/zo.py make -p ~/work/publications/refs/all.bib
+
 .PHONY: all clean
