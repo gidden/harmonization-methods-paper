@@ -669,7 +669,7 @@ format expected for input and output data and the calculation format used by
     \caption[]{
       \label{fig:software}
       The various objects and their relation to one another in the \code{aneris}
-      code base as well as a short description of their scope.  
+      code base as well as a short description of their scope of concern.  
     }
   \end{center}
 \end{figure}
@@ -783,30 +783,34 @@ source. In such cases, users can override default methods with their method of
 choice and both the default method and override is reported in the resulting
 metadata.
 
-In order to help identify cases where overrides may be needed,
-harmonization \textit{diagnostics} are provided which report the relative
-difference between harmonized and unharmonized trajectories at their mid and
-end-points when these values exceed specified threshold. The diagnostic reporting thresholds  are configurable by the user, but defaults of $400$\%
-and $200$\%, respectively, are provided based on experiences of the authors'
-use of \code{aneris} to date.
+In order to help identify cases where overrides may be needed, harmonization
+\textit{diagnostics} are provided which report the relative difference between
+harmonized and unharmonized trajectories at their mid and end-points when these
+values exceed specified thresholds. The diagnostic reporting thresholds are
+configurable by the user, but defaults of $400$\% and $200$\%, respectively, are
+provided based on experiences of the authors' use of \code{aneris} to date.
 
 \section{Case Study: Harmonizing Results from a Global IAM}\label{sec:results}
 
 In order to show a representative cross section of the performance of the
 \code{aneris} harmonization procedure, we focus on the harmonization of results
-of the \gls{iam} MESSAGE-GLOBIOM \cite{fricko_marker_2017}. Harmonization results for two scenarios from
-the \gls{ssp} scenario library\footnote{We refer the reader to the broad
-  literature discussing the SSPs, e.g.,
+of the \gls{iam} MESSAGE-GLOBIOM \cite{fricko_marker_2017}. Harmonization
+results for two scenarios from the \gls{ssp} scenario library\footnote{We refer
+  the reader to the broad literature discussing the SSPs, e.g.,
   \cite{vuuren_new_2013,oneill_scenario_2016, oneill_new_2013} for a more in
-  depth discussion of the scenario architecture and design.} are presented here. We use the
-SSP2-reference\cite{Riahi2017153,Rao2017346}, or ``middle of the road'', scenario
-(referred to as SSP2-Ref) as an example because MESSAGE-GLOBIOM is
-the marker scenario\footnote{The ``marker'' scenario concept is used to
-  designate the archetype scenario used as a reference within each SSP scenario family. See
-  \cite{vuuren_new_2013} and \cite{Riahi2017153} for a more lengthy
-  description.} for this \gls{ssp}. This SSP2 scenario lies between two
-\glspl{rcp}, 6 and 8.5, with a radiative forcing\footnote{Radiative forcing in this concept is the energy inbalance at the top of the atmsophere caused by anthropogenic influences relative to a pre-industrial reference point. Higher radiative forcing leads to larger global changes, such as surface temperture. We refer the reader to \cite{IPCCWG1PhysicalStocker2013}
-  for a more detailed discussion.} level of approximately 6.5 Wm$^{-2}$. We
+  depth discussion of the scenario architecture and design.} are presented
+here. We use the SSP2-reference\cite{Riahi2017153,Rao2017346}, or ``middle of
+the road'', scenario (referred to as SSP2-Ref) as an example because
+MESSAGE-GLOBIOM is the marker scenario\footnote{The ``marker'' scenario concept
+  is used to designate the archetype scenario used as a reference within each
+  SSP scenario family. See \cite{vuuren_new_2013} and \cite{Riahi2017153} for a
+  more lengthy description.} for this \gls{ssp}. This SSP2 scenario lies between
+two \glspl{rcp}, 6 and 8.5, with a radiative forcing\footnote{Radiative forcing
+  in this context is the energy imbalance at the top of the atmosphere caused by
+  anthropogenic influences relative to a pre-industrial reference point. Higher
+  radiative forcing leads to larger global changes, such as surface
+  temperature. We refer the reader to \cite{IPCCWG1PhysicalStocker2013} for a
+  more detailed discussion.} level of approximately 6.5 Wm$^{-2}$. We
 additionally present the results for the SSP2-based mitigation scenario leading
 to a radiative forcing of 4.5 Wm$^{-2}$ (referred to as SSP2-4.5). The SSP2-45
 scenario is chosen because mitigation technologies and policies are enacted
@@ -835,20 +839,22 @@ aggregate \gls{ghg} emissions, in each scenarios.
 \end{figure}
 
 
-MESSAGE-GLOBIOM includes a representation of 11 distinct regions, and harmonization is performed at the native regional resolution of each model. Historical
-data is taken from previously described \gls{luc} and anthropogenic sources,
-which comprise 10 separate pollutant and \gls{ghg} species and 12 sectors shown
-in Table \ref{tab:sp}. A total of 970 distinct trajectories were harmonized for
-each scenario, and therefore 1940 trajectories were harmonized in total for these two illustrative scenarios. 
-\noxx
-generated from the Energy sector provides an example of an emissions species and
-sector in which all regions were satisfactorily harmonized with the default
+MESSAGE-GLOBIOM includes a representation of 11 distinct regions which can be
+mapped directly to the 5-region definition used in the RCPs (Figure
+\ref{fig:regions}); harmonization is performed directly on the native regional
+spatial resolution. Historical data is taken from previously described \gls{luc}
+and anthropogenic sources, which comprise 10 separate pollutant and \gls{ghg}
+species and 12 sectors shown in Table \ref{tab:sp}. A total of 970 distinct
+trajectories were harmonized for each scenario, and therefore 1940 trajectories
+were harmonized in total for these two illustrative scenarios.  \noxx generated
+from the Energy sector provides an example of an emissions species and sector in
+which all regions were satisfactorily harmonized with the default
 methods. Figure \ref{fig:nox} shows the results of harmonization in Asia, and
 Table \ref{tab:nox} describes the parameters that underlie the choice of method
 for each harmonized trajectory. Importantly, the default methods provide
-regional trajectories for both the reference and mitigation scenarios that
-match the general unharmonized model behavior and also result in global aggregated emissions
-that are similar to the unharmonized trajectory.
+regional trajectories for both the reference and mitigation scenarios that match
+the general unharmonized model behavior and also result in global aggregated
+emissions that are similar to the unharmonized trajectory.
 
 \begin{table}[]\begin{minipage}{\textwidth}
   \centering
@@ -962,13 +968,13 @@ underlying regional trajectories is also maintained.
       \label{fig:co}
       CO Industrial Sector harmonized (without markers) and unharmonized (with
       markers) emissions are presented for SSP2 (purple lines) and SSP2-45 (red
-      lines) scenarios. The left column shows the deault harmonization and the right column shows harmonization with overrides. Panel \textbf{a} shows  trajectories for the \gls{sas} region
+      lines) scenarios. The left column shows the default harmonization and the right column shows harmonization with overrides. Panel \textbf{a} shows  trajectories for the \gls{sas} region
       while panels \textbf{b} and \textbf{c} show  trajectories for the
       \gls{afr} region and (total) global emissions, respectively. Notably, the
       \gls{sas} and \gls{afr} regional trajectories are distorted
       when the default methods are used due to the harmonization-year difference between history and
       model results in both scenarios. The distortion is large enough to affect
-      global results, as shown in Panel \textbf{c}.  The use of overrides (right column) results in better consistantcy with the unharmonized model scenario at the regional and global levels. }
+      global results, as shown in Panel \textbf{c}.  The use of overrides (right column) results in better consistency with the unharmonized model scenario at the regional and global levels. }
   \end{center}
 \end{figure}
 
