@@ -155,12 +155,12 @@ Integrated Assessment Models, Harmonization, Greenhouse Gases (GHGs), Air Pollut
 \section*{Software Availability}
 
 \texttt{aneris}, first made available in 2017, is available online at
-\url{https://github.com/gidden/aneris} as a free and open-source Python software
+\url{https://github.com/iiasa/aneris} as a free and open-source Python software
 library (approximately 2000 lines of code). The \texttt{aneris} software was
 developed by the lead author whose contact information is shown on the title
 page of this manuscript. Documentation for the \texttt{aneris} Python package,
-including software requirements, is available
-\href{http://mattgidden.com/aneris/}{online}.
+including software requirements, is available online at
+\url{http://data.ene.iiasa.ac.at/gidden/aneris/}.
 
 \newpage
 
@@ -173,25 +173,24 @@ representative regions (typically 10 to 30), the definition of which is distinct
 for each model \cite{krey_global_2014}. Results from \glspl{iam} are integral in
 a number of international studies, which notably include projections of climate
 and energy futures. Recently, the \gls{iam} community has developed scenarios
-based on the \glspl{ssp} \cite{fujimori_ssp3:_2017, van_vuuren_energy_2017,
-  calvin_ssp4:_2017, fricko_marker_2017, kriegler_fossil-fueled_2017} which
-quantify a variety of potential global futures. The \glspl{ssp} are designed to
-be used in research that include \gls{esm} simulations, climate impact,
-adaptation and climate mitigation studies \cite{vuuren_new_2013}.
+based on the \glspl{ssp} \cite{Riahi2017153} which quantify a variety of
+potential global futures. The \glspl{ssp} are designed to be used in research
+that include \gls{esm} simulations, climate impact, adaptation and climate
+mitigation studies \cite{oneill_new_2013, vuuren_new_2013}.
 
 While \glspl{iam} are implemented in myriad ways\footnote{IAM models are
   numerous and have a long history in the scientific literature. Various IAMs
-  have collaborated to produce
-  \href{http://themasites.pbl.nl/models/advance/index.php/ADVANCE_wiki}{community
-    IAM documentation} which readers can access for a full treatment of model
-  implementation and features.}, including simulation and optimization, the core
-inputs and outputs are similar across different models. Modeling teams
-incorporate data on energy systems, land use, economics, demographics and
-emissions sources and concentrations, among other data, in order to provide a
-consistent starting point for future projections. The models then provide
-estimates of future trajectories of these variables under various socio-economic
-and technological assumptions as well as proposed policy constraints, e.g.,
-targets for future \gls{ghg} emissions.
+  have collaborated to produce community IAM documentation (available online:
+  \url{http://themasites.pbl.nl/models/advance/index.php/ADVANCE_wiki}) which
+  readers can access for a full treatment of model implementation and
+  features.}, including simulation and optimization, the core inputs and outputs
+are similar across different models. Modeling teams incorporate data on energy
+systems, land use, economics, demographics and emissions sources and
+concentrations, among other data, in order to provide a consistent starting
+point for future projections. The models then provide estimates of future
+trajectories of these variables under various socio-economic and technological
+assumptions as well as proposed policy constraints, e.g., targets for future
+\gls{ghg} emissions.
 
 The emissions trajectories calculated by \glspl{iam} are critical inputs for
 ongoing, worldwide scientific community efforts in the \gls{cmip6}
@@ -224,15 +223,16 @@ historical emissions data set for both anthropogenic emissions (i.e., the
 \gls{cmip6}.
 
 When participating in intercomparison exercises in which a consistent historical
-starting point is required (e.g., in \gls{cmip6}), model teams incorporate a single,
-common historical data set through \textit{harmonization}. Harmonization
-refers to the process of adjusting model results to match a selected
-historical time series such that the resulting future trajectories are also
-consistent with the original modeled results. In the emissions context, this
-means that each individual combination of model region, model sector, and
-emissions species must be harmonized. Depending on the total number of model
-regions, sectors, and emissions species, this can require the selection of
-thousands to tens-of-thousands of harmonization methods.
+starting point is required (e.g., in \gls{cmip6}), model teams incorporate a
+single, common historical data set through \textit{harmonization}. Harmonization
+refers to the process of adjusting model results to match a selected historical
+time series such that the resulting future trajectories are consistent with the
+original modeled results and provide a smooth transition from the common
+historical data. In the emissions context, this means that each individual
+combination of model region, model sector, and emissions species must be
+harmonized. Depending on the total number of model regions, sectors, and
+emissions species, this can require the selection of thousands to
+tens-of-thousands of harmonization methods.
 
 Harmonization has been addressed in previous studies as it is a common practice
 in the \gls{iam} and climate change communities. For example,
@@ -261,9 +261,9 @@ modeling teams not involved in the original exercise.
 
 The remainder of this paper describes the methodology and implementation of the
 harmonization software \code{aneris} \cite{matthew_gidden_2017_802832}, written
-in the Python programming language (detailed documentation is available
-\href{http://mattgidden.com/aneris/}{online}). Section \ref{sec:meths} provides
-a detailed description of the underlying mathematical components of
+in the Python programming language (detailed documentation is available online
+at \url{http://data.ene.iiasa.ac.at/gidden/aneris/}). Section \ref{sec:meths}
+provides a detailed description of the underlying mathematical components of
 \code{aneris} as well as the procedural workflow. A case study of applying the
 automated harmonization mechanism on two example \gls{iam} scenarios, one with
 emissions growth and another with emissions mitigation, is presented in Section
@@ -275,8 +275,8 @@ improvements on the automated methodology is discussed in Section
 
 \subsection{The Conceptual Basis for Choosing Harmonization Methods}\label{sec:concept}
 
-The goals of any harmonization exercise are threefold: aligning model results in
-the harmonization year to a common historical data source, faithfully
+The goals of any scenario harmonization exercise are threefold: aligning model
+results in the harmonization year to a common historical data source, faithfully
 representing the original \gls{iam}’s internal consistency between the driver of
 emissions (e.g. energy use) and emissions, and maintaining critical parameters
 from the original scenario design. Any harmonization method achieves the first
@@ -310,20 +310,21 @@ mean temperature and other climate metrics.
 
 Accordingly, we have developed a \textit{decision tree} approach to
 harmonization method choice, discussed in Section \ref{sec:tree}, in order to
-balance each of these concerns and use cases in a robust and automated manner.
+balance each of these concerns and use cases in a robust, systematic,
+reproducible, and transparent manner.
 
 \subsection{Harmonization Methods}\label{sec:harm-methods}
 
 \gls{iam} emission results are provided along temporal (normally half decade or
-decade), spatial (i.e., model regions), gas species, and sectoral
+decade), spatial (i.e., model regions), emissions species, and sectoral
 dimensions. Each individual temporal trajectory, i.e., unique combinations of
 regions ($r$), species ($g$), and sectors ($s$), must be harmonized to the
 initial modeling period. Given a model trajectory, $m_{r, g, s}(t)$, historical
 values, $h_{r, g, s}(t)$, and model base year, $t_i$, a harmonized trajectory
 needs to be calculated. The \textit{harmonization quality} of a trajectory,
 i.e., how well a given harmonization algorithm performs, depends on a number of
-factors. Of chief import is the faithful representation of the original,
-unharmonized, trajectory as well as the representation of negative trajectories
+factors. Of chief import is the faithful representation of the original
+unharmonized trajectory as well as the representation of negative trajectories
 (i.e., if a trajectory becomes negative, both the timing and total magnitude
 should be as close as possible) which are of critical importance for cumulative
 \cotwo calculations.
@@ -515,7 +516,7 @@ of \gls{luc} $c_v$s and non-\gls{luc} $c_v$s as determined for historical data
 aggregated to the model regions of 5 different \glspl{iam} involved in the
 \gls{ssp} process: AIM-CGE \cite{fujimori_ssp3:_2017},
 IMAGE\cite{van_vuuren_energy_2017}, GCAM4\cite{calvin_ssp4:_2017},
-MESSAGE-GLOBIOM\cite{fricko_marker_2017}, and
+MESSAGE-GLOBIOM\cite{fricko_marker_2017, message_globiom_2016}, and
 REMIND-MAGPIE\cite{kriegler_fossil-fueled_2017}, each of which have varying
 definitions of native model regions comprising different collections of
 countries. Therefore, each data point comprising Figure \ref{fig:cov} represents
@@ -598,7 +599,7 @@ for scenario in driver.scenarios():
     driver.harmonize(scenario)
 harmonized, metadata = driver.harmonized_results()
 \end{minted}
-\caption{High-level user interaction with the \texttt{HarmonizationDriver} taken from the online \href{http://mattgidden.com/aneris/config.html}{tutorial}}
+\caption{High-level user interaction with the \texttt{HarmonizationDriver} taken from the online \href{http://data.ene.iiasa.ac.at/gidden/aneris/tutorial.html}{tutorial}}
 \label{lst:tutorial}
 \end{listing}
 
@@ -623,7 +624,7 @@ optional arguments:
   --history HISTORY     Historical emissions in the base year.
   --regions REGIONS     Mapping of country iso-codes to native regions.
   --rc RC               Runcontrol YAML file (see
-                        http://mattgidden.com/aneris/config.html for
+                        http://data.ene.iiasa.ac.at/gidden/aneris/config.html for
                         examples).
   --output_path OUTPUT_PATH
                         Path to use for output file names.
@@ -773,7 +774,7 @@ harmonized   & The resulting harmonized value in the harmonization year.\\
 
 Users are able to control the harmonization process via a number of options
 (with examples provided
-\href{http://mattgidden.com/aneris/config.html}{online}). The primary mechanism
+\href{http://data.ene.iiasa.ac.at/gidden/aneris/config.html}{online}). The primary mechanism
 by which users control the process is by providing \textit{override} methods for
 any combination of region and variable (i.e., sector and gas species).  In
 practice, it may be possible that not all default methods chosen will provide
@@ -796,16 +797,18 @@ provided based on experiences of the authors' use of \code{aneris} to date.
 
 In order to show a representative cross section of the performance of the
 \code{aneris} harmonization procedure, we focus on the harmonization of results
-of the \gls{iam} MESSAGE-GLOBIOM \cite{fricko_marker_2017}. Harmonization
-results for two scenarios from the \gls{ssp} scenario library\footnote{We refer
-  the reader to the broad literature discussing the SSPs, e.g.,
-  \cite{vuuren_new_2013,oneill_scenario_2016, oneill_new_2013} for a more in
-  depth discussion of the scenario architecture and design.} are presented
-here. We use the SSP2-reference\cite{Riahi2017153,Rao2017346}, or ``middle of
-the road'', scenario (referred to as SSP2-Ref) as an example because
+of the \gls{iam} MESSAGE-GLOBIOM \cite{fricko_marker_2017,
+  message_globiom_2016}. Harmonization results for two scenarios from the
+\gls{ssp} scenario library\footnote{We refer the reader to the broad literature
+  discussing the SSPs, e.g., \cite{Riahi2017153, oneill_new_2013,
+    vuuren_new_2013,oneill_scenario_2016} for a more in depth discussion of the
+  scenario architecture and design. Model results for various SSP scenarios are
+  available online at \url{https://tntcat.iiasa.ac.at/SspDb}} are presented
+here. We use the SSP2-reference\cite{fricko_marker_2017,Rao2017346}, or ``middle
+of the road'', scenario (referred to as SSP2-Ref) as an example because
 MESSAGE-GLOBIOM is the marker scenario\footnote{The ``marker'' scenario concept
   is used to designate the archetype scenario used as a reference within each
-  SSP scenario family. See \cite{vuuren_new_2013} and \cite{Riahi2017153} for a
+  SSP scenario family. See \cite{Riahi2017153} and \cite{vuuren_new_2013} for a
   more lengthy description.} for this \gls{ssp}. This SSP2 scenario lies between
 two \glspl{rcp}, 6 and 8.5, with a radiative forcing\footnote{Radiative forcing
   in this context is the energy imbalance at the top of the atmosphere caused by
@@ -1030,17 +1033,16 @@ methods on total anthropogenic radiative forcing projections with the simple
 carbon-cycle and climate model, MAGICC\footnote{MAGICC is a reduced complexity
   climate model which incorporates future trajectories of forcing agents (i.e.,
   emissions) to estimate future radiative forcing and mean global temperature
-  response. We refer the reader to the
-  \href{http://wiki.magicc.org/index.php?title=Model_Description}{MAGICC wiki}
-  for a more in-depth description.} \cite{meinshausen2011emulating,
-  meinshausen2011rcp}, for each harmonized and unharmonized scenario
-respectively as shown in Figure \ref{fig:forcing}. We find that the change due
-to harmonization is small, ranging between 1 and 2.5\% over the modeled time
-period. Relative near-term differences persist in the mitigation case (SSP-4.5)
-because differences in near-term emissions define to a larger degree the
-longer-term forcing outcome due to the cumulative nature of long-lived climate
-forcers like \cotwo.  The resulting difference in forcing in 2100 is 0.04
-$\frac{\text{W}}{\text{m}^2}$ for SSP2-4.5 and 0.01
+  response. We refer the reader to the MAGICC wiki (available online:
+  \url{http://wiki.magicc.org}) for a more in-depth description.}
+\cite{meinshausen2011emulating, meinshausen2011rcp}, for each harmonized and
+unharmonized scenario respectively as shown in Figure \ref{fig:forcing}. We find
+that the change due to harmonization is small, ranging between 1 and 2.5\% over
+the modeled time period. Relative near-term differences persist in the
+mitigation case (SSP-4.5) because differences in near-term emissions define to a
+larger degree the longer-term forcing outcome due to the cumulative nature of
+long-lived climate forcers like \cotwo.  The resulting difference in forcing in
+2100 is 0.04 $\frac{\text{W}}{\text{m}^2}$ for SSP2-4.5 and 0.01
 $\frac{\text{W}}{\text{m}^2}$ for SSP2-Ref, both of which are well within
 acceptable tolerances (e.g., 0.75 $\frac{\text{W}}{\text{m}^2}$ defined for
 \gls{smip} \cite{oneill_scenario_2016}). Thus harmonization is considered to
