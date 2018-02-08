@@ -160,7 +160,7 @@ library (approximately 2000 lines of code). The \texttt{aneris} software was
 developed by the lead author whose contact information is shown on the title
 page of this manuscript. Documentation for the \texttt{aneris} Python package,
 including software requirements, is available online at
-\url{http://data.ene.iiasa.ac.at/gidden/aneris/}.
+\url{http://software.ene.iiasa.ac.at/aneris/}.
 
 \newpage
 
@@ -262,7 +262,7 @@ modeling teams not involved in the original exercise.
 The remainder of this paper describes the methodology and implementation of the
 harmonization software \code{aneris} \cite{matthew_gidden_2017_802832}, written
 in the Python programming language (detailed documentation is available online
-at \url{http://data.ene.iiasa.ac.at/gidden/aneris/}). Section \ref{sec:meths}
+at \url{http://software.ene.iiasa.ac.at/aneris/}). Section \ref{sec:meths}
 provides a detailed description of the underlying mathematical components of
 \code{aneris} as well as the procedural workflow. A case study of applying the
 automated harmonization mechanism on two example \gls{iam} scenarios, one with
@@ -599,7 +599,7 @@ for scenario in driver.scenarios():
     driver.harmonize(scenario)
 harmonized, metadata = driver.harmonized_results()
 \end{minted}
-\caption{High-level user interaction with the \texttt{HarmonizationDriver} taken from the online \href{http://data.ene.iiasa.ac.at/gidden/aneris/tutorial.html}{tutorial}}
+\caption{High-level user interaction with the \texttt{HarmonizationDriver} taken from the online \href{http://software.ene.iiasa.ac.at/aneris/tutorial.html}{tutorial}}
 \label{lst:tutorial}
 \end{listing}
 
@@ -624,7 +624,7 @@ optional arguments:
   --history HISTORY     Historical emissions in the base year.
   --regions REGIONS     Mapping of country iso-codes to native regions.
   --rc RC               Runcontrol YAML file (see
-                        http://data.ene.iiasa.ac.at/gidden/aneris/config.html for
+                        http://software.ene.iiasa.ac.at/aneris/config.html for
                         examples).
   --output_path OUTPUT_PATH
                         Path to use for output file names.
@@ -774,7 +774,7 @@ harmonized   & The resulting harmonized value in the harmonization year.\\
 
 Users are able to control the harmonization process via a number of options
 (with examples provided
-\href{http://data.ene.iiasa.ac.at/gidden/aneris/config.html}{online}). The primary mechanism
+\href{http://software.ene.iiasa.ac.at/aneris/config.html}{online}). The primary mechanism
 by which users control the process is by providing \textit{override} methods for
 any combination of region and variable (i.e., sector and gas species).  In
 practice, it may be possible that not all default methods chosen will provide
